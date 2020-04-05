@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="ejb3-server-impl">
+    <output-path>$PROJECT_DIR$/out/artifacts/ejb3_server_impl</output-path>
+    <root id="archive" name="ejb3-server-impl.jar" />
+  </artifact>
+</component>
