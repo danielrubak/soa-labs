@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head/>
 <h:body>
+
    <h:form rendered="#{Form.firstPage}">
       <h:panelGrid columns="1">
          <h:outputLabel for="name-field">Name:</h:outputLabel>
@@ -135,7 +136,7 @@
          Bra: #{Form.bra} <br/>
          Waist: #{Form.waist} <br/>
          Hips: #{Form.hips} <br/>
-      </h:panelGroup>
+      </h:panelGroup><br/>
 
       <h:panelGroup rendered="#{Form.gender.equals('male')}">
          Chest: #{Form.chest} <br/>
@@ -146,7 +147,18 @@
       Frequency: #{Form.selectedShoppingFrequency} <br/>
       Colours: #{Form.selectedColoursToString()} <br/>
       Clothes: #{Form.selectedClothesToString()} <br/>
+
    </h:panelGroup>
+
+   <h:panelGroup>
+      <h:form id="ads">
+         <h:commandLink action="#{Ads.onClick}">
+            <f:ajax render="ads counter" /> #{Ads.getAd()}
+         </h:commandLink>
+      </h:form>
+   </h:panelGroup>
+
+   <h:panelGroup id="counter">Clicks on the ad banner: #{Ads.entranceNum}</h:panelGroup>
 </h:body>
 
 </html>

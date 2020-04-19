@@ -12,34 +12,22 @@ import java.util.regex.Pattern;
 @ManagedBean(name = "Form")
 @SessionScoped
 public class Form {
-    boolean firstPage = false;
+    boolean firstPage = true;
     boolean secondPage = false;
-    boolean thirdPage = true;
+    boolean thirdPage = false;
 
     // first page fields
-//    String name;
-//    String email;
-//    int age;
-//    String gender="male";
-//    String education="";
-//    int height;
-//    int bust;
-//    int bra;
-//    int waist;
-//    int hips;
-//    int chest;
-
-    String name = "daniel";
-    String email = "dr@pc.pl";
-    int age = 25;
+    String name;
+    String email;
+    int age;
     String gender="male";
-    String education="university";
-    int height = 185;
+    String education="";
+    int height;
     int bust;
     int bra;
-    int waist = 100;
+    int waist;
     int hips;
-    int chest = 120;
+    int chest;
 
     // second page fields
     String selectedPriceRange = "";
