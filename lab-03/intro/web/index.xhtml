@@ -11,14 +11,14 @@
 </h:head>
 
 <h:body>
-   <h1> Sprawdz czy masz szczescie w losowaniu</h1>
+   <h1>Fill out the form and check if you are lucky!</h1>
    <h:form>
-      <h:outputLabel>Podaj swoje dane:</h:outputLabel> <br/>
-      PESEL <h:inputText /> <br/>
-      IMIE <h:inputText /> <br/>
-      WIEK <h:inputText /> <br/>
+      <h:outputLabel>Enter data:</h:outputLabel> <br/>
+      Personal identity number: <h:inputText /> <br/>
+      Name: <h:inputText /> <br/>
+      Age: <h:inputText /> <br/>
 
-      <h:commandButton value="Wyslij" action="#{Losowanie.wyslij}"></h:commandButton>
+      <h:commandButton value="Send" action="#{Lottery.send}"></h:commandButton>
    </h:form>
 </h:body>
 
