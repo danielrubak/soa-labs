@@ -7,7 +7,7 @@ public class BookLibrary {
 
     public BookLibrary() {
         Book hp_05 = new Book("Harry Potter and the Order of the Phoenix","J. K. Rowling", "Fantasy", 15, "GBP", 800);
-        Book hp_07 = new Book("harry potter and deathly hallows", "J. K. Rowling", "Fantasy", 70, "PLN", 759);
+        Book hp_07 = new Book("Harry Potter and Deathly Hallows", "J. K. Rowling", "Fantasy", 70, "PLN", 759);
         Book dd = new Book("Done Deal: An Insider's Guide to Football Contracts", "Daniel Geey", "Sport", 15, "USD", 336);
         Book tf = new Book ("The Four: The Hidden DNA of Amazon, Apple, Facebook, and Google", "Scott Galloway", "Finance",10, "EUR", 368);
 

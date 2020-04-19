@@ -10,8 +10,8 @@
 </h:head>
 
 <h:body>
-   <h:form id="theForm">
-      <f:ajax render="theForm outputs messages bookTableForm" event="change">
+   <h:form id="filteringForm">
+      <f:ajax render="filteringForm booksTable" event="change">
 
          <h3>Filters:</h3>
          Title: <h:selectBooleanCheckbox value="#{Search.searchByTitle}"/>
@@ -59,7 +59,7 @@
       </f:ajax>
    </h:form>
 
-   <h:form id="bookTableForm">
+   <h:form id="booksTable">
       <h:dataTable value="#{Search.getBooksForSearch()}" var="book">
          <h:column rendered="#{Search.titleVisible}">
             <f:facet name="header">Title</f:facet>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+   <h:form rendered="#{Form.firstPage}">
+      <h:panelGrid columns="1">
+         <h:outputLabel for="name-field">Name:</h:outputLabel>
+         <h:inputText id="name-field" value="#{Form.name}"
+                      required="true" requiredMessage="Name is required"
+                      validator="#{Form.validateName}"/>
+         <h:message for="name-field" style="color: red" rendered="true"/> <br/>
+
+         <h:outputLabel for="email-field">Email address:</h:outputLabel>
+         <h:inputText id="email-field" value="#{Form.email}"
+                      required="true" requiredMessage="Email is required"
+                      validator="#{Form.validateEmail}"/>
+         <h:message for="email-field" style="color: red"/> <br/>
+
+         <h:outputLabel for="age-field">Age:</h:outputLabel>
+         <h:inputText id="age-field" value="#{Form.age}"
+                      converterMessage="Insert a number!"
+                      validator="#{Form.validateAge}"/>
+         <h:message for="age-field" style="color: red"/> <br/>
+
+         <h:outputLabel for = "height-field">Height:</h:outputLabel>
+         <h:inputText id="height-field" value="#{Form.height}"
+                      converterMessage="Insert a number!"
+                      validator="#{Form.validateHeight}">
+         </h:inputText>
+         <h:message id="height-msg" for="height-field" style="color: red"/> <br/>
+
+         <h:outputLabel>Gender:</h:outputLabel>
+         <h:selectOneRadio value="#{Form.gender}">
+            <f:selectItem itemValue="female" itemLabel="Female"/>
+            <f:selectItem itemValue="male" itemLabel="Male"/>
+            <f:ajax event="change" render="gender-questions"/>
+         </h:selectOneRadio> <br/>
+         <h:outputLabel></h:outputLabel>
+
+         <h:outputLabel>Education:</h:outputLabel>
+         <h:selectOneMenu value="#{Form.education}">
+            <f:selectItem itemValue="" itemLabel="-"/>
+            <f:selectItem itemValue="primary" itemLabel="Primary Education"/>
+            <f:selectItem itemValue="secondary" itemLabel="Secondary Education"/>
+            <f:selectItem itemValue="university" itemLabel="University Education"/>
+         </h:selectOneMenu> <br/>
+      </h:panelGrid>
+
+      <h:panelGroup id = "gender-questions">
+         <h:panelGrid columns="1" rendered="#{Form.gender.equals('female')}">
+            <h:outputLabel for="bust-field">Bust:</h:outputLabel>
+            <h:inputText id="bust-field" value="#{Form.bust}" validator="#{Form.isPositiveNumber}"/>
+            <h:message for="bust-field" style="color: red"/> <br/>
+
+            <h:outputLabel for="bra-size-field">Bra size:</h:outputLabel>
+            <h:inputText id="bra-size-field" value="#{Form.bra}" validator="#{Form.isPositiveNumber}"/>
+            <h:message for="bra-size-field" style="color: red"/> <br/>
+
+            <h:outputLabel for="waist-field">Waist:</h:outputLabel>
+            <h:inputText id="waist-field" value="#{Form.waist}" validator="#{Form.isPositiveNumber}"/>
+            <h:message for="waist-field" style="color: red"/> <br/>
+
+            <h:outputLabel for="hips-field">Hips:</h:outputLabel>
+            <h:inputText id="hips-field" value="#{Form.hips}" validator="#{Form.isPositiveNumber}"/>
+            <h:message for="hips-field" style="color: red"/> <br/>
+         </h:panelGrid>
+
+         <h:panelGrid columns="1" rendered="#{Form.gender.equals('male')}">
+            <h:outputLabel for="chest-field">Chest:</h:outputLabel>
+            <h:inputText id="chest-field" value="#{Form.chest}" validator="#{Form.isPositiveNumber}"/>
+            <h:message for="chest-field" style="color: red"/> <br/>
+
+            <h:outputLabel for="male-waist-field">Waist:</h:outputLabel>
+            <h:inputText id="male-waist-field" value="#{Form.waist}" validator="#{Form.isPositiveNumber}"/>
+            <h:message for="male-waist-field" style="color: red"/> <br/>
+         </h:panelGrid>
+      </h:panelGroup>
+
+      <h:commandButton value="Next page" action="#{Form.confirmFistPage()}"/>
+   </h:form>
+</h:body>
+
+</html>
