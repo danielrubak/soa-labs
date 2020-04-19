@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+   <title>Your books</title>
+</h:head>
+
+<h:body>
+   <h:form id="theForm">
+      <f:ajax render="theForm outputs messages bookTableForm" event="change">
+
+         <h3>Filters:</h3>
+         Title: <h:selectBooleanCheckbox value="#{Search.searchByTitle}"/>
+         <h:inputText value="#{Search.title}" rendered = "#{Search.searchByTitle}"/>
+         <br/>
+         Author: <h:selectBooleanCheckbox value="#{Search.searchByAuthor}"/>
+         <h:inputText value="#{Search.author}" rendered="#{Search.searchByAuthor}"/>
+         <br/>
+         Category: <h:selectBooleanCheckbox value="#{Search.searchByCategory}"/>
+         <h:inputText value="#{Search.category}" rendered="#{Search.searchByCategory}"/>
+         <br/>
+         Price: <h:selectBooleanCheckbox value="#{Search.searchByPrice}"/>
+         <h:outputLabel rendered = "#{Search.searchByPrice}">From: </h:outputLabel>
+         <h:inputText value="#{Search.priceMin}" rendered="#{Search.searchByPrice}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+         <h:outputLabel rendered = "#{Search.searchByPrice}">To: </h:outputLabel>
+         <h:inputText value="#{Search.priceMax}" rendered="#{Search.searchByPrice}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+         <br/>
+         Currency: <h:selectBooleanCheckbox value="#{Search.searchByCurrency}"/>
+         <h:inputText value="#{Search.currency}" rendered="#{Search.searchByCurrency}"/>
+         <br/>
+         Pages: <h:selectBooleanCheckbox value="#{Search.searchByPages}"/>
+         <h:outputLabel rendered = "#{Search.searchByPages}">From: </h:outputLabel>
+         <h:inputText value="#{Search.numOfPagesMin}" rendered="#{Search.searchByPages}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+         <h:outputLabel rendered = "#{Search.searchByPages}">To: </h:outputLabel>
+         <h:inputText value="#{Search.numOfPagesMax}" rendered="#{Search.searchByPages}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+         <br/>
+
+         Show result:
+         <h:selectOneRadio value = "#{Search.inPLN}">
+            <f:selectItem itemValue = "#{true}" itemLabel = "in PLN" />
+            <f:selectItem itemValue = "#{false}" itemLabel = "in default currency" />
+         </h:selectOneRadio>
+         <br/>
+
+         <h3>Select visible columns:</h3>
+         Title: <h:selectBooleanCheckbox value="#{Search.titleVisible}"/><br/>
+         Author: <h:selectBooleanCheckbox value="#{Search.authorVisible}"/><br/>
+         Category: <h:selectBooleanCheckbox value="#{Search.categoryVisible}"/><br/>
+         Price: <h:selectBooleanCheckbox value="#{Search.priceVisible}"/><br/>
+         Currency: <h:selectBooleanCheckbox value="#{Search.currencyVisible}"/><br/>
+         Pages: <h:selectBooleanCheckbox value="#{Search.pagesVisible}"/><br/>
+         <br/>
+         <br/>
+
+      </f:ajax>
+   </h:form>
+
+   <h:form id="bookTableForm">
+      <h:dataTable value="#{Search.getBooksForSearch()}" var="book">
+         <h:column rendered="#{Search.titleVisible}">
+            <f:facet name="header">Title</f:facet>
+            #{book.title}
+         </h:column>
+         <h:column rendered="#{Search.authorVisible}">
+            <f:facet name="header">Author</f:facet>
+            #{book.author}
+         </h:column>
+         <h:column rendered="#{Search.categoryVisible}">
+            <f:facet name="header">Category</f:facet>
+            #{book.category}
+         </h:column>
+         <h:column rendered="#{Search.priceVisible}">
+            <f:facet name="header">Price</f:facet>
+            #{Search.priceForBook(book)}
+         </h:column>
+         <h:column rendered="#{Search.currencyVisible}">
+            <f:facet name="header">Currency</f:facet>
+            #{Search.currencyForBook(book)}
+         </h:column>
+         <h:column rendered="#{Search.pagesVisible}">
+            <f:facet name="header">No. of pages</f:facet>
+            #{book.numOfPages}
+         </h:column>
+         <h:column rendered="#{Search.isSthVisible()}">
+            <f:facet name="header">Book</f:facet>
+            <h:selectBooleanCheckbox value="#{book.selected}"/>
+         </h:column>
+      </h:dataTable>
+      <br/>
+      <h:commandButton value="Get summary" action="#{Search.submitOrder()}"/>
+   </h:form>
+
+
+
+</h:body>
+
+</html>
