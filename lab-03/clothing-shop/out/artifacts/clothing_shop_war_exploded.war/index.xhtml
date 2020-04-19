@@ -27,20 +27,18 @@
                       validator="#{Form.validateAge}"/>
          <h:message for="age-field" style="color: red"/> <br/>
 
-         <h:outputLabel for = "height-field">Height:</h:outputLabel>
+         <h:outputLabel for="height-field">Height:</h:outputLabel>
          <h:inputText id="height-field" value="#{Form.height}"
                       converterMessage="Insert a number!"
-                      validator="#{Form.validateHeight}">
-         </h:inputText>
+                      validator="#{Form.validateHeight}"/>
          <h:message id="height-msg" for="height-field" style="color: red"/> <br/>
 
          <h:outputLabel>Gender:</h:outputLabel>
          <h:selectOneRadio value="#{Form.gender}">
             <f:selectItem itemValue="female" itemLabel="Female"/>
             <f:selectItem itemValue="male" itemLabel="Male"/>
-            <f:ajax event="change" render="gender-questions"/>
+            <f:ajax event="change" render="gender-questions-1"/>
          </h:selectOneRadio> <br/>
-         <h:outputLabel></h:outputLabel>
 
          <h:outputLabel>Education:</h:outputLabel>
          <h:selectOneMenu value="#{Form.education}">
@@ -51,7 +49,7 @@
          </h:selectOneMenu> <br/>
       </h:panelGrid>
 
-      <h:panelGroup id = "gender-questions">
+      <h:panelGroup id = "gender-questions-1">
          <h:panelGrid columns="1" rendered="#{Form.gender.equals('female')}">
             <h:outputLabel for="bust-field">Bust:</h:outputLabel>
             <h:inputText id="bust-field" value="#{Form.bust}" validator="#{Form.isPositiveNumber}"/>
@@ -81,8 +79,74 @@
          </h:panelGrid>
       </h:panelGroup>
 
-      <h:commandButton value="Next page" action="#{Form.confirmFistPage()}"/>
+      <h:commandButton value="Next" action="#{Form.confirmFistPage}"/>
    </h:form>
+
+   <h:form rendered="#{Form.secondPage}">
+      <h:panelGrid columns="1">
+         <h:outputLabel for="question-1">How much do you spend on clothes per month:</h:outputLabel>
+         <h:selectOneRadio id = "question-1" layout="pageDirection" value="#{Form.selectedPriceRange}">
+            <f:selectItems value="#{Provider.spendingRanges}"/><br/>
+         </h:selectOneRadio><br/>
+
+         <h:outputLabel for="question-2">How often do You go shopping:</h:outputLabel>
+         <h:selectOneRadio id = "question-2" layout="pageDirection" value="#{Form.selectedShoppingFrequency}">
+            <f:selectItems value="#{Provider.shoppingFrequency}"/><br/>
+         </h:selectOneRadio><br/>
+
+         <h:outputLabel for="question-3">What are Your favourite colours:</h:outputLabel>
+         <h:selectManyCheckbox id = "question-3" layout="pageDirection" value="#{Form.selectedColours}">
+            <f:selectItems value="#{Provider.colourPreferences}"/><br/>
+         </h:selectManyCheckbox><br/>
+
+         <h:panelGroup id = "gender-questions-2">
+            <h:panelGrid columns="1" rendered="#{Form.gender.equals('female')}">
+               <h:outputLabel for="question-4">Which clothes do You usually buy:</h:outputLabel>
+               <h:selectManyCheckbox id = "question-4" layout="pageDirection" value="#{Form.selectedClothes}">
+                  <f:selectItems value="#{Provider.femaleClothes}"/><br/>
+               </h:selectManyCheckbox><br/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="1" rendered="#{Form.gender.equals('male')}">
+               <h:outputLabel for="question-5">Which clothes do You usually buy:</h:outputLabel>
+               <h:selectManyCheckbox id = "question-5" layout="pageDirection" value="#{Form.selectedClothes}">
+                  <f:selectItems value="#{Provider.maleClothes}"/><br/>
+               </h:selectManyCheckbox><br/>
+            </h:panelGrid>
+         </h:panelGroup>
+
+      </h:panelGrid>
+
+      <h:commandButton value="Next" action="#{Form.confirmSecondPage()}"/>
+   </h:form>
+
+   <h:panelGroup rendered="#{Form.thirdPage}">
+      <h1> Summary </h1>
+
+      Name: #{Form.name} <br/>
+      Email: #{Form.email} <br/>
+      Age: #{Form.age} <br/>
+      Gender: #{Form.gender} <br/>
+      Education: #{Form.education} <br/>
+      Height: #{Form.height} <br/> <br/>
+
+      <h:panelGroup rendered="#{Form.gender.equals('female')}">
+         Bust: #{Form.bust} <br/>
+         Bra: #{Form.bra} <br/>
+         Waist: #{Form.waist} <br/>
+         Hips: #{Form.hips} <br/>
+      </h:panelGroup>
+
+      <h:panelGroup rendered="#{Form.gender.equals('male')}">
+         Chest: #{Form.chest} <br/>
+         Waist: #{Form.waist} <br/>
+      </h:panelGroup><br/>
+
+      Price: #{Form.selectedPriceRange} <br/>
+      Frequency: #{Form.selectedShoppingFrequency} <br/>
+      Colours: #{Form.selectedColoursToString()} <br/>
+      Clothes: #{Form.selectedClothesToString()} <br/>
+   </h:panelGroup>
 </h:body>
 
 </html>

@@ -4,6 +4,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,28 +12,40 @@ import java.util.regex.Pattern;
 @ManagedBean(name = "Form")
 @SessionScoped
 public class Form {
-    boolean firstPage = true;
+    boolean firstPage = false;
     boolean secondPage = false;
-    boolean thirdPage = false;
+    boolean thirdPage = true;
 
     // first page fields
-    String name;
-    String email;
-    int age;
+//    String name;
+//    String email;
+//    int age;
+//    String gender="male";
+//    String education="";
+//    int height;
+//    int bust;
+//    int bra;
+//    int waist;
+//    int hips;
+//    int chest;
+
+    String name = "daniel";
+    String email = "dr@pc.pl";
+    int age = 25;
     String gender="male";
-    String education="";
-    int height;
+    String education="university";
+    int height = 185;
     int bust;
     int bra;
-    int waist;
+    int waist = 100;
     int hips;
-    int chest;
+    int chest = 120;
 
     // second page fields
     String selectedPriceRange = "";
     String selectedShoppingFrequency = "";
-    List<String> selectedColours;
-    List<String> selectedClothes;
+    List<String> selectedColours = new ArrayList<>();
+    List<String> selectedClothes = new ArrayList<>();
 
     // validation helpers
     Pattern namePattern = Pattern.compile("[A-Za-z ]*");
@@ -72,12 +85,13 @@ public class Form {
         FacesMessage message = new FacesMessage();
         if (this.gender.equals("male") && (height < 165 || height > 200)) {
             message = new FacesMessage("Value must be between 165-200");
+            ((UIInput) uiComponent).setValid(false);
+            facesContext.addMessage(uiComponent.getClientId(facesContext), message);
         } else if (this.gender.equals("female") && (height < 150 || height > 185)) {
             message = new FacesMessage("Value must be between 150-185");
+            ((UIInput) uiComponent).setValid(false);
+            facesContext.addMessage(uiComponent.getClientId(facesContext), message);
         }
-
-        ((UIInput) uiComponent).setValid(false);
-        facesContext.addMessage(uiComponent.getClientId(facesContext), message);
     }
 
     public void isPositiveNumber(FacesContext facesContext, UIComponent uiComponent, Object o) {
@@ -92,6 +106,37 @@ public class Form {
     public void confirmFistPage () {
         firstPage = false;
         secondPage = true;
+    }
+
+    public void confirmSecondPage () {
+        secondPage = false;
+        thirdPage = true;
+    }
+
+    public String selectedColoursToString() {
+        if ( selectedColours.size() > 0 ) {
+            StringBuffer buffer = new StringBuffer();
+            for (String str: selectedColours){
+                buffer.append(str).append(", ");
+            }
+            return buffer.toString();
+
+        } else {
+            return "No answer";
+        }
+    }
+
+    public String selectedClothesToString () {
+        if ( selectedClothes.size() > 0 ) {
+            StringBuffer buffer = new StringBuffer();
+            for (String str: selectedClothes){
+                buffer.append(str).append(", ");
+            }
+            return buffer.toString();
+
+        } else {
+            return "No answer";
+        }
     }
 
     public boolean isFirstPage () {
@@ -207,7 +252,11 @@ public class Form {
     }
 
     public String getSelectedPriceRange() {
-        return selectedPriceRange;
+        if ( selectedPriceRange.length() > 0 ) {
+            return selectedPriceRange;
+        } else {
+            return "No answer";
+        }
     }
 
     public void setSelectedPriceRange(String selectedPriceRange) {
@@ -215,7 +264,11 @@ public class Form {
     }
 
     public String getSelectedShoppingFrequency() {
-        return selectedShoppingFrequency;
+        if ( selectedShoppingFrequency.length() > 0 ) {
+            return selectedShoppingFrequency;
+        } else {
+            return "No answer";
+        }
     }
 
     public void setSelectedShoppingFrequency(String selectedShoppingFrequency) {
