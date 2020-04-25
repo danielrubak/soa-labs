@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+    http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <navigation-rule>
+        <from-view-id>/add-form.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{BookBean.addBook}</from-action>
+            <from-outcome>BOOK_ADDED</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{BookBean.onBackButton}</from-action>
+            <from-outcome>ON_BACK_CALLBACK</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/update-form.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{BookBean.updateBook}</from-action>
+            <from-outcome>BOOK_UPDATED</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{BookBean.onBackButton}</from-action>
+            <from-outcome>ON_BACK_CALLBACK</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/delete-form.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{BookBean.deleteBook}</from-action>
+            <from-outcome>BOOK_DELETED</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{BookBean.onBackButton}</from-action>
+            <from-outcome>ON_BACK_CALLBACK</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>
