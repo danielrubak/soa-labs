@@ -7,23 +7,27 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Deleting a book</title>
+    <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
 <body>
 <h:form>
-    <h:selectOneMenu value="#{BookBean.selectedBookId}">
-        <f:selectItem itemValue="#{null}" itemLabel="Select a book..." noSelectionOption="true" />
-        <f:selectItems value="#{BookBean.getBooksMap()}"/>
-        <f:ajax listener = "#{BookBean.onBookSelection}" event="change"/>
-    </h:selectOneMenu>
+    <h:panelGrid columns="2">
+        <h:outputLabel for="books-listbox">Select book you want to delete:</h:outputLabel>
+        <h:selectOneMenu id = "books-listbox" value="#{BookBean.selectedBookId}">
+            <f:selectItem itemValue="#{null}" itemLabel="Select a book..." noSelectionOption="true" />
+            <f:selectItems value="#{BookBean.getBooksMap()}"/>
+            <f:ajax listener = "#{BookBean.onBookSelection}" event="change"/>
+        </h:selectOneMenu>
+    </h:panelGrid>
 </h:form>
 
 <h:form>
-    <h:panelGrid columns="2">
+    <h:panelGrid columns="2" styleClass = "buttons-group">
         <h:commandButton value="Back" action="#{BookBean.onBackButton}"
-                         immediate="true" style="width: 150px"/>
+                         immediate="true" styleClass = "back-button"/>
         <h:commandButton value="Remove book" action="#{BookBean.deleteBook}"
-                         style="width: 150px"/>
+                         styleClass = "remove-button"/>
     </h:panelGrid>
 </h:form>
 

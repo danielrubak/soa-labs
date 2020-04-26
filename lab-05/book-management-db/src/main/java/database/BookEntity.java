@@ -17,7 +17,7 @@ public class BookEntity {
     public BookEntity() {
     }
 
-    public BookEntity(String authorSurname, String authorName, String bookTitle, String isbnNumber, int releaseDate, BigDecimal price) {
+    public BookEntity(String authorName, String authorSurname, String bookTitle, String isbnNumber, int releaseDate, BigDecimal price) {
         this.authorSurname = authorSurname;
         this.authorName = authorName;
         this.bookTitle = bookTitle;

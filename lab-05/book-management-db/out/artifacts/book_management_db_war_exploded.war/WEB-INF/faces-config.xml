@@ -10,11 +10,13 @@
             <from-action>#{BookBean.addBook}</from-action>
             <from-outcome>BOOK_ADDED</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-action>#{BookBean.onBackButton}</from-action>
             <from-outcome>ON_BACK_CALLBACK</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -24,11 +26,13 @@
             <from-action>#{BookBean.updateBook}</from-action>
             <from-outcome>BOOK_UPDATED</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-action>#{BookBean.onBackButton}</from-action>
             <from-outcome>ON_BACK_CALLBACK</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -38,11 +42,13 @@
             <from-action>#{BookBean.deleteBook}</from-action>
             <from-outcome>BOOK_DELETED</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-action>#{BookBean.onBackButton}</from-action>
             <from-outcome>ON_BACK_CALLBACK</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 

@@ -88,3 +88,20 @@ td {
     background-color: red;
     color: white;
 }
+
+.back-button {
+    transition-duration: 0.4s;
+    border: 2px solid grey;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 8px 8px;
+    width: 100%;
+}
+
+.back-button:hover {
+    background-color: grey;
+    color: white;
+}

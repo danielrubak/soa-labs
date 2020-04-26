@@ -57,11 +57,20 @@ public class Database implements DatabaseAPI
             if( book.getAuthorName() != null )
                 updateObject.setAuthorName(book.getAuthorName());
 
-            if(book.getAuthorSurname()!=null) updateObject.setAuthorSurname(book.getAuthorSurname());
-            if(book.getBookTitle()!=null) updateObject.setBookTitle(book.getBookTitle());
-            if(book.getIsbnNumber()!=null) updateObject.setIsbnNumber(book.getIsbnNumber());
-            if(book.getReleaseDate()!=null) updateObject.setReleaseDate(book.getReleaseDate());
-            if(book.getPrice()!=null) updateObject.setPrice(book.getPrice());
+            if( book.getAuthorSurname() != null )
+                updateObject.setAuthorSurname(book.getAuthorSurname());
+
+            if( book.getBookTitle() != null )
+                updateObject.setBookTitle(book.getBookTitle());
+
+            if( book.getIsbnNumber() != null )
+                updateObject.setIsbnNumber(book.getIsbnNumber());
+
+            if( book.getReleaseDate() != null )
+                updateObject.setReleaseDate(book.getReleaseDate());
+
+            if( book.getPrice() != null )
+                updateObject.setPrice(book.getPrice());
 
             em.persist(updateObject);
         } catch (Exception e) {
