@@ -6,33 +6,33 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Order books</title>
+    <title>Books Library</title>
+    <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
 <h:body>
     <h:form id = "buttons-group">
-        <h1>Menu</h1>
-        <h:panelGrid columns="3">
-            <h:button value="Add book" outcome = "add-form" style="width: 150px"/>
-            <h:button value="Update book" outcome = "update-form" style="width: 150px"/>
-            <h:button value="Remove book" outcome = "delete-form" style="width: 150px"/>
+        <h:panelGrid columns="3" styleClass = "buttons-group">
+            <h:button value="Add book" outcome = "add-form" styleClass = "add-button"/>
+            <h:button value="Update book" outcome = "update-form" styleClass = "edit-button"/>
+            <h:button value="Remove book" outcome = "delete-form" styleClass = "remove-button"/>
         </h:panelGrid>
     </h:form>
 
     <h:form id = "books-table">
-        <h1>Books Library</h1>
-        <h:dataTable value="#{BookBean.getAllBooks()}" var="book">
+        <h:dataTable value="#{BookBean.getAllBooks()}" var="book"
+                     styleClass = "table" headerClass = "table-header">
             <h:column>
                 <f:facet name="header">Id</f:facet>
                 #{book.id}
             </h:column>
             <h:column>
-                <f:facet name="header">Author surname</f:facet>
-                #{book.authorSurname}
-            </h:column>
-            <h:column>
                 <f:facet name="header">Author name</f:facet>
                 #{book.authorName}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Author surname</f:facet>
+                #{book.authorSurname}
             </h:column>
             <h:column>
                 <f:facet name="header">Title</f:facet>
@@ -52,6 +52,5 @@
             </h:column>
         </h:dataTable>
     </h:form>
-
 </h:body>
 </html>

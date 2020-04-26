@@ -1,4 +1,4 @@
-import api.DataBaseAPI;
+import api.DatabaseAPI;
 import database.BookEntity;
 
 import javax.ejb.EJB;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class BookBean
 {
     @EJB
-    DataBaseAPI dataBase;
+    DatabaseAPI dataBase;
 
     String authorSurname;
     String authorName;
@@ -77,14 +77,18 @@ public class BookBean
     public void onBookSelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
         List<BookEntity> books = dataBase.getAllBooks();
 
-        for (BookEntity book : books) {
-            if ( book.getId() == this.getSelectedBookId()) {
-                this.authorName = book.getAuthorName();
-                this.authorSurname = book.getAuthorSurname();
-                this.bookTitle = book.getBookTitle();
-                this.isbnNumber = book.getIsbnNumber();
-                this.releaseDate = book.getReleaseDate();
-                this.price = book.getPrice();
+        if ( this.getSelectedBookId() == null ) {
+            this.setEmptyValues();
+        } else {
+            for (BookEntity book : books) {
+                if ( book.getId() == this.getSelectedBookId()) {
+                    this.authorName = book.getAuthorName();
+                    this.authorSurname = book.getAuthorSurname();
+                    this.bookTitle = book.getBookTitle();
+                    this.isbnNumber = book.getIsbnNumber();
+                    this.releaseDate = book.getReleaseDate();
+                    this.price = book.getPrice();
+                }
             }
         }
     }

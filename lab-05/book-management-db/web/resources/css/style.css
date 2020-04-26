@@ -1,0 +1,90 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #105469;
+    font-family: 'Open Sans', sans-serif;
+}
+
+table {
+    width: 50%;
+    background: #012B39;
+    border-radius: 0.25em;
+    border-collapse: collapse;
+    margin: 1em;
+}
+
+th {
+    border-bottom: 1px solid #364043;
+    color: #E2B842;
+    font-size: 0.85em;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    text-align: left;
+}
+
+td {
+    color: #fff;
+    font-weight: 400;
+    padding: 0.65em 1em;
+}
+
+.buttons-group {
+    text-align: center;
+}
+
+.add-button {
+    transition-duration: 0.4s;
+    border: 2px solid forestgreen;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 8px 8px;
+    width: 100%;
+}
+
+.add-button:hover {
+    background-color: forestgreen;
+    color: white;
+}
+
+.edit-button {
+    transition-duration: 0.4s;
+    border: 2px solid orange;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 8px 8px;
+    width: 100%;
+}
+
+.edit-button:hover {
+    background-color: orange;
+    color: white;
+}
+
+.remove-button {
+    transition-duration: 0.4s;
+    border: 2px solid red;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 8px 8px;
+    width: 100%;
+}
+
+.remove-button:hover {
+    background-color: red;
+    color: white;
+}

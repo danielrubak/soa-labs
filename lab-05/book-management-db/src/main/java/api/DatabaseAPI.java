@@ -3,7 +3,7 @@ package api;
 import database.BookEntity;
 import java.util.List;
 
-public interface DataBaseAPI {
+public interface DatabaseAPI {
     List<BookEntity> getAllBooks();
     void addBook(BookEntity book);
     void deleteBookById(int toDeleteId);

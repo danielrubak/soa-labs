@@ -1,6 +1,6 @@
 package database;
 
-import api.DataBaseAPI;
+import api.DatabaseAPI;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -10,8 +10,8 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
-@Local(DataBaseAPI.class)
-public class Database implements DataBaseAPI
+@Local(DatabaseAPI.class)
+public class Database implements DatabaseAPI
 {
     @PersistenceContext(name = "book-persistence-unit")
     private EntityManager em;
@@ -50,20 +50,22 @@ public class Database implements DataBaseAPI
         }
     }
 
-    public void updateBook(int toUpdateId, BookEntity schema) {
+    public void updateBook(int bookID, BookEntity book) {
         try {
-            // transaction-type="JTA" in persistance.xml handles transaction
-            BookEntity updateObject = em.find(BookEntity.class,toUpdateId);
-            if(schema.getAuthorName()!=null) updateObject.setAuthorName(schema.getAuthorName());
-            if(schema.getAuthorSurname()!=null) updateObject.setAuthorSurname(schema.getAuthorSurname());
-            if(schema.getBookTitle()!=null) updateObject.setBookTitle(schema.getBookTitle());
-            if(schema.getIsbnNumber()!=null) updateObject.setIsbnNumber(schema.getIsbnNumber());
-            if(schema.getReleaseDate()!=null) updateObject.setReleaseDate(schema.getReleaseDate());
-            if(schema.getPrice()!=null) updateObject.setPrice(schema.getPrice());
+            BookEntity updateObject = em.find(BookEntity.class, bookID);
+
+            if( book.getAuthorName() != null )
+                updateObject.setAuthorName(book.getAuthorName());
+
+            if(book.getAuthorSurname()!=null) updateObject.setAuthorSurname(book.getAuthorSurname());
+            if(book.getBookTitle()!=null) updateObject.setBookTitle(book.getBookTitle());
+            if(book.getIsbnNumber()!=null) updateObject.setIsbnNumber(book.getIsbnNumber());
+            if(book.getReleaseDate()!=null) updateObject.setReleaseDate(book.getReleaseDate());
+            if(book.getPrice()!=null) updateObject.setPrice(book.getPrice());
+
             em.persist(updateObject);
-        }catch (Exception e)
-        {
-            System.err.println("An error occurred during updating a book object. Id = "+toUpdateId+"\n"+e);
+        } catch (Exception e) {
+            System.err.println("An error occurred during updating a book object. Id = "+ bookID + "\n" + e);
         }
     }
 }
