@@ -32,7 +32,7 @@ public class ReaderBean {
         readerAPI.addReader(reader);
         this.setEmptyValues();
 
-        return "READER_ADDED";
+        return "/readers/readers";
     }
 
     public String deleteReader() {
@@ -40,7 +40,7 @@ public class ReaderBean {
         readerAPI.deleteReader(this.selectedReaderId);
         this.setEmptyValues();
 
-        return "READER_DELETED";
+        return "/readers/readers";
     }
 
     public String updateReader()
@@ -49,7 +49,7 @@ public class ReaderBean {
         readerAPI.updateReader(this.selectedReaderId, reader);
         this.setEmptyValues();
 
-        return "READER_UPDATED";
+        return "/readers/readers";
     }
 
     public Map<String, Integer> getReadersMap() {
@@ -82,8 +82,8 @@ public class ReaderBean {
 
     public String onBackButton () {
         this.setEmptyValues();
-        System.out.println("ON_BACK_CALLBACK");
-        return "ON_BACK_CALLBACK";
+        
+        return "/readers/readers";
     }
 
     public void setEmptyValues () {

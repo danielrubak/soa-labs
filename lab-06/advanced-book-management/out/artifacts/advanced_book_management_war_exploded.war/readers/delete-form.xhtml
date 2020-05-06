@@ -13,7 +13,7 @@
 <body>
 <h:form>
     <h:panelGrid columns="2">
-        <h:outputLabel for="readers-listbox">Select reader you want to update:</h:outputLabel>
+        <h:outputLabel for="readers-listbox">Select reader you want to delete:</h:outputLabel>
         <h:selectOneMenu id="readers-listbox" value="#{ReaderBean.selectedReaderId}">
             <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
             <f:selectItems value="#{ReaderBean.getReadersMap()}"/>

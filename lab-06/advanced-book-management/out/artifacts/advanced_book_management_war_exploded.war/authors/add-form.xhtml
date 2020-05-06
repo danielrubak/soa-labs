@@ -6,28 +6,28 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Adding a reader</title>
+    <title>Adding an author</title>
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
 <body>
 <h:form id = "adding-form">
     <h:panelGrid columns="3">
-        <h:outputLabel for="reader-name-field">Reader Name:</h:outputLabel>
-        <h:inputText id="reader-name-field" value="#{ReaderBean.name}"
+        <h:outputLabel for="author-name-field">Author Name:</h:outputLabel>
+        <h:inputText id="author-name-field" value="#{AuthorBean.name}"
                      required="true" requiredMessage="Value is required"/>
-        <h:message for="reader-name-field" style="color: red" rendered="true"/>
+        <h:message for="author-name-field" style="color: red" rendered="true"/>
 
-        <h:outputLabel for="reader-surname-field">Reader Surname:</h:outputLabel>
-        <h:inputText id="reader-surname-field" value="#{ReaderBean.surname}"
+        <h:outputLabel for="author-surname-field">Author Surname:</h:outputLabel>
+        <h:inputText id="author-surname-field" value="#{AuthorBean.surname}"
                      required="true" requiredMessage="Value is required"/>
-        <h:message for="reader-surname-field" style="color: red" rendered="true"/>
+        <h:message for="author-surname-field" style="color: red" rendered="true"/>
     </h:panelGrid>
 
     <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
+        <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
                          immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Add reader" action="#{ReaderBean.addReader}"
+        <h:commandButton value="Add author" action="#{AuthorBean.addAuthor}"
                          styleClass = "add-button"/>
     </h:panelGrid>
 </h:form>

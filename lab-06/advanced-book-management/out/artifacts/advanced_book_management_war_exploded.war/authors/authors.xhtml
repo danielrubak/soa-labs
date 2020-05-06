@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Readers</title>
+    <title>Authors</title>
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
@@ -16,26 +16,26 @@
             <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
         </h:panelGrid>
         <h:panelGrid columns="3" styleClass = "buttons-group">
-            <h:button value="Add reader" outcome = "/readers/add-form" styleClass = "add-button"/>
-            <h:button value="Update reader" outcome = "/readers/update-form" styleClass = "edit-button"/>
-            <h:button value="Remove reader" outcome = "/readers/delete-form" styleClass = "remove-button"/>
+            <h:button value="Add author" outcome = "/authors/add-form" styleClass = "add-button"/>
+            <h:button value="Update author" outcome = "/authors/update-form" styleClass = "edit-button"/>
+            <h:button value="Remove author" outcome = "/authors/delete-form" styleClass = "remove-button"/>
         </h:panelGrid>
     </h:form>
 
-    <h:form id = "readers-table">
-        <h:dataTable value="#{ReaderBean.getAllReaders()}" var="reader"
+    <h:form id = "authors-table">
+        <h:dataTable value="#{AuthorBean.getAllAuthors()}" var="author"
                      styleClass = "table" headerClass = "table-header">
             <h:column>
                 <f:facet name="header">Id</f:facet>
-                #{reader.id}
+                #{author.id}
             </h:column>
             <h:column>
-                <f:facet name="header">Reader name</f:facet>
-                #{reader.name}
+                <f:facet name="header">Author name</f:facet>
+                #{author.name}
             </h:column>
             <h:column>
-                <f:facet name="header">Reader surname</f:facet>
-                #{reader.surname}
+                <f:facet name="header">Author surname</f:facet>
+                #{author.surname}
             </h:column>
         </h:dataTable>
     </h:form>

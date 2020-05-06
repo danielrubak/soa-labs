@@ -6,18 +6,18 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Deleting a reader</title>
+    <title>Deleting an author</title>
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
 <body>
 <h:form>
     <h:panelGrid columns="2">
-        <h:outputLabel for="readers-listbox">Select reader you want to delete:</h:outputLabel>
-        <h:selectOneMenu id="readers-listbox" value="#{ReaderBean.selectedReaderId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
-            <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
-            <f:ajax listener = "#{BookBean.onBookSelection}" event="change"/>
+        <h:outputLabel for="authors-listbox">Select author you want to delete:</h:outputLabel>
+        <h:selectOneMenu id="authors-listbox" value="#{AuthorBean.selectedAuthorId}">
+            <f:selectItem itemValue="#{null}" itemLabel="Select an author..." noSelectionOption="true" />
+            <f:selectItems value="#{AuthorBean.getAuthorsMap()}"/>
+            <f:ajax listener = "#{AuthorBean.onAuthorSelection}" event="change"/>
         </h:selectOneMenu>
     </h:panelGrid>
 </h:form>
@@ -25,9 +25,9 @@
 
 <h:form>
     <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
+        <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
                          immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Remove reader" action="#{ReaderBean.deleteReader}"
+        <h:commandButton value="Remove reader" action="#{AuthorBean.deleteAuthor}"
                          styleClass = "remove-button"/>
     </h:panelGrid>
 </h:form>
