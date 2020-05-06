@@ -11,46 +11,10 @@
 </h:head>
 
 <h:body>
-    <h:form id = "buttons-group">
+    <h:form id = "reader-buttons-group">
         <h:panelGrid columns="3" styleClass = "buttons-group">
-            <h:button value="Add book" outcome = "add-form" styleClass = "add-button"/>
-            <h:button value="Update book" outcome = "update-form" styleClass = "edit-button"/>
-            <h:button value="Remove book" outcome = "delete-form" styleClass = "remove-button"/>
+            <h:button value="Readers management" outcome = "/readers/readers" styleClass = "select-button"/>
         </h:panelGrid>
-    </h:form>
-
-    <h:form id = "books-table">
-        <h:dataTable value="#{BookBean.getAllBooks()}" var="book"
-                     styleClass = "table" headerClass = "table-header">
-            <h:column>
-                <f:facet name="header">Id</f:facet>
-                #{book.id}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Author name</f:facet>
-                #{book.authorName}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Author surname</f:facet>
-                #{book.authorSurname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Title</f:facet>
-                #{book.bookTitle}
-            </h:column>
-            <h:column>
-                <f:facet name="header">ISBN</f:facet>
-                #{book.isbnNumber}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Release date</f:facet>
-                #{book.releaseDate}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Price</f:facet>
-                #{book.price}
-            </h:column>
-        </h:dataTable>
     </h:form>
 </h:body>
 </html>
