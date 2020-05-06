@@ -1,0 +1,170 @@
+package beans;
+
+import api.BookAPI;
+import model.Book;
+
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+
+@ManagedBean(name = "beans.BookBean")
+@SessionScoped
+public class BookBean
+{
+    @EJB
+    BookAPI dataBase;
+
+    String authorSurname;
+    String authorName;
+    String bookTitle;
+    String isbnNumber;
+    Integer releaseDate;
+    BigDecimal price;
+    Integer selectedBookId;
+
+
+    public String addBook()
+    {
+        Book book = new Book(this.authorName,this.authorSurname,this.bookTitle,
+                this.isbnNumber,this.releaseDate,this.price);
+        dataBase.addBook(book);
+        this.setEmptyValues();
+
+        return "BOOK_ADDED";
+    }
+
+    public String deleteBook()
+    {
+        System.out.println("BOOK ID TO REMOVE: " + this.getSelectedBookId());
+        dataBase.deleteBookById(this.getSelectedBookId());
+        this.setEmptyValues();
+
+        return "BOOK_DELETED";
+    }
+
+    public String updateBook()
+    {
+        Book book = new Book(this.getAuthorName(), this.getAuthorSurname(), this.getBookTitle(),
+                this.getIsbnNumber(), this.getReleaseDate(), this.getPrice());
+        dataBase.updateBook(this.getSelectedBookId(), book);
+        this.setEmptyValues();
+
+        return "BOOK_UPDATED";
+    }
+
+    public List<Book> getAllBooks()
+    {
+        return dataBase.getAllBooks();
+    }
+
+    public Map<String, Integer> getBooksMap() {
+        Map<String, Integer> booksMap = new LinkedHashMap<>();
+
+        String label = "";
+        List <Book> books = dataBase.getAllBooks();
+        for (Book be : books) {
+            label = be.getAuthorName() + " " + be.getAuthorSurname() + ": " + be.getBookTitle();
+            booksMap.put(label, be.getId());
+        }
+
+        return booksMap;
+    }
+
+    public void onBookSelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
+        List<Book> books = dataBase.getAllBooks();
+
+        if ( this.getSelectedBookId() == null ) {
+            this.setEmptyValues();
+        } else {
+            for (Book book : books) {
+                if ( book.getId() == this.getSelectedBookId()) {
+                    this.authorName = book.getAuthorName();
+                    this.authorSurname = book.getAuthorSurname();
+                    this.bookTitle = book.getBookTitle();
+                    this.isbnNumber = book.getIsbnNumber();
+                    this.releaseDate = book.getReleaseDate();
+                    this.price = book.getPrice();
+                }
+            }
+        }
+    }
+
+    public String onBackButton () {
+        this.setEmptyValues();
+        return "ON_BACK_CALLBACK";
+    }
+
+    public void setEmptyValues () {
+        this.authorName = null;
+        this.authorSurname = null;
+        this.bookTitle = null;
+        this.isbnNumber = null;
+        this.releaseDate = null;
+        this.price = null;
+        this.setSelectedBookId(null);
+    }
+
+    // Getters and Setters
+
+    public String getAuthorSurname() {
+        return authorSurname;
+    }
+
+    public void setAuthorSurname(String authorSurname) {
+        this.authorSurname = authorSurname;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
+    public String getIsbnNumber() {
+        return isbnNumber;
+    }
+
+    public void setIsbnNumber(String isbnNumber) {
+        this.isbnNumber = isbnNumber;
+    }
+
+    public Integer getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Integer releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getSelectedBookId() {
+        return selectedBookId;
+    }
+
+    public void setSelectedBookId(Integer selectedBookId) {
+        this.selectedBookId = selectedBookId;
+    }
+}
