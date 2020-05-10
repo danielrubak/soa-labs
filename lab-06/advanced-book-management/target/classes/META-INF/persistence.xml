@@ -8,7 +8,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>model.Reader</class>
         <class>model.Author</class>
-        <class>model.Category</class>
+        <class>model.BookCategory</class>
+        <class>model.Book</class>
+        <class>model.Catalog</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/soa-lab" />
@@ -16,7 +18,7 @@
             <property name="javax.persistence.jdbc.password" value="postgres" /> <!-- DB Password -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update" />
-            <property name="hibernate.show_sql" value="true" /> <!-- Show SQL in console -->
+            <property name="hibernate.show_sql" value="false" /> <!-- Show SQL in console -->
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/soa-lab"/>
             <property name="hibernate.connection.driver_class"

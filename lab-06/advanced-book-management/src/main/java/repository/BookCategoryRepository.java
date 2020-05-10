@@ -1,10 +1,12 @@
 package repository;
 
+import model.BookCategory;
+
 import java.util.List;
 
-public interface CategoryRepository {
-    List<Category> getAllCategories();
-    void addCategory(Category category);
-    void updateCategory(int id, Category category);
+public interface BookCategoryRepository {
+    List<BookCategory> getAllCategories();
+    void addCategory(BookCategory category);
+    void updateCategory(int id, BookCategory category);
     void deleteCategory(int id);
 }

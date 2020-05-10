@@ -23,7 +23,7 @@ public class AuthorService implements AuthorRepository {
             return (List<Author>) q.getResultList();
         }
         catch(Exception e) {
-            System.err.println("An error occurred during selecting entities: " + e);
+            System.err.println("An error occurred during selecting author: " + e);
         }
         return null;
     }
@@ -34,7 +34,7 @@ public class AuthorService implements AuthorRepository {
             em.persist(author);
         }
         catch (Exception e) {
-            System.err.println("An error occurred during addition of a book: " + author + "\n" + e);
+            System.err.println("An error occurred during addition of an author: " + author + "\n" + e);
         }
     }
 
@@ -44,7 +44,7 @@ public class AuthorService implements AuthorRepository {
             Author author = em.find(Author.class, id);
             em.remove(author);
         } catch (Exception e){
-            System.err.println("An error occurred during book deletion. Id: " + id + "\n" + e);
+            System.err.println("An error occurred during author deletion. Id: " + id + "\n" + e);
         }
     }
 

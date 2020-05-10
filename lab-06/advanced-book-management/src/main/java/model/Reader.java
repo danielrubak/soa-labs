@@ -1,13 +1,15 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(schema = "library", name = "reader")
 public class Reader {
-    int id;
-    String name;
-    String surname;
+    private int id;
+    private String name;
+    private String surname;
+    private List<Borrowing> borrowing;
 
     public Reader() {
     }
@@ -20,28 +22,33 @@ public class Reader {
     @Id
     @GeneratedValue
     @Column(name="id", nullable = false)
-    public int getId() {
+    public int getId(){
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    @Column(name="surname", nullable = false)
+    @OneToMany(mappedBy = "reader")
+    public List<Borrowing> getBorrowing() {
+        return borrowing;
+    }
+    public void setBorrowing(List<Borrowing> borrowing) {
+        this.borrowing = borrowing;
+    }
+
+    @Column(name = "surname", nullable = false)
     public String getSurname() {
         return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }

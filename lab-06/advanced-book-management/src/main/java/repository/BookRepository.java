@@ -1,13 +1,12 @@
 package repository;
 
-import model.Author;
+import model.Book;
 
+import java.math.BigInteger;
 import java.util.List;
 
-public interface AuthorRepository {
+public interface BookRepository {
 
-    List<Author> getAllAuthors();
-    void addAuthor(Author author);
-    void deleteAuthor(int id);
-    void updateAuthor(int id, Author author);
+    List<Book> getAllBooks();
+    void addBook(String title, BigInteger isbn, String authorName, String authorSurname, String category, int quantity);
 }

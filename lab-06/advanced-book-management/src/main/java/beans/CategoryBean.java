@@ -1,7 +1,7 @@
 package beans;
 
-import repository.CategoryRepository;
-import model.Category;
+import model.BookCategory;
+import repository.BookCategoryRepository;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -15,33 +15,33 @@ import java.util.Map;
 @SessionScoped
 public class CategoryBean {
     @EJB
-    CategoryRepository categoryRepository;
+    BookCategoryRepository bookCategoryRepository;
 
     String name;
     Integer selectedCategoryId;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.getAllCategories();
+    public List<BookCategory> getAllCategories() {
+        return bookCategoryRepository.getAllCategories();
     }
 
     public String addCategory() {
-        Category category = new Category(this.name);
-        categoryRepository.addCategory(category);
+        BookCategory category = new BookCategory(this.name);
+        bookCategoryRepository.addCategory(category);
         this.setEmptyValues();
 
         return "/categories/categories";
     }
 
     public String updateCategory() {
-        Category category = new Category(this.name);
-        categoryRepository.updateCategory(this.selectedCategoryId, category);
+        BookCategory category = new BookCategory(this.name);
+        bookCategoryRepository.updateCategory(this.selectedCategoryId, category);
         this.setEmptyValues();
 
         return "/categories/categories";
     }
 
     public String deleteCategory() {
-        categoryRepository.deleteCategory(this.selectedCategoryId);
+        bookCategoryRepository.deleteCategory(this.selectedCategoryId);
         this.setEmptyValues();
 
         return "/categories/categories";
@@ -50,8 +50,8 @@ public class CategoryBean {
     public Map<String, Integer> getCategoriesMap() {
         Map<String, Integer> categoriesMap = new LinkedHashMap<>();
 
-        List <Category> categories = categoryRepository.getAllCategories();
-        for (Category category : categories) {
+        List <BookCategory> categories = bookCategoryRepository.getAllCategories();
+        for (BookCategory category : categories) {
             categoriesMap.put(category.getName(), category.getId());
         }
 
@@ -59,12 +59,12 @@ public class CategoryBean {
     }
 
     public void onCategorySelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
-        List<Category> authors = categoryRepository.getAllCategories();
+        List<BookCategory> authors = bookCategoryRepository.getAllCategories();
 
         if ( this.selectedCategoryId == null ) {
             this.setEmptyValues();
         } else {
-            for (Category category : authors) {
+            for (BookCategory category : authors) {
                 if ( this.selectedCategoryId == category.getId() ) {
                     this.name = category.getName();
                 }

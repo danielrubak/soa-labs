@@ -1,6 +1,7 @@
 package service;
 
-import repository.CategoryRepository;
+import model.BookCategory;
+import repository.BookCategoryRepository;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -10,15 +11,15 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
-@Local(CategoryRepository.class)
-public class CategoryService implements CategoryRepository {
+@Local(BookCategoryRepository.class)
+public class BookCategoryService implements BookCategoryRepository {
     @PersistenceContext(name = "book-persistence-unit")
     private EntityManager em;
 
     @Override
-    public List<Category> getAllCategories() {
+    public List<BookCategory> getAllCategories() {
         try {
-            Query q = em.createQuery("FROM Category", Category.class);
+            Query q = em.createQuery("FROM Category", BookCategory.class);
             return q.getResultList();
         } catch(Exception e) {
             System.err.println("An error occurred during selecting entities: " + e);
@@ -27,7 +28,7 @@ public class CategoryService implements CategoryRepository {
     }
 
     @Override
-    public void addCategory(Category category) {
+    public void addCategory(BookCategory category) {
         try {
             em.persist(category);
         } catch (Exception e) {
@@ -36,9 +37,9 @@ public class CategoryService implements CategoryRepository {
     }
 
     @Override
-    public void updateCategory(int id, Category category) {
+    public void updateCategory(int id, BookCategory category) {
         try {
-            Category updateObject = em.find(Category.class, id);
+            BookCategory updateObject = em.find(BookCategory.class, id);
 
             if( category.getName() != null )
                 updateObject.setName(category.getName());
@@ -53,7 +54,7 @@ public class CategoryService implements CategoryRepository {
     @Override
     public void deleteCategory(int id) {
         try {
-            Category category = em.find(Category.class, id);
+            BookCategory category = em.find(BookCategory.class, id);
             em.remove(category);
         } catch (Exception e) {
             System.err.println("An error occurred during category deletion. Id: " + id + "\n" + e);
