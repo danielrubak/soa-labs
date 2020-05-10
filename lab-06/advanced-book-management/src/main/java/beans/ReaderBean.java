@@ -1,6 +1,6 @@
 package beans;
 
-import api.ReaderAPI;
+import repository.ReaderRepository;
 import model.Reader;
 
 import javax.ejb.EJB;
@@ -15,7 +15,7 @@ import java.util.Map;
 @SessionScoped
 public class ReaderBean {
     @EJB
-    ReaderAPI readerAPI;
+    ReaderRepository readerRepository;
 
     String name;
     String surname;
@@ -24,12 +24,12 @@ public class ReaderBean {
 
     public List<Reader> getAllReaders()
     {
-        return readerAPI.getAllReaders();
+        return readerRepository.getAllReaders();
     }
 
     public String addReader() {
         Reader reader = new Reader(this.name, this.surname);
-        readerAPI.addReader(reader);
+        readerRepository.addReader(reader);
         this.setEmptyValues();
 
         return "/readers/readers";
@@ -37,7 +37,7 @@ public class ReaderBean {
 
     public String deleteReader() {
         System.out.println("READER ID TO REMOVE: " + this.selectedReaderId);
-        readerAPI.deleteReader(this.selectedReaderId);
+        readerRepository.deleteReader(this.selectedReaderId);
         this.setEmptyValues();
 
         return "/readers/readers";
@@ -46,7 +46,7 @@ public class ReaderBean {
     public String updateReader()
     {
         Reader reader = new Reader(this.name, this.surname);
-        readerAPI.updateReader(this.selectedReaderId, reader);
+        readerRepository.updateReader(this.selectedReaderId, reader);
         this.setEmptyValues();
 
         return "/readers/readers";
@@ -56,7 +56,7 @@ public class ReaderBean {
         Map<String, Integer> readersMap = new LinkedHashMap<>();
 
         String label = "";
-        List <Reader> readers = readerAPI.getAllReaders();
+        List <Reader> readers = readerRepository.getAllReaders();
         for (Reader reader : readers) {
             label = reader.getName() + " " + reader.getSurname();
             readersMap.put(label, reader.getId());
@@ -66,7 +66,7 @@ public class ReaderBean {
     }
 
     public void onReaderSelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
-        List<Reader> readers = readerAPI.getAllReaders();
+        List<Reader> readers = readerRepository.getAllReaders();
 
         if ( this.getSelectedReaderId() == null ) {
             this.setEmptyValues();

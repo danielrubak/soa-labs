@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Updating a category</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+<h:form>
+    <h:panelGrid columns="2">
+        <h:outputLabel for="categories-listbox">Select category you want to update:</h:outputLabel>
+        <h:selectOneMenu id="categories-listbox" value="#{CategoryBean.selectedCategoryId}">
+            <f:selectItem itemValue="#{null}" itemLabel="Select a category..." noSelectionOption="true" />
+            <f:selectItems value="#{CategoryBean.getCategoriesMap()}"/>
+            <f:ajax render="update-form" listener = "#{CategoryBean.onCategorySelection}" event="change"/>
+        </h:selectOneMenu>
+    </h:panelGrid>
+</h:form>
+
+<h:form id = "update-form">
+    <h:panelGrid columns="3">
+        <h:outputLabel for="category-name-field">Category Name:</h:outputLabel>
+        <h:inputText id="category-name-field" value="#{CategoryBean.name}"
+                     required="true" requiredMessage="Value is required"/>
+        <h:message for="category-name-field" style="color: red" rendered="true"/>
+    </h:panelGrid>
+
+    <h:panelGrid columns="2" styleClass = "buttons-group">
+        <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
+                         immediate="true" styleClass = "back-button"/>
+        <h:commandButton value="Save changes" action="#{CategoryBean.updateCategory}"
+                         styleClass = "add-button"/>
+    </h:panelGrid>
+</h:form>
+</body>
+
+</html>

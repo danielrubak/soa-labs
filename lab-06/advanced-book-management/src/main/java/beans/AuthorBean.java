@@ -1,6 +1,6 @@
 package beans;
 
-import api.AuthorAPI;
+import repository.AuthorRepository;
 import model.Author;
 
 import javax.ejb.EJB;
@@ -15,7 +15,7 @@ import java.util.Map;
 @SessionScoped
 public class AuthorBean {
     @EJB
-    AuthorAPI authorAPI;
+    AuthorRepository authorRepository;
 
     String name;
     String surname;
@@ -23,12 +23,12 @@ public class AuthorBean {
     Integer selectedAuthorId;
 
     public List<Author> getAllAuthors() {
-        return authorAPI.getAllAuthors();
+        return authorRepository.getAllAuthors();
     }
 
     public String addAuthor() {
         Author author = new Author(this.name, this.surname);
-        authorAPI.addAuthor(author);
+        authorRepository.addAuthor(author);
         this.setEmptyValues();
 
         return "/authors/authors";
@@ -36,14 +36,14 @@ public class AuthorBean {
 
     public String updateAuthor() {
         Author author = new Author(this.name, this.surname);
-        authorAPI.updateAuthor(this.selectedAuthorId, author);
+        authorRepository.updateAuthor(this.selectedAuthorId, author);
         this.setEmptyValues();
 
         return "/authors/authors";
     }
 
     public String deleteAuthor() {
-        authorAPI.deleteAuthor(this.selectedAuthorId);
+        authorRepository.deleteAuthor(this.selectedAuthorId);
         this.setEmptyValues();
 
         return "/authors/authors";
@@ -53,7 +53,7 @@ public class AuthorBean {
         Map<String, Integer> authorsMap = new LinkedHashMap<>();
 
         String label = "";
-        List <Author> authors = authorAPI.getAllAuthors();
+        List <Author> authors = authorRepository.getAllAuthors();
         for (Author author : authors) {
             label = author.getName() + " " + author.getSurname();
             authorsMap.put(label, author.getId());
@@ -63,7 +63,7 @@ public class AuthorBean {
     }
 
     public void onAuthorSelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
-        List<Author> authors = authorAPI.getAllAuthors();
+        List<Author> authors = authorRepository.getAllAuthors();
 
         if ( this.selectedAuthorId == null ) {
             this.setEmptyValues();

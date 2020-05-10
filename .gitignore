@@ -1,9 +1,17 @@
 /*.zip
-######################
-# IDEA
-######################
+
+# Intellij
 *.iml
 *.ipr
 *.iws
 .idea/
 atlassian-ide-plugin.xml
+
+# Eclipse
+.classpath
+.project
+.settings/
+ 
+# Maven
+log/
+target/
