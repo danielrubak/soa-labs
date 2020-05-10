@@ -19,7 +19,7 @@ public class BookCategoryService implements BookCategoryRepository {
     @Override
     public List<BookCategory> getAllCategories() {
         try {
-            Query q = em.createQuery("FROM Category", BookCategory.class);
+            Query q = em.createQuery("FROM BookCategory", BookCategory.class);
             return q.getResultList();
         } catch(Exception e) {
             System.err.println("An error occurred during selecting entities: " + e);

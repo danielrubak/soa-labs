@@ -11,7 +11,6 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Locale;
 
 @Stateless
 @Local(BookRepository.class)

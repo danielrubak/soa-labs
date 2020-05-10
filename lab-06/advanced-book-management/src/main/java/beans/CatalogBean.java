@@ -46,6 +46,11 @@ public class CatalogBean {
         this.setEditMode(false);
     }
 
+    public void cancelCallback() {
+        this.setEditedCatalog(null);
+        this.setEditMode(false);
+    }
+
     public int getId() {
         return id;
     }

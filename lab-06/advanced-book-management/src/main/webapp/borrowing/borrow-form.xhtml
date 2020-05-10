@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Updating a category</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+<h:form>
+    <h:panelGrid columns="2">
+        <h:outputLabel for="readers-listbox">Select reader who will borrow the book:</h:outputLabel>
+        <h:selectOneMenu id="readers-listbox" value="#{BorrowingBean.selectedReaderId}">
+            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
+            <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
+        </h:selectOneMenu>
+    </h:panelGrid>
+
+    <h:panelGrid columns="2">
+        <h:outputLabel for="books-listbox">Select book:</h:outputLabel>
+        <h:selectOneMenu id="books-listbox" value="#{BorrowingBean.selectedBookId}">
+            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
+            <f:selectItems value="#{BookBean.getBooksMap()}"/>
+        </h:selectOneMenu>
+    </h:panelGrid>
+
+    <h:panelGrid columns="2" styleClass = "buttons-group">
+        <h:commandButton value="Back" action="#{BorrowingBean.onBackButton}"
+                         immediate="true" styleClass = "back-button"/>
+        <h:commandButton value="Borrow book" action="#{BorrowingBean.borrowBook}"
+                         styleClass = "add-button"/>
+    </h:panelGrid>
+</h:form>
+</body>
+
+</html>

@@ -39,7 +39,7 @@
                     <td>#{catalog.quantity}</td>
                     <td>#{catalog.available}</td>
                     <td>
-                        <h:commandButton value="edit">
+                        <h:commandButton class = "edit-button" value="Edit">
                             <f:ajax listener="#{CatalogBean.setEditMode(catalog)}" render="@all"/>
                         </h:commandButton>
                     </td>
@@ -54,6 +54,8 @@
             <thead>
             <tr>
                 <th scope="col">Quantity</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
 
@@ -70,8 +72,8 @@
                     </h:commandButton>
                 </td>
                 <td>
-                    <h:commandButton value="Save changes">
-                        <f:ajax listener="#{CatalogBean.editCatalog(newQuantityValue.value)}" render="@all"/>
+                    <h:commandButton value="Cancel">
+                        <f:ajax listener="#{CatalogBean.cancelCallback}" render="@all"/>
                     </h:commandButton>
                 </td>
             </tr>
