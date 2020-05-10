@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Adding an author</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+<h:form id = "adding-form">
+    <h:panelGrid columns="3">
+        <h:outputLabel for="author-name-field">Author Name:</h:outputLabel>
+        <h:inputText id="author-name-field" value="#{AuthorBean.name}"
+                     required="true" requiredMessage="Value is required"/>
+        <h:message for="author-name-field" style="color: red" rendered="true"/>
+
+        <h:outputLabel for="author-surname-field">Author Surname:</h:outputLabel>
+        <h:inputText id="author-surname-field" value="#{AuthorBean.surname}"
+                     required="true" requiredMessage="Value is required"/>
+        <h:message for="author-surname-field" style="color: red" rendered="true"/>
+    </h:panelGrid>
+
+    <h:panelGrid columns="2" styleClass = "buttons-group">
+        <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
+                         immediate="true" styleClass = "back-button"/>
+        <h:commandButton value="Add author" action="#{AuthorBean.addAuthor}"
+                         styleClass = "add-button"/>
+    </h:panelGrid>
+</h:form>
+</body>
+
+</html>

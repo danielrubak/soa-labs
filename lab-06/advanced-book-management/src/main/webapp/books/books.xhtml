@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Authors</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+    <h:form id = "buttons-group">
+        <h:panelGrid styleClass = "buttons-group">
+            <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3" styleClass = "buttons-group">
+            <h:button value="Add author" outcome = "/authors/add-form" styleClass = "add-button"/>
+            <h:button value="Update author" outcome = "/authors/update-form" styleClass = "edit-button"/>
+            <h:button value="Remove author" outcome = "/authors/delete-form" styleClass = "remove-button"/>
+        </h:panelGrid>
+    </h:form>
+
+    <h:form id = "authors-table">
+        <h:dataTable value="#{AuthorBean.getAllAuthors()}" var="author"
+                     styleClass = "table" headerClass = "table-header">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{author.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Author name</f:facet>
+                #{author.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Author surname</f:facet>
+                #{author.surname}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+</h:body>
+</html>

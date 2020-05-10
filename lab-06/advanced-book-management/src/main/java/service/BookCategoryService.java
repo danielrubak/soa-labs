@@ -1,7 +1,6 @@
 package service;
 
 import repository.CategoryRepository;
-import model.Category;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
