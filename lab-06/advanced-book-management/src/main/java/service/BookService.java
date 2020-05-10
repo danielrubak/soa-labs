@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Locale;
 
 @Stateless
 @Local(BookRepository.class)
@@ -67,10 +68,9 @@ public class BookService implements BookRepository {
                 // update books field of category entity
                 newCategory.addBook(book);
                 em.persist(newCategory);
-            }
-            else {
-                for(BookCategory cat: categories){
-                    cat.addBook(book);
+            } else {
+                for(BookCategory bookCategory: categories){
+                    bookCategory.addBook(book);
                 }
             }
 
@@ -83,6 +83,32 @@ public class BookService implements BookRepository {
 
         } catch ( Exception e ) {
             System.err.println("An error occurred during addition of a book: " + e);
+        }
+    }
+
+    @Override
+    public void updateBook(int id, String title, BigInteger isbn, String authorName, String authorSurname, String category, int quantity) {
+
+    }
+
+    @Override
+    public void deleteBook(int id) {
+        try {
+            Book book = em.find(Book.class, id);
+
+            Author author = book.getAuthor();
+            author.removeBook(book);
+
+            BookCategory category = book.getCategory();
+            category.removeBook(book);
+
+            Catalog catalog = book.getCatalog();
+            em.remove(catalog);
+
+            em.remove(book);
+
+        } catch (Exception e) {
+            System.err.println("An error occurred during book deletion. Id: " + id + "\n" + e);
         }
     }
 }

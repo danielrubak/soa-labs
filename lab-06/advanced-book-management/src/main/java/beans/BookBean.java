@@ -6,8 +6,11 @@ import repository.BookRepository;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.math.BigInteger;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean(name = "BookBean")
 @SessionScoped
@@ -21,6 +24,7 @@ public class BookBean {
     private String authorSurname;
     private String category;
     private Integer quantity;
+    private Integer available;
 
     private Integer selectedBookId;
 
@@ -34,6 +38,45 @@ public class BookBean {
         this.setEmptyValues();
 
         return "/books/books";
+    }
+
+    public String deleteBook() {
+        bookRepository.deleteBook(this.getSelectedBookId());
+        this.setEmptyValues();
+
+        return "/books/books";
+    }
+
+    public Map<String, Integer> getBooksMap() {
+        Map<String, Integer> booksMap = new LinkedHashMap<>();
+
+        String label = "";
+        List <Book> books = bookRepository.getAllBooks();
+        for (Book book : books) {
+            label = book.getTitle() + ", " + book.getAuthor().getName() + " " + book.getAuthor().getSurname();
+            booksMap.put(label, book.getId());
+        }
+
+        return booksMap;
+    }
+
+    public void onBookSelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
+        List<Book> books = bookRepository.getAllBooks();
+
+        if ( this.getSelectedBookId() == null ) {
+            this.setEmptyValues();
+        } else {
+            for (Book book : books) {
+                if ( this.getSelectedBookId() == book.getId() ) {
+                    this.setTitle(book.getTitle());
+                    this.setISBNNumber(book.getISBNNumber());
+                    this.setAuthorName(book.getAuthor().getName());
+                    this.setAuthorSurname(book.getAuthor().getSurname());
+                    this.setCategory(book.getCategory().getName());
+                    this.setQuantity(book.getCatalog().getQuantity());
+                }
+            }
+        }
     }
 
     public String onBackButton () {
@@ -97,6 +140,14 @@ public class BookBean {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
     }
 
     public Integer getSelectedBookId() {

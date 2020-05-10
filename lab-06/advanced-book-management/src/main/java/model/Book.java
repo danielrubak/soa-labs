@@ -82,4 +82,9 @@ public class Book {
     public void setBorrowing(List<Borrowing> borrowing) {
         this.borrowing = borrowing;
     }
+
+    @Override
+    public String toString() {
+        return "'" + title + "\' " + author;
+    }
 }
