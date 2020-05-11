@@ -25,7 +25,7 @@ public class BorrowingBean {
 
     // view logic fields
     private Map<Integer, Boolean> canReturnMap = new LinkedHashMap<>();
-    private List<Boolean> canReturn;
+    private boolean showReturnBookField;
     private Integer selectedReaderId;
     private Integer selectedBookId;
 
@@ -44,6 +44,7 @@ public class BorrowingBean {
         }
 
         this.setCanReturnMap(canReturnMap);
+        this.setShowReturnBookField(canReturnMap.containsValue(true));
 
         return borrowings;
     }
@@ -133,11 +134,11 @@ public class BorrowingBean {
         this.canReturnMap = canReturnMap;
     }
 
-    public List<Boolean> getCanReturn() {
-        return canReturn;
+    public boolean isShowReturnBookField() {
+        return showReturnBookField;
     }
 
-    public void setCanReturn(List<Boolean> canReturn) {
-        this.canReturn = canReturn;
+    public void setShowReturnBookField(boolean showReturnBookField) {
+        this.showReturnBookField = showReturnBookField;
     }
 }

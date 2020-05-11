@@ -18,40 +18,51 @@
     </h:form>
 
     <h:form id="borrowings-form" class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th scope="col">Book title</th>
-                <th scope="col">Author name</th>
-                <th scope="col">Author surname</th>
-                <th scope="col">Reader name</th>
-                <th scope="col">Reader surname</th>
-                <th scope="col">From Date</th>
-                <th scope="col">To Date</th>
-                <th scope="col">Return</th>
-            </tr>
-            </thead>
+        <h:dataTable value="#{BorrowingBean.getAllBorrowings()}" var="borrowing">
+            <h:column>
+                <f:facet name="header">Book title</f:facet>
+                #{borrowing.book.title}
+            </h:column>
 
-            <tbody>
-            <ui:repeat value="#{BorrowingBean.getAllBorrowings()}" var="borrowing">
-                <tr>
-                    <td>#{borrowing.book.title}</td>
-                    <td>#{borrowing.book.author.name}</td>
-                    <td>#{borrowing.book.author.surname}</td>
-                    <td>#{borrowing.reader.name}</td>
-                    <td>#{borrowing.reader.surname}</td>
-                    <td>#{borrowing.fromDate}</td>
-                    <td>#{borrowing.toDate}</td>
-                    <td>
-                        <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}"
-                                         value = "Return book" class="grid-button edit-button">
-                            <f:ajax listener="#{BorrowingBean.returnBook(borrowing.id)}" render="@all"/>
-                        </h:commandButton>
-                    </td>
-                </tr>
-            </ui:repeat>
-            </tbody>
-        </table>
+            <h:column>
+                <f:facet name="header">Author name</f:facet>
+                #{borrowing.book.author.name}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Author surname</f:facet>
+                #{borrowing.book.author.surname}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Reader name</f:facet>
+                #{borrowing.reader.name}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Reader surname</f:facet>
+                #{borrowing.reader.surname}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">From Date</f:facet>
+                #{borrowing.fromDate}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">To Date</f:facet>
+                #{borrowing.toDate}
+            </h:column>
+
+            <h:column rendered="#{BorrowingBean.showReturnBookField}">
+                <f:facet name="header">Return</f:facet>
+                <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}"
+                                 value = "Return book" class="grid-button edit-button">
+                    <f:ajax listener="#{BorrowingBean.returnBook(borrowing.id)}" render="@all"/>
+                </h:commandButton>
+            </h:column>
+
+        </h:dataTable>
     </h:form>
 
 </h:body>

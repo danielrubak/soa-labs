@@ -25,9 +25,9 @@
     </h:selectOneMenu>
     <h:message for="readers-listbox" styleClass="error-msg" rendered="true"/>
 
-    <h:outputLabel for="books-listbox" styleClass="form-label">Select book:</h:outputLabel>
+    <h:outputLabel for="books-listbox" styleClass="form-label">Select a book:</h:outputLabel>
     <h:selectOneMenu id="books-listbox" value="#{BorrowingBean.selectedBookId}"
-                     required="true" requiredMessage="Value is required">
+                     required="true" requiredMessage="Value is required" styleClass="dropdown">
         <f:selectItem itemValue="#{null}" itemLabel="Select a reader..."/>
         <f:selectItems value="#{BookBean.getBooksMap()}"/>
     </h:selectOneMenu>
