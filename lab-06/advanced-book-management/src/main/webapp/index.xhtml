@@ -11,15 +11,19 @@
 </h:head>
 
 <h:body>
-    <h:form id = "reader-buttons-group">
-        <h:panelGrid columns="1" styleClass = "buttons-group">
-            <h:button value="Readers management" outcome = "/readers/readers" styleClass = "select-button"/>
-            <h:button value="Authors management" outcome = "/authors/authors" styleClass = "select-button"/>
-            <h:button value="Categories management" outcome = "/categories/categories" styleClass = "select-button"/>
-            <h:button value="Book management" outcome = "/books/books" styleClass = "select-button"/>
-            <h:button value="Borrow books" outcome = "/borrowing/borrowing" styleClass = "select-button"/>
-            <h:button value="Show catalog" outcome = "/catalog/catalog" styleClass = "select-button"/>
-        </h:panelGrid>
+    <h:form id = "main-page-menu" class="buttons-menu-panel">
+        <h:button value="Readers management" outcome = "/readers/readers" styleClass = "menu-button select-button"/>
+        <br/>
+        <h:button value="Authors management" outcome = "/authors/authors" styleClass = "menu-button select-button"/>
+        <br/>
+        <h:button value="Categories management" outcome = "/categories/categories"
+                  styleClass = "menu-button select-button"/>
+        <br/>
+        <h:button value="Book management" outcome = "/books/books" styleClass = "menu-button select-button"/>
+        <br/>
+        <h:button value="Borrow books" outcome = "/borrowing/borrowing" styleClass = "menu-button select-button"/>
+        <br/>
+        <h:button value="Show catalog" outcome = "/catalog/catalog" styleClass = "menu-button select-button"/>
     </h:form>
 </h:body>
 </html>

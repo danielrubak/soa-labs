@@ -6,21 +6,18 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Catalog</title>
+    <title>Book Borrowings</title>
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
 <h:body>
-    <h:form id = "buttons-group">
-        <h:panelGrid styleClass = "buttons-group">
-            <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
-        </h:panelGrid>
-        <h:panelGrid columns="1" styleClass = "buttons-group">
-            <h:button value="Borrow book" outcome = "/borrowing/borrow-form" styleClass = "add-button"/>
-        </h:panelGrid>
+    <h:form id ="menu" class="buttons-menu-panel">
+        <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
+        <br/>
+        <h:button value="Borrow book" outcome = "/borrowing/borrow-form" styleClass = "menu-button add-button"/>
     </h:form>
 
-    <h:form>
+    <h:form id="borrowings-form" class="table-container">
         <table>
             <thead>
             <tr>
@@ -46,7 +43,8 @@
                     <td>#{borrowing.fromDate}</td>
                     <td>#{borrowing.toDate}</td>
                     <td>
-                        <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}" value="Return book">
+                        <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}"
+                                         value = "Return book" class="grid-button edit-button">
                             <f:ajax listener="#{BorrowingBean.returnBook(borrowing.id)}" render="@all"/>
                         </h:commandButton>
                     </td>

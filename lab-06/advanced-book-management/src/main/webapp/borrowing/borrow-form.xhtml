@@ -6,35 +6,40 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Updating a category</title>
+    <title>Borrow a book</title>
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
 <body>
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="readers-listbox">Select reader who will borrow the book:</h:outputLabel>
-        <h:selectOneMenu id="readers-listbox" value="#{BorrowingBean.selectedReaderId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
-            <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
 
-    <h:panelGrid columns="2">
-        <h:outputLabel for="books-listbox">Select book:</h:outputLabel>
-        <h:selectOneMenu id="books-listbox" value="#{BorrowingBean.selectedBookId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
-            <f:selectItems value="#{BookBean.getBooksMap()}"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
+<div class="">
 
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{BorrowingBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Borrow book" action="#{BorrowingBean.borrowBook}"
-                         styleClass = "add-button"/>
-    </h:panelGrid>
+</div>
+
+<h:form id = "borrow-book-form" class = "form-container">
+    <h:outputLabel for="readers-listbox" styleClass="form-label">Select reader who will borrow the book:</h:outputLabel>
+    <h:selectOneMenu id="readers-listbox" value="#{BorrowingBean.selectedReaderId}"
+                     required="true" requiredMessage="Value is required" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a reader..."/>
+        <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
+    </h:selectOneMenu>
+    <h:message for="readers-listbox" styleClass="error-msg" rendered="true"/>
+
+    <h:outputLabel for="books-listbox" styleClass="form-label">Select book:</h:outputLabel>
+    <h:selectOneMenu id="books-listbox" value="#{BorrowingBean.selectedBookId}"
+                     required="true" requiredMessage="Value is required">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a reader..."/>
+        <f:selectItems value="#{BookBean.getBooksMap()}"/>
+    </h:selectOneMenu>
+    <h:message for="books-listbox" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{BorrowingBean.onBackButton}"
+                     immediate="true" styleClass = "menu-button back-button form-back-button"/>
+    <h:commandButton id="asdas" value="Borrow book" action ="#{BorrowingBean.borrowBook}"
+                     styleClass = "menu-button add-button form-confirm-button"/>
+
 </h:form>
+
 </body>
 
 </html>
