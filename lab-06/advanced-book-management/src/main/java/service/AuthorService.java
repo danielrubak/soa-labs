@@ -39,6 +39,29 @@ public class AuthorService implements AuthorRepository {
     }
 
     @Override
+    public void addAuthor(String name, String surname) {
+        try {
+
+            Author author = new Author(name, surname);
+            em.persist(author);
+
+        } catch (Exception e){
+            System.err.println("An error occurred during adding author: " + e);
+        }
+    }
+
+    @Override
+    public List<Author> findByNameAndSurname(String name, String surname) {
+        String authorQueryStr = "SELECT a FROM Author a WHERE a.name = :name AND a.surname = :surname";
+        Query authorQuery = em.createQuery(authorQueryStr);
+        authorQuery.setParameter("name", name);
+        authorQuery.setParameter("surname", surname);
+        List<Author> authors = authorQuery.getResultList();
+
+        return authors;
+    }
+
+    @Override
     public void deleteAuthor(int id) {
         try {
             Author author = em.find(Author.class, id);

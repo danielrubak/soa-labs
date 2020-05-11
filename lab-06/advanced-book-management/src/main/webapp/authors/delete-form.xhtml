@@ -11,25 +11,21 @@
 </h:head>
 
 <body>
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="authors-listbox">Select author you want to delete:</h:outputLabel>
-        <h:selectOneMenu id="authors-listbox" value="#{AuthorBean.selectedAuthorId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select an author..." noSelectionOption="true" />
-            <f:selectItems value="#{AuthorBean.getAuthorsMap()}"/>
-            <f:ajax listener = "#{AuthorBean.onAuthorSelection}" event="change"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
-</h:form>
 
+<h:form id="author-delete-form" class="form-container">
+    <h:outputLabel for="authors-listbox" styleClass="form-label">Select author you want to delete:</h:outputLabel>
+    <h:selectOneMenu id="authors-listbox" value="#{AuthorBean.selectedAuthorId}" required="true"
+                     requiredMessage="Value is required" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select an author..." noSelectionOption="true" />
+        <f:selectItems value="#{AuthorBean.getAuthorsMap()}"/>
+        <f:ajax listener = "#{AuthorBean.onAuthorSelection}" event="change"/>
+    </h:selectOneMenu>
+    <h:message for="authors-listbox" styleClass="error-msg" rendered="true"/>
 
-<h:form>
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Remove reader" action="#{AuthorBean.deleteAuthor}"
-                         styleClass = "remove-button"/>
-    </h:panelGrid>
+    <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Remove reader" action="#{AuthorBean.deleteAuthor}"
+                     styleClass = "menu-button remove-button form-confirm-button"/>
 </h:form>
 
 </body>

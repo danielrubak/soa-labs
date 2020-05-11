@@ -11,26 +11,24 @@
 </h:head>
 
 <body>
-<h:form id = "adding-form">
-    <h:panelGrid columns="3">
-        <h:outputLabel for="author-name-field">Author Name:</h:outputLabel>
-        <h:inputText id="author-name-field" value="#{AuthorBean.name}"
-                     required="true" requiredMessage="Value is required"/>
-        <h:message for="author-name-field" style="color: red" rendered="true"/>
 
-        <h:outputLabel for="author-surname-field">Author Surname:</h:outputLabel>
-        <h:inputText id="author-surname-field" value="#{AuthorBean.surname}"
-                     required="true" requiredMessage="Value is required"/>
-        <h:message for="author-surname-field" style="color: red" rendered="true"/>
-    </h:panelGrid>
+<h:form id = "author-add-form" class = "form-container">
+    <h:outputLabel for="author-name-field" styleClass="form-label">Author Name:</h:outputLabel>
+    <h:inputText id="author-name-field" value="#{AuthorBean.name}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="author-name-field" styleClass="error-msg" rendered="true"/>
 
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Add author" action="#{AuthorBean.addAuthor}"
-                         styleClass = "add-button"/>
-    </h:panelGrid>
+    <h:outputLabel for="author-surname-field" styleClass="form-label">Author Surname:</h:outputLabel>
+    <h:inputText id="author-surname-field" value="#{AuthorBean.surname}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="author-surname-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
+                     immediate="true" styleClass = "menu-button back-button form-back-button"/>
+    <h:commandButton value="Add author" action="#{AuthorBean.addAuthor}"
+                     styleClass = "menu-button add-button form-confirm-button"/>
 </h:form>
+
 </body>
 
 </html>

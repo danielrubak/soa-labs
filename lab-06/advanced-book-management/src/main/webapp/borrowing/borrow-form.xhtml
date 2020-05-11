@@ -12,10 +12,6 @@
 
 <body>
 
-<div class="">
-
-</div>
-
 <h:form id = "borrow-book-form" class = "form-container">
     <h:outputLabel for="readers-listbox" styleClass="form-label">Select reader who will borrow the book:</h:outputLabel>
     <h:selectOneMenu id="readers-listbox" value="#{BorrowingBean.selectedReaderId}"
@@ -35,7 +31,7 @@
 
     <h:commandButton value="Back" action="#{BorrowingBean.onBackButton}"
                      immediate="true" styleClass = "menu-button back-button form-back-button"/>
-    <h:commandButton id="asdas" value="Borrow book" action ="#{BorrowingBean.borrowBook}"
+    <h:commandButton value="Borrow book" action ="#{BorrowingBean.borrowBook}"
                      styleClass = "menu-button add-button form-confirm-button"/>
 
 </h:form>

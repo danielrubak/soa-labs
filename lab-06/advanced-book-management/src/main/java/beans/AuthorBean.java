@@ -4,8 +4,10 @@ import repository.AuthorRepository;
 import model.Author;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,26 +29,52 @@ public class AuthorBean {
     }
 
     public String addAuthor() {
-        Author author = new Author(this.name, this.surname);
-        authorRepository.addAuthor(author);
-        this.setEmptyValues();
+        List<Author> authors = authorRepository.findByNameAndSurname(this.name, this.surname);
 
-        return "/authors/authors";
+        if ( !authors.isEmpty() ) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "Author already exists");
+            context.addMessage( "author-add-form:author-name-field", fm);
+
+            return null;
+        } else {
+            authorRepository.addAuthor(this.name, this.surname);
+            this.setEmptyValues();
+
+            return "/authors/authors";
+        }
     }
 
     public String updateAuthor() {
-        Author author = new Author(this.name, this.surname);
-        authorRepository.updateAuthor(this.selectedAuthorId, author);
-        this.setEmptyValues();
+        List<Author> authors = authorRepository.findByNameAndSurname(this.name, this.surname);
 
-        return "/authors/authors";
+        if ( !authors.isEmpty() ) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "Author already exists");
+            context.addMessage( "author-update-form:author-name-field", fm);
+
+            return null;
+        } else {
+            Author author = new Author(this.name, this.surname);
+            authorRepository.updateAuthor(this.selectedAuthorId, author);
+            this.setEmptyValues();
+            return "/authors/authors";
+        }
     }
 
     public String deleteAuthor() {
-        authorRepository.deleteAuthor(this.selectedAuthorId);
-        this.setEmptyValues();
+        try {
+            authorRepository.deleteAuthor(this.selectedAuthorId);
+            this.setEmptyValues();
 
-        return "/authors/authors";
+            return "/authors/authors";
+        } catch (Exception e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "Can not remove selected author");
+            context.addMessage( "author-delete-form:authors-listbox", fm);
+        }
+
+        return null;
     }
 
     public Map<String, Integer> getAuthorsMap() {
@@ -65,15 +93,15 @@ public class AuthorBean {
     public void onAuthorSelection (AjaxBehaviorEvent ajaxBehaviorEvent) {
         List<Author> authors = authorRepository.getAllAuthors();
 
-        if ( this.selectedAuthorId == null ) {
-            this.setEmptyValues();
-        } else {
+        if ( this.selectedAuthorId != null ) {
             for (Author author : authors) {
                 if ( this.selectedAuthorId == author.getId() ) {
                     this.name = author.getName();
                     this.surname = author.getSurname();
                 }
             }
+        } else {
+            this.setEmptyValues();
         }
     }
 
@@ -112,4 +140,5 @@ public class AuthorBean {
     public void setSelectedAuthorId(Integer selectedAuthorId) {
         this.selectedAuthorId = selectedAuthorId;
     }
+
 }
