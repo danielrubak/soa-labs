@@ -15,9 +15,8 @@
         <h:panelGrid styleClass = "buttons-group">
             <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
         </h:panelGrid>
-        <h:panelGrid columns="2" styleClass = "buttons-group">
+        <h:panelGrid columns="1" styleClass = "buttons-group">
             <h:button value="Borrow book" outcome = "/borrowing/borrow-form" styleClass = "add-button"/>
-            <h:button value="Return book" outcome = "/borrowing/return-form" styleClass = "remove-button"/>
         </h:panelGrid>
     </h:form>
 
@@ -32,6 +31,7 @@
                 <th scope="col">Reader surname</th>
                 <th scope="col">From Date</th>
                 <th scope="col">To Date</th>
+                <th scope="col">Return</th>
             </tr>
             </thead>
 
@@ -45,6 +45,11 @@
                     <td>#{borrowing.reader.surname}</td>
                     <td>#{borrowing.fromDate}</td>
                     <td>#{borrowing.toDate}</td>
+                    <td>
+                        <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}" value="Return book">
+                            <f:ajax listener="#{BorrowingBean.returnBook(borrowing.id)}" render="@all"/>
+                        </h:commandButton>
+                    </td>
                 </tr>
             </ui:repeat>
             </tbody>

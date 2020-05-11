@@ -9,8 +9,7 @@ import repository.BorrowingRepository;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @ManagedBean(name = "BorrowingBean")
 @SessionScoped
@@ -24,17 +23,39 @@ public class BorrowingBean {
     private Date fromDate;
     private Date toDate;
 
+    // view logic fields
+    private Map<Integer, Boolean> canReturnMap = new LinkedHashMap<>();
+    private List<Boolean> canReturn;
     private Integer selectedReaderId;
     private Integer selectedBookId;
 
     public List<Borrowing> getAllBorrowings() {
-        return borrowingRepository.getAllBookBorrowing();
+        Date today = Calendar.getInstance().getTime();
+        Map<Integer, Boolean> canReturnMap = new LinkedHashMap<>();
+
+        List<Borrowing> borrowings = borrowingRepository.getAllBookBorrowing();
+        for (Borrowing borrowing: borrowings) {
+            Date returnDate = borrowing.getToDate();
+            if ( returnDate.compareTo(today) >= 0) {
+                canReturnMap.put(borrowing.getId(), true);
+            } else {
+                canReturnMap.put(borrowing.getId(), false);
+            }
+        }
+
+        this.setCanReturnMap(canReturnMap);
+
+        return borrowings;
     }
 
     public String borrowBook(){
         borrowingRepository.borrowBook(this.getSelectedReaderId(), this.getSelectedBookId());
 
         return "/borrowing/borrowing";
+    }
+
+    public void returnBook(int id) {
+        borrowingRepository.returnBook(id);
     }
 
     public String onBackButton () {
@@ -102,5 +123,21 @@ public class BorrowingBean {
 
     public void setSelectedBookId(Integer selectedBookId) {
         this.selectedBookId = selectedBookId;
+    }
+
+    public Map<Integer, Boolean> getCanReturnMap() {
+        return canReturnMap;
+    }
+
+    public void setCanReturnMap(Map<Integer, Boolean> canReturnMap) {
+        this.canReturnMap = canReturnMap;
+    }
+
+    public List<Boolean> getCanReturn() {
+        return canReturn;
+    }
+
+    public void setCanReturn(List<Boolean> canReturn) {
+        this.canReturn = canReturn;
     }
 }

@@ -1,9 +1,6 @@
 package service;
 
-import model.Book;
-import model.Borrowing;
-import model.Catalog;
-import model.Reader;
+import model.*;
 import repository.BorrowingRepository;
 
 import javax.ejb.Local;
@@ -69,6 +66,20 @@ public class BorrowingService implements BorrowingRepository {
         catch (Exception e){
             System.err.println("An error occurred during book borrowing. Book Id: " + bookId + "\n" +
                     ", Reader ID: " + readerId + "msg: " + e);
+        }
+    }
+
+    @Override
+    public void returnBook(int borrowingId) {
+        try {
+            Borrowing borrowing = em.find(Borrowing.class, borrowingId);
+
+            borrowing.getCatalog().returnBook();
+            borrowing.setToDate(Calendar.getInstance().getTime());
+
+            em.persist(borrowing);
+        } catch (Exception e) {
+            System.err.println("An error occurred during book returning. Borrowing id = "+ borrowingId + "\n" + e);
         }
     }
 }

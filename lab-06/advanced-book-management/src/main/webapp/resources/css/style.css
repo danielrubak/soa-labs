@@ -12,11 +12,9 @@ body {
 }
 
 table {
-    width: 50%;
     background: #012B39;
     border-radius: 0.25em;
     border-collapse: collapse;
-    margin: 1em;
 }
 
 th {
@@ -32,93 +30,4 @@ td {
     color: #fff;
     font-weight: 400;
     padding: 0.65em 1em;
-}
-
-.buttons-group {
-    text-align: center;
-}
-
-.add-button {
-    transition-duration: 0.4s;
-    border: 2px solid forestgreen;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    padding: 8px 8px;
-    width: 100%;
-}
-
-.add-button:hover {
-    background-color: forestgreen;
-    color: white;
-}
-
-.edit-button {
-    transition-duration: 0.4s;
-    border: 2px solid orange;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    padding: 8px 8px;
-    width: 100%;
-}
-
-.edit-button:hover {
-    background-color: orange;
-    color: white;
-}
-
-.remove-button {
-    transition-duration: 0.4s;
-    border: 2px solid red;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    padding: 8px 8px;
-    width: 100%;
-}
-
-.remove-button:hover {
-    background-color: red;
-    color: white;
-}
-
-.back-button {
-    transition-duration: 0.4s;
-    border: 2px solid grey;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    padding: 8px 8px;
-    width: 100%;
-}
-
-.back-button:hover {
-    background-color: grey;
-    color: white;
-}
-
-.select-button {
-    transition-duration: 0.4s;
-    border: 2px solid cornflowerblue;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    padding: 8px 8px;
-    width: 100%;
-}
-
-.select-button:hover {
-    background-color: cornflowerblue;
-    color: white;
 }
