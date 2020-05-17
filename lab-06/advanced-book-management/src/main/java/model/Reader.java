@@ -52,4 +52,9 @@ public class Reader {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    @Override
+    public String toString() {
+        return "Reader: " + this.name + " " + this.surname;
+    }
 }

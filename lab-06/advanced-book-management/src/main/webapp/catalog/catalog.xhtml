@@ -11,45 +11,47 @@
 </h:head>
 
 <h:body>
-    <h:form id = "buttons-group">
-        <h:panelGrid styleClass = "buttons-group">
-            <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
-        </h:panelGrid>
+    <h:form id ="menu" class="buttons-menu-panel">
+        <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
     </h:form>
 
-    <h:form>
-        <table>
-            <thead>
-            <tr>
-                <th scope="col">Book title</th>
-                <th scope="col">Author name</th>
-                <th scope="col">Author surname</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Available</th>
-                <th scope="col">Edit</th>
-            </tr>
-            </thead>
+    <h:form id="catalog-table" class="table-container">
+        <h:dataTable value="#{CatalogBean.getCatalog()}" var="catalog">
+            <h:column>
+                <f:facet name="header">Book title</f:facet>
+                #{catalog.book.title}
+            </h:column>
 
-            <tbody>
-            <ui:repeat value="#{CatalogBean.getCatalog()}" var="catalog">
-                <tr>
-                    <td>#{catalog.book.title}</td>
-                    <td>#{catalog.book.author.name}</td>
-                    <td>#{catalog.book.author.surname}</td>
-                    <td>#{catalog.quantity}</td>
-                    <td>#{catalog.available}</td>
-                    <td>
-                        <h:commandButton class = "edit-button" value="Edit">
-                            <f:ajax listener="#{CatalogBean.setEditMode(catalog)}" render="@all"/>
-                        </h:commandButton>
-                    </td>
-                </tr>
-            </ui:repeat>
-            </tbody>
-        </table>
+            <h:column>
+                <f:facet name="header">Author name</f:facet>
+                #{catalog.book.author.name}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Author surname</f:facet>
+                #{catalog.book.author.surname}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Quantity</f:facet>
+                #{catalog.quantity}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Available</f:facet>
+                #{catalog.available}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:commandButton class = "grid-button edit-button" value="Edit">
+                    <f:ajax listener="#{CatalogBean.setEditMode(catalog)}" render="@all"/>
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
     </h:form>
 
-    <h:form rendered="#{CatalogBean.editMode}">
+    <h:form rendered="#{CatalogBean.editMode}" class="table-container">
         <table>
             <thead>
             <tr>
@@ -67,18 +69,62 @@
                     </h:inputText>
                 </td>
                 <td>
-                    <h:commandButton value="Save changes">
+                    <h:commandButton value="Save changes" class = "grid-button add-button">
                         <f:ajax listener="#{CatalogBean.editCatalog(newQuantityValue.value)}" render="@all"/>
                     </h:commandButton>
                 </td>
                 <td>
-                    <h:commandButton value="Cancel">
+                    <h:commandButton value="Cancel" class = "grid-button back-button">
                         <f:ajax listener="#{CatalogBean.cancelCallback}" render="@all"/>
                     </h:commandButton>
                 </td>
             </tr>
             </tbody>
         </table>
+    </h:form>
+
+    <h:form class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Author</th>
+                <th scope="col">From date (MM/dd/yyyy)</th>
+                <th scope="col">To date (MM/dd/yyyy)</th>
+                <th scope="col">Search</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{authorId}" required="true">
+                        <f:selectItem itemLabel="Select Author" itemValue="-1" />
+                        <f:selectItems value="#{AuthorBean.getAuthorsMap()}" var="author" itemLabel="#{author}" itemValue="#{author.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateFrom}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateTo}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="Submit" class = "grid-button add-button">
+                        <f:ajax listener="#{CatalogBean.getReadersByAuthorAndDate(authorId.value, dateFrom.value,
+                        dateTo.value)}" render="filterResult"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h:outputText id="filterResult" value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
     </h:form>
 
 </h:body>
