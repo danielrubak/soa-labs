@@ -63,4 +63,9 @@ public class Author {
         books.remove(book);
         book.setAuthor(null);
     }
+
+    @Override
+    public String toString() {
+        return "'" + this.name + " " + this.surname + "'";
+    }
 }

@@ -55,6 +55,6 @@ public class Reader {
 
     @Override
     public String toString() {
-        return "Reader: " + this.name + " " + this.surname;
+        return "'" + this.name + " " + this.surname + "'";
     }
 }
