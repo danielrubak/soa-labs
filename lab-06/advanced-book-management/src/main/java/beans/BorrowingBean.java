@@ -51,6 +51,7 @@ public class BorrowingBean {
 
     public String borrowBook(){
         borrowingRepository.borrowBook(this.getSelectedReaderId(), this.getSelectedBookId());
+        this.setEmptyValues();
 
         return "/borrowing/borrowing";
     }

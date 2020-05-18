@@ -64,7 +64,7 @@ public class ReaderBean {
         }
     }
 
-    public String deleteAuthor() {
+    public String deleteReader() {
         try {
             readerRepository.deleteReader(this.getSelectedReaderId());
             this.setEmptyValues();
