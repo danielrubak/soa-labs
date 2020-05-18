@@ -11,21 +11,19 @@
 </h:head>
 
 <body>
-<h:form id = "adding-form">
-    <h:panelGrid columns="3">
-        <h:outputLabel for="category-name-field">Category Name:</h:outputLabel>
-        <h:inputText id="category-name-field" value="#{CategoryBean.name}"
-                     required="true" requiredMessage="Value is required"/>
-        <h:message for="category-name-field" style="color: red" rendered="true"/>
-    </h:panelGrid>
 
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Add category" action="#{CategoryBean.addCategory}"
-                         styleClass = "add-button"/>
-    </h:panelGrid>
+<h:form id = "category-add-form" class = "form-container">
+    <h:outputLabel for="category-name-field" styleClass="form-label">Category Name:</h:outputLabel>
+    <h:inputText id="category-name-field" value="#{CategoryBean.name}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="category-name-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
+                     immediate="true" styleClass = "menu-button back-button form-back-button"/>
+    <h:commandButton value="Add category" action="#{CategoryBean.addCategory}"
+                     styleClass = "menu-button add-button form-confirm-button"/>
 </h:form>
+
 </body>
 
 </html>

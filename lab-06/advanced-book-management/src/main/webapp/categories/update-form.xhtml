@@ -11,32 +11,26 @@
 </h:head>
 
 <body>
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="categories-listbox">Select category you want to update:</h:outputLabel>
-        <h:selectOneMenu id="categories-listbox" value="#{CategoryBean.selectedCategoryId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a category..." noSelectionOption="true" />
-            <f:selectItems value="#{CategoryBean.getCategoriesMap()}"/>
-            <f:ajax render="update-form" listener = "#{CategoryBean.onCategorySelection}" event="change"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
+
+<h:form id="category-update-form" class = "form-container">
+    <h:outputLabel for="categories-listbox" styleClass="form-label">Select category you want to update:</h:outputLabel>
+    <h:selectOneMenu id="categories-listbox" value="#{CategoryBean.selectedCategoryId}" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a category..." noSelectionOption="true" />
+        <f:selectItems value="#{CategoryBean.getCategoriesMap()}"/>
+        <f:ajax render="category-update-form" listener = "#{CategoryBean.onCategorySelection}" event="change"/>
+    </h:selectOneMenu>
+
+    <h:outputLabel for="category-name-field" styleClass="form-label">Category Name:</h:outputLabel>
+    <h:inputText id="category-name-field" value="#{CategoryBean.name}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="category-name-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Save changes" action="#{CategoryBean.updateCategory}"
+                     styleClass="menu-button add-button form-confirm-button"/>
 </h:form>
 
-<h:form id = "update-form">
-    <h:panelGrid columns="3">
-        <h:outputLabel for="category-name-field">Category Name:</h:outputLabel>
-        <h:inputText id="category-name-field" value="#{CategoryBean.name}"
-                     required="true" requiredMessage="Value is required"/>
-        <h:message for="category-name-field" style="color: red" rendered="true"/>
-    </h:panelGrid>
-
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Save changes" action="#{CategoryBean.updateCategory}"
-                         styleClass = "add-button"/>
-    </h:panelGrid>
-</h:form>
 </body>
 
 </html>

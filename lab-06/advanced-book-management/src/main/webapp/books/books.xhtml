@@ -11,20 +11,16 @@
 </h:head>
 
 <h:body>
-    <h:form id = "buttons-group">
-        <h:panelGrid styleClass = "buttons-group">
-            <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
-        </h:panelGrid>
-        <h:panelGrid columns="3" styleClass = "buttons-group">
-            <h:button value="Add book" outcome = "/books/add-form" styleClass = "add-button"/>
-<!--            <h:button value="Update book" outcome = "/books/update-form" styleClass = "edit-button"/>-->
-            <h:button value="Remove book" outcome = "/books/delete-form" styleClass = "remove-button"/>
-        </h:panelGrid>
+    <h:form id ="menu" class="buttons-menu-panel">
+        <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
+        <br/>
+        <h:button value="Add book" outcome = "/books/add-form" styleClass = "menu-button add-button"/>
+        <br/>
+        <h:button value="Remove book" outcome = "/books/delete-form" styleClass = "menu-button remove-button"/>
     </h:form>
 
-    <h:form id = "books-table">
-        <h:dataTable value="#{BookBean.getAllBooks()}" var="book"
-                     styleClass = "table" headerClass = "table-header">
+    <h:form id="books-table" class="table-container">
+        <h:dataTable value="#{BookBean.getAllBooks()}" var="book">
             <h:column>
                 <f:facet name="header">Id</f:facet>
                 #{book.id}
@@ -57,9 +53,7 @@
                 <f:facet name="header">Available</f:facet>
                 #{book.catalog.available}
             </h:column>
-
         </h:dataTable>
     </h:form>
-
 </h:body>
 </html>

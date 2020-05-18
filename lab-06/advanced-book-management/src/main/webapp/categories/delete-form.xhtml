@@ -11,25 +11,21 @@
 </h:head>
 
 <body>
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="categories-listbox">Select category you want to delete:</h:outputLabel>
-        <h:selectOneMenu id="categories-listbox" value="#{CategoryBean.selectedCategoryId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a category..." noSelectionOption="true" />
-            <f:selectItems value="#{CategoryBean.getCategoriesMap()}"/>
-            <f:ajax listener = "#{CategoryBean.onCategorySelection}" event="change"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
-</h:form>
 
+<h:form id="category-delete-form" class="form-container">
+    <h:outputLabel for="categories-listbox" styleClass="form-label">Select category you want to delete:</h:outputLabel>
+    <h:selectOneMenu id="categories-listbox" value="#{CategoryBean.selectedCategoryId}" required="true"
+                     requiredMessage="Value is required" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a category..." noSelectionOption="true" />
+        <f:selectItems value="#{CategoryBean.getCategoriesMap()}"/>
+        <f:ajax listener = "#{CategoryBean.onCategorySelection}" event="change"/>
+    </h:selectOneMenu>
+    <h:message for="categories-listbox" styleClass="error-msg" rendered="true"/>
 
-<h:form>
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Remove category" action="#{CategoryBean.deleteCategory}"
-                         styleClass = "remove-button"/>
-    </h:panelGrid>
+    <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Remove category" action="#{CategoryBean.deleteCategory}"
+                     styleClass = "menu-button remove-button form-confirm-button"/>
 </h:form>
 
 </body>
