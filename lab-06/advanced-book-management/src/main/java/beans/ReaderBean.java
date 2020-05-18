@@ -4,8 +4,10 @@ import repository.ReaderRepository;
 import model.Reader;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,28 +30,53 @@ public class ReaderBean {
     }
 
     public String addReader() {
-        Reader reader = new Reader(this.name, this.surname);
-        readerRepository.addReader(reader);
-        this.setEmptyValues();
+        List<Reader> readers = readerRepository.findByNameAndSurname(this.name, this.surname);
 
-        return "/readers/readers";
+        if ( !readers.isEmpty() ) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "Reader already exists");
+            context.addMessage( "reader-add-form:reader-name-field", fm);
+
+            return null;
+        } else {
+            Reader reader = new Reader(this.name, this.surname);
+            readerRepository.addReader(reader);
+            this.setEmptyValues();
+
+            return "/readers/readers";
+        }
     }
 
-    public String deleteReader() {
-        System.out.println("READER ID TO REMOVE: " + this.selectedReaderId);
-        readerRepository.deleteReader(this.selectedReaderId);
-        this.setEmptyValues();
+    public String updateReader() {
+        List<Reader> readers = readerRepository.findByNameAndSurname(this.name, this.surname);
 
-        return "/readers/readers";
+        if ( !readers.isEmpty() ) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "Reader already exists");
+            context.addMessage( "reader-update-form:reader-name-field", fm);
+
+            return null;
+        } else {
+            Reader reader = new Reader(this.name, this.surname);
+            readerRepository.updateReader(this.getSelectedReaderId(), reader);
+            this.setEmptyValues();
+            return "/readers/readers";
+        }
     }
 
-    public String updateReader()
-    {
-        Reader reader = new Reader(this.name, this.surname);
-        readerRepository.updateReader(this.selectedReaderId, reader);
-        this.setEmptyValues();
+    public String deleteAuthor() {
+        try {
+            readerRepository.deleteReader(this.getSelectedReaderId());
+            this.setEmptyValues();
 
-        return "/readers/readers";
+            return "/readers/readers";
+        } catch (Exception e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "Can not remove selected reader");
+            context.addMessage( "reader-delete-form:readers-listbox", fm);
+        }
+
+        return null;
     }
 
     public Map<String, Integer> getReadersMap() {

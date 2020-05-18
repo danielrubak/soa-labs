@@ -11,20 +11,19 @@
 </h:head>
 
 <h:body>
-    <h:form id = "buttons-group">
-        <h:panelGrid styleClass = "buttons-group">
-            <h:button value="Back to previous menu" outcome = "/index" styleClass = "back-button"/>
-        </h:panelGrid>
-        <h:panelGrid columns="3" styleClass = "buttons-group">
-            <h:button value="Add reader" outcome = "/readers/add-form" styleClass = "add-button"/>
-            <h:button value="Update reader" outcome = "/readers/update-form" styleClass = "edit-button"/>
-            <h:button value="Remove reader" outcome = "/readers/delete-form" styleClass = "remove-button"/>
-        </h:panelGrid>
+    
+    <h:form id ="menu" class="buttons-menu-panel">
+        <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
+        <br/>
+        <h:button value="Add reader" outcome = "/readers/add-form" styleClass = "menu-button add-button"/>
+        <br/>
+        <h:button value="Update reader" outcome = "/readers/update-form" styleClass = "menu-button edit-button"/>
+        <br/>
+        <h:button value="Remove reader" outcome = "/readers/delete-form" styleClass = "menu-button remove-button"/>
     </h:form>
 
-    <h:form id = "readers-table">
-        <h:dataTable value="#{ReaderBean.getAllReaders()}" var="reader"
-                     styleClass = "table" headerClass = "table-header">
+    <h:form id="readers-table" class="table-container">
+        <h:dataTable value="#{ReaderBean.getAllReaders()}" var="reader">
             <h:column>
                 <f:facet name="header">Id</f:facet>
                 #{reader.id}

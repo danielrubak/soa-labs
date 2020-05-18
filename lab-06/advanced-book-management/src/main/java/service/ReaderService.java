@@ -64,4 +64,15 @@ public class ReaderService implements ReaderRepository {
             System.err.println("An error occurred during updating a book object. Id = "+ id + "\n" + e);
         }
     }
+
+    @Override
+    public List<Reader> findByNameAndSurname(String name, String surname) {
+        String readerQueryStr = "SELECT r FROM Reader r WHERE r.name = :name AND r.surname = :surname";
+        Query readerQuery = em.createQuery(readerQueryStr);
+        readerQuery.setParameter("name", name);
+        readerQuery.setParameter("surname", surname);
+        List<Reader> readers = readerQuery.getResultList();
+
+        return readers;
+    }
 }

@@ -11,25 +11,21 @@
 </h:head>
 
 <body>
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="readers-listbox">Select reader you want to delete:</h:outputLabel>
-        <h:selectOneMenu id="readers-listbox" value="#{ReaderBean.selectedReaderId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
-            <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
-            <f:ajax listener = "#{BookBean.onBookSelection}" event="change"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
-</h:form>
 
+<h:form id="reader-delete-form" class="form-container">
+    <h:outputLabel for="readers-listbox" styleClass="form-label">Select reader you want to delete:</h:outputLabel>
+    <h:selectOneMenu id="readers-listbox" value="#{ReaderBean.selectedReaderId}" required="true"
+                     requiredMessage="Value is required" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
+        <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
+        <f:ajax listener = "#{ReaderBean.onReaderSelection}" event="change"/>
+    </h:selectOneMenu>
+    <h:message for="readers-listbox" styleClass="error-msg" rendered="true"/>
 
-<h:form>
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Remove reader" action="#{ReaderBean.deleteReader}"
-                         styleClass = "remove-button"/>
-    </h:panelGrid>
+    <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Remove reader" action="#{ReaderBean.deleteReader}"
+                     styleClass = "menu-button remove-button form-confirm-button"/>
 </h:form>
 
 </body>

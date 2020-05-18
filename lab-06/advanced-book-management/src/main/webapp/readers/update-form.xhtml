@@ -11,37 +11,31 @@
 </h:head>
 
 <body>
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="readers-listbox">Select reader you want to update:</h:outputLabel>
-        <h:selectOneMenu id="readers-listbox" value="#{ReaderBean.selectedReaderId}">
-            <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
-            <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
-            <f:ajax render="update-form" listener = "#{ReaderBean.onReaderSelection}" event="change"/>
-        </h:selectOneMenu>
-    </h:panelGrid>
+
+<h:form id="reader-update-form" class = "form-container">
+    <h:outputLabel for="readers-listbox" styleClass="form-label">Select reader you want to update:</h:outputLabel>
+    <h:selectOneMenu id="readers-listbox" value="#{ReaderBean.selectedReaderId}" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a reader..." noSelectionOption="true" />
+        <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
+        <f:ajax render="reader-update-form" listener = "#{ReaderBean.onReaderSelection}" event="change"/>
+    </h:selectOneMenu>
+
+    <h:outputLabel for="readers-name-field" styleClass="form-label">Reader Name:</h:outputLabel>
+    <h:inputText id="readers-name-field" value="#{ReaderBean.name}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="readers-name-field" styleClass="error-msg" rendered="true"/>
+
+    <h:outputLabel for="readers-surname-field" styleClass="form-label">Reader Surname:</h:outputLabel>
+    <h:inputText id="readers-surname-field" value="#{ReaderBean.surname}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="readers-surname-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Save changes" action="#{ReaderBean.updateReader}"
+                     styleClass="menu-button add-button form-confirm-button"/>
 </h:form>
 
-<h:form id = "update-form">
-    <h:panelGrid columns="3">
-        <h:outputLabel for="reader-name-field">Reader Name:</h:outputLabel>
-        <h:inputText id="reader-name-field" value="#{ReaderBean.name}"
-                     required="true" requiredMessage="Value is required"/>
-        <h:message for="reader-name-field" style="color: red" rendered="true"/>
-
-        <h:outputLabel for="reader-surname-field">Reader Surname:</h:outputLabel>
-        <h:inputText id="reader-surname-field" value="#{ReaderBean.surname}"
-                     required="true" requiredMessage="Value is required"/>
-        <h:message for="reader-surname-field" style="color: red" rendered="true"/>
-    </h:panelGrid>
-
-    <h:panelGrid columns="2" styleClass = "buttons-group">
-        <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
-                         immediate="true" styleClass = "back-button"/>
-        <h:commandButton value="Save changes" action="#{ReaderBean.updateReader}"
-                         styleClass = "add-button"/>
-    </h:panelGrid>
-</h:form>
 </body>
 
 </html>

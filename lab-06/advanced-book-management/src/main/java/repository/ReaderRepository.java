@@ -10,4 +10,5 @@ public interface ReaderRepository {
     void addReader(Reader reader);
     void deleteReader(int id);
     void updateReader(int id, Reader reader);
+    List<Reader> findByNameAndSurname(String name, String surname);
 }
