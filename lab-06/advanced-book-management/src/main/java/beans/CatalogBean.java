@@ -1,9 +1,7 @@
 package beans;
 
-import model.Author;
 import model.Book;
 import model.Catalog;
-import model.Reader;
 import repository.CatalogRepository;
 
 import javax.ejb.EJB;
@@ -11,11 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @ManagedBean(name = "CatalogBean")
 @SessionScoped
@@ -65,42 +60,11 @@ public class CatalogBean {
         this.setEditMode(false);
     }
 
-    // TODO: query creator should be move to repository and service classes
-    public void getReadersByAuthorAndDate(String author, Date dateFrom, Date dateTo){
+    public void getReadersByAuthorAndDate(String authorId, Date dateFrom, Date dateTo) {
         try {
-            Map<String, Date> queryParams = new HashMap<String, Date>();
-            String queryStr = "SELECT DISTINCT r FROM Reader r, Borrowing b WHERE b.reader.id = r.id " +
-                    "AND b.book.author.id = :authorId";
+            List<Object> readers = catalogRepository.getReadersByAuthorIdAndDate(authorId, dateFrom, dateTo);
 
-            // update query only if date is selected
-            if ( dateFrom != null ){
-                queryStr += " AND b.fromDate >= :dateFrom";
-                queryParams.put("dateFrom", dateFrom);
-            }
-
-            // update query only if date is selected
-            // TODO: should be compared with dateFrom
-            if ( dateTo != null ){
-                queryStr += " AND b.toDate <= :dateTo";
-                queryParams.put("dateTo", dateTo);
-            }
-
-            Query query = em.createQuery(queryStr);
-            query.setParameter("authorId", Integer.parseInt(author));
-            query.setParameter("dateFrom", queryParams.get("dateFrom"));
-            query.setParameter("dateTo", queryParams.get("dateTo"));
-
-            List<Reader> readers = query.getResultList();
-
-            int i = 1;
-            String resultStr = "";
-            for (Reader r : readers) {
-                resultStr += r.toString();
-                if ( i < readers.size() )
-                    resultStr += ", ";
-                i += 1;
-            }
-
+            String resultStr = this.objList2String(readers);
             setLastQueryResult(resultStr);
 
         } catch ( Exception e ) {
@@ -108,42 +72,11 @@ public class CatalogBean {
         }
     }
 
-    // TODO: query creator should be move to repository and service classes
-    public void getReadersByBookAndDate(String bookId, Date dateFrom, Date dateTo){
+    public void getReadersByBookAndDate(String bookId, Date dateFrom, Date dateTo) {
         try {
-            Map<String, Date> queryParams = new HashMap<String, Date>();
-            String queryStr = "SELECT DISTINCT r FROM Reader r, Borrowing b WHERE b.reader.id = r.id " +
-                    "AND b.book.id = :bookId";
+            List<Object> readers = catalogRepository.getReadersByBookAndDate(bookId, dateFrom, dateTo);
 
-            // update query only if date is selected
-            if ( dateFrom != null ){
-                queryStr += " AND b.fromDate >= :dateFrom";
-                queryParams.put("dateFrom", dateFrom);
-            }
-
-            // update query only if date is selected
-            // TODO: should be compared with dateFrom
-            if ( dateTo != null ){
-                queryStr += " AND b.toDate <= :dateTo";
-                queryParams.put("dateTo", dateTo);
-            }
-
-            Query query = em.createQuery(queryStr);
-            query.setParameter("bookId", Integer.parseInt(bookId));
-            query.setParameter("dateFrom", queryParams.get("dateFrom"));
-            query.setParameter("dateTo", queryParams.get("dateTo"));
-
-            List<Reader> readers = query.getResultList();
-
-            int i = 1;
-            String resultStr = "";
-            for (Reader r : readers) {
-                resultStr += r.toString();
-                if ( i < readers.size() )
-                    resultStr += ", ";
-                i += 1;
-            }
-
+            String resultStr = this.objList2String(readers);
             setLastQueryResult(resultStr);
 
         } catch ( Exception e ) {
@@ -151,41 +84,11 @@ public class CatalogBean {
         }
     }
 
-    public void getAuthorsByReaderIdAndDate(String readerId, Date dateFrom, Date dateTo){
+    public void getBooksByReaderIdAndDate(String readerId, Date dateFrom, Date dateTo) {
         try {
-            Map<String, Date> queryParams = new HashMap<String, Date>();
-            String queryStr = "SELECT DISTINCT books FROM Book books, Borrowing b WHERE b.reader.id = :readerId " +
-                    "AND books.id = b.book.id";
+            List<Object> books = catalogRepository.getBooksByReaderIdAndDate(readerId, dateFrom, dateTo);
 
-            // update query only if date is selected
-            if ( dateFrom != null ){
-                queryStr += " AND b.fromDate >= :dateFrom";
-                queryParams.put("dateFrom", dateFrom);
-            }
-
-            // update query only if date is selected
-            // TODO: should be compared with dateFrom
-            if ( dateTo != null ){
-                queryStr += " AND b.toDate <= :dateTo";
-                queryParams.put("dateTo", dateTo);
-            }
-
-            Query query = em.createQuery(queryStr);
-            query.setParameter("reader", Integer.parseInt(readerId));
-            query.setParameter("dateFrom", queryParams.get("dateFrom"));
-            query.setParameter("dateTo", queryParams.get("dateTo"));
-
-            List<Book> books = query.getResultList();
-
-            int i = 1;
-            String resultStr = "";
-            for (Book b : books) {
-                resultStr += b.toString();
-                if ( i < books.size() )
-                    resultStr += ", ";
-                i += 1;
-            }
-
+            String resultStr = this.objList2String(books);
             setLastQueryResult(resultStr);
 
         } catch ( Exception e ) {
@@ -193,35 +96,11 @@ public class CatalogBean {
         }
     }
 
-    public void getMostReadAuthor(){
+    public void getMostReadAuthor() {
         try {
-            Map<String, Date> dateMap = new HashMap<String, Date>();
-            String queryStr = "SELECT COUNT(a) FROM Author a, Borrowing b WHERE b.book.author.id = a.id " +
-                    "GROUP BY a.id";
+            List<Object> authors = catalogRepository.getMostReadAuthor();
 
-            Query borrowingQuery = em.createQuery(queryStr);
-            List<Long> borrowings = borrowingQuery.getResultList();
-            Long maxBorrowsNum = borrowings.get(0);
-            for ( Long i: borrowings ){
-                if (i > maxBorrowsNum ) maxBorrowsNum = i;
-            }
-
-            String authorQueryStr = "SELECT a FROM Author a, Borrowing b WHERE b.book.author.id = a.id " +
-                    "GROUP BY a.id HAVING COUNT(a) = :maxBorrowsNum";
-            Query authorQuery = em.createQuery(authorQueryStr);
-            authorQuery.setParameter("maxBorrowsNum", maxBorrowsNum);
-
-            List<Author> authors = authorQuery.getResultList();
-
-            int i = 1;
-            String resultStr = "";
-            for (Author a : authors) {
-                resultStr += a.toString();
-                if ( i < authors.size() )
-                    resultStr += ", ";
-                i += 1;
-            }
-
+            String resultStr = this.objList2String(authors);
             setLastQueryResult(resultStr);
 
         } catch (Exception e){
@@ -283,5 +162,23 @@ public class CatalogBean {
 
     public void setLastQueryResult(String lastQueryResult) {
         this.lastQueryResult = lastQueryResult;
+    }
+
+    public String objList2String(List<Object> objectList) {
+        int i = 1;
+
+        String resultStr = "";
+        if ( objectList.size() == 0 ) {
+            resultStr = "No results found matching your search criteria";
+        } else {
+            for (Object o : objectList) {
+                resultStr += o.toString();
+                if ( i < objectList.size() )
+                    resultStr += ", ";
+                i += 1;
+            }
+        }
+
+        return resultStr;
     }
 }

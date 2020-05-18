@@ -126,7 +126,8 @@
             </tbody>
         </table>
 
-        <h:outputText id="filterResult1" value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+        <h:outputText id="filterResult1" styleClass="filter-result-box"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
     </h:form>
 
     <h:form class="table-container">
@@ -171,7 +172,8 @@
             </tbody>
         </table>
 
-        <h:outputText id="filterResult2" value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+        <h:outputText id="filterResult2" styleClass="filter-result-box"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
     </h:form>
 
     <h:form class="table-container">
@@ -207,8 +209,8 @@
                     </h:inputText>
                 </td>
                 <td>
-                    <h:commandButton value="commit">
-                        <f:ajax listener="#{CatalogBean.getAuthorsByReaderIdAndDate(readerId.value,
+                    <h:commandButton value="Submit" class = "grid-button add-button">
+                        <f:ajax listener="#{CatalogBean.getBooksByReaderIdAndDate(readerId.value,
                         datefrom3.value, dateto3.value)}" render="queryResult"/>
                     </h:commandButton>
                 </td>
@@ -216,14 +218,17 @@
             </tbody>
         </table>
 
-        <h:outputText id="filterResult3" value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+        <h:outputText id="filterResult3" styleClass="filter-result-box"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
     </h:form>
 
     <h:form styleClass="form-container">
         <h:commandButton value="Find the most-read author" styleClass="menu-button add-button">
             <f:ajax listener="#{CatalogBean.getMostReadAuthor}" render="filterResult4"/>
-            <h:outputText id="filterResult4" value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
         </h:commandButton>
+
+        <h:outputText styleClass="filter-result-box" id="filterResult4"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
     </h:form>
 
 </h:body>
