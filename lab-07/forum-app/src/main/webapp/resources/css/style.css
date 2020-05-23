@@ -1,0 +1,148 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #105469;
+    font-family: 'Open Sans', sans-serif;
+}
+
+table {
+    background: #012B39;
+    border-radius: 0.25em;
+    border-collapse: collapse;
+}
+
+th {
+    border-bottom: 1px solid #364043;
+    color: #E2B842;
+    font-size: 0.85em;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    text-align: left;
+}
+
+td {
+    color: #fff;
+    font-weight: 400;
+    padding: 0.65em 1em;
+}
+
+.buttons-menu-panel {
+    margin: 1em;
+}
+
+.table-container {
+    margin: 1em;
+}
+
+.menu-button {
+    transition-duration: 0.4s;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    padding: 8px 8px;
+    width: 200px;
+}
+
+.grid-button {
+    text-align: center;
+    display: inline-block;
+    margin: 1px;
+    cursor: pointer;
+    padding: 4px 4px;
+}
+
+.back-button {
+    border: 2px solid grey;
+}
+
+.back-button:hover {
+    background-color: grey;
+    color: white;
+}
+
+.add-button {
+    border: 2px solid forestgreen;
+}
+
+.add-button:hover {
+    background-color: forestgreen;
+    color: white;
+}
+
+.edit-button {
+    border: 2px solid orange;
+}
+
+.edit-button:hover {
+    background-color: orange;
+    color: white;
+}
+
+.select-button {
+    border: 2px solid cornflowerblue;
+}
+
+.select-button:hover {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.remove-button {
+    border: 2px solid red;
+}
+
+.remove-button:hover {
+    background-color: red;
+    color: white;
+}
+
+.form-container {
+    padding: 1em;
+    max-width: 700px;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 0.5em 1.5em;
+}
+
+.form-container > * {
+    width: auto;
+}
+
+.form-label {
+    color: white;
+    grid-column: 1 / 3;
+    height: auto;
+}
+
+.dropdown, input {
+    grid-column: 1 / 3;
+    height: 2.5em;
+}
+
+.error-msg {
+    color: red;
+    grid-column: 1 / 3;
+    height: auto;
+}
+
+.form-confirm-button {
+    grid-column: 2 / 3;
+}
+
+.form-back-button {
+    grid-column: 1 / 2;
+}
+
+.filter-result-box {
+    max-width: 700px;
+    color: white;
+}

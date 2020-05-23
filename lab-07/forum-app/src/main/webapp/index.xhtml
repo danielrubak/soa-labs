@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+   <title>Random forum</title>
+   <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+   <h:form id="login-form" class="form-container">
+      <h:outputLabel for="user-name-field" styleClass="form-label">User Name:</h:outputLabel>
+      <h:inputText id="user-name-field" binding="#{username}"
+                   required="true" requiredMessage="Value is required"/>
+      <h:message for="user-name-field" styleClass="error-msg" rendered="true"/>
+
+      <h:commandButton value="Login" action="#{UserBean.login(username.value)}"
+                       styleClass = "menu-button add-button"/>
+   </h:form>
+</h:body>
+
+</html>

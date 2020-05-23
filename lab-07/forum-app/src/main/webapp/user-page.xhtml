@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+   <title>User page</title>
+   <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+   <h:form id="info-panel" class="form-container">
+      <h:outputLabel styleClass="form-label">Logged as #{UserBean.username}</h:outputLabel>
+   </h:form>
+
+   <h:form id="new-topic-form" class="form-container">
+      <h:outputLabel styleClass="form-label">Adding new topic to forum</h:outputLabel>
+      <h:outputLabel for="new-topic-name-field" styleClass="form-label">New Topic Name:</h:outputLabel>
+      <h:inputText id="new-topic-name-field" value="#{UserBean.newTopicName}"
+                   required="true" requiredMessage="Value is required">
+         <f:ajax event="blur"/>
+      </h:inputText>
+      <h:message for="new-topic-name-field" styleClass="error-msg" rendered="true"/>
+
+      <h:commandButton action="#{UserBean.addTopic}" value="Add new topic"
+                       styleClass = "menu-button add-button">
+         <f:ajax render="my-subscription-table new-topic-form"/>
+      </h:commandButton>
+   </h:form>
+
+   <h:form id="add-topic-subscription" class="form-container">
+      <h:outputLabel styleClass="form-label">Subscribe new topic</h:outputLabel>
+      <h:outputLabel for="subscribe-topic-name-field" styleClass="form-label">
+         Name of topic you want to subscribe:</h:outputLabel>
+      <h:inputText id="subscribe-topic-name-field" value="#{UserBean.topicToSubscribe}"
+                   required="true" requiredMessage="Value is required">
+         <f:ajax event="blur"/>
+      </h:inputText>
+      <h:message for="subscribe-topic-name-field" styleClass="error-msg" rendered="true"/>
+
+      <h:commandButton action="#{UserBean.addSubscription}" value="Add subscription"
+                       styleClass = "menu-button add-button">
+         <f:ajax render="my-subscription-table add-topic-subscription"/>
+      </h:commandButton>
+   </h:form>
+
+   <h:form>
+      <br/>Forum:<h:inputText binding="#{forumName}">
+      <f:ajax event="blur"/>
+   </h:inputText>
+      <br/>Text:<h:inputText binding="#{msgText}">
+      <f:ajax event="blur"/>
+   </h:inputText>
+      <h:commandButton action="#{ForumBean.sendMessage(forumName.value, msgText.value)}" value="SEND FORUM"/>
+   </h:form>
+   <br/>
+
+
+   <h:form>
+      <h:commandButton action="#{UserBean.loadMessages}" value="Load Messages"/>
+   </h:form>
+   <br/>
+
+   <h:form id="my-subscription-table" class="table-container">
+      <h:outputLabel styleClass="form-label">My Subscriptions</h:outputLabel>
+      <h:dataTable value="#{UserBean.getSubscribedTopics()}" var="topic">
+         <h:column>
+            <f:facet name="header">Topic</f:facet>
+            #{topic}
+         </h:column>
+      </h:dataTable>
+   </h:form>
+
+   <h:form id="notification-table" class="table-container">
+      <h:outputLabel styleClass="form-label">Notifications</h:outputLabel>
+      <h:dataTable value="#{UserBean.getMyNotificationsList()}" var="notification">
+         <h:column>
+            <f:facet name="header">Notification</f:facet>
+            #{notification}
+         </h:column>
+      </h:dataTable>
+   </h:form>
+
+</h:body>
+
+</html>
