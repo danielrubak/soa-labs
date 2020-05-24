@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Deleting an author</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+
+<h:form id="author-delete-form" class="form-container">
+    <h:outputLabel for="authors-listbox" styleClass="form-label">Select author you want to delete:</h:outputLabel>
+    <h:selectOneMenu id="authors-listbox" value="#{AuthorBean.selectedAuthorId}" required="true"
+                     requiredMessage="Value is required" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select an author..." noSelectionOption="true" />
+        <f:selectItems value="#{AuthorBean.getAuthorsMap()}"/>
+        <f:ajax listener = "#{AuthorBean.onAuthorSelection}" event="change"/>
+    </h:selectOneMenu>
+    <h:message for="authors-listbox" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Remove reader" action="#{AuthorBean.deleteAuthor}"
+                     styleClass = "menu-button remove-button form-confirm-button"/>
+</h:form>
+
+</body>
+
+</html>

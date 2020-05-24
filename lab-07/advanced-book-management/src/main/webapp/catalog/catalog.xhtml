@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Catalog</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+    <h:form id ="menu" class="buttons-menu-panel">
+        <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
+    </h:form>
+
+    <h:form id="catalog-table" class="table-container">
+        <h:dataTable value="#{CatalogBean.getCatalog()}" var="catalog">
+            <h:column>
+                <f:facet name="header">Book title</f:facet>
+                #{catalog.book.title}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Author name</f:facet>
+                #{catalog.book.author.name}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Author surname</f:facet>
+                #{catalog.book.author.surname}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Quantity</f:facet>
+                #{catalog.quantity}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Available</f:facet>
+                #{catalog.available}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:commandButton class = "grid-button edit-button" value="Edit">
+                    <f:ajax listener="#{CatalogBean.setEditMode(catalog)}" render="@all"/>
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+    <h:form rendered="#{CatalogBean.editMode}" class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Quantity</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>
+                    <h:inputText binding="#{newQuantityValue}">
+                        <f:ajax event="blur"/>
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="Save changes" class = "grid-button add-button">
+                        <f:ajax listener="#{CatalogBean.editCatalog(newQuantityValue.value)}" render="@all"/>
+                    </h:commandButton>
+                </td>
+                <td>
+                    <h:commandButton value="Cancel" class = "grid-button back-button">
+                        <f:ajax listener="#{CatalogBean.cancelCallback}" render="@all"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </h:form>
+
+    <h:form class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Author</th>
+                <th scope="col">From date (dd/MM/yyyy)</th>
+                <th scope="col">To date (dd/MM/yyyy)</th>
+                <th scope="col">Search</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{authorId}" required="true">
+                        <f:selectItem itemLabel="Select Author" itemValue="-1" />
+                        <f:selectItems value="#{AuthorBean.getAuthorsMap()}" var="author" itemLabel="#{author}"
+                                       itemValue="#{author.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateFrom1}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateTo1}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="Submit" class = "grid-button add-button">
+                        <f:ajax listener="#{CatalogBean.getReadersByAuthorAndDate(authorId.value, dateFrom1.value,
+                        dateTo1.value)}" render="filterResult1"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h:outputText id="filterResult1" styleClass="filter-result-box"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+    </h:form>
+
+    <h:form class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Book</th>
+                <th scope="col">From date (dd/MM/yyyy)</th>
+                <th scope="col">To date (dd/MM/yyyy)</th>
+                <th scope="col">Search</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{bookId}" required="true">
+                        <f:selectItem itemLabel="Select Book" itemValue="-1" />
+                        <f:selectItems value="#{BookBean.getBooksMap()}" var="book" itemLabel="#{book}"
+                                       itemValue="#{book.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateFrom2}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateTo2}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="Submit" class = "grid-button add-button">
+                        <f:ajax listener="#{CatalogBean.getReadersByBookAndDate(bookId.value, dateFrom2.value,
+                        dateTo2.value)}" render="filterResult2"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h:outputText id="filterResult2" styleClass="filter-result-box"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+    </h:form>
+
+    <h:form class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Reader</th>
+                <th scope="col">From date (dd/MM/yyyy)</th>
+                <th scope="col">To date (dd/MM/yyyy)</th>
+                <th scope="col">Search</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h:selectOneMenu binding="#{readerId}" required="true">
+                        <f:selectItem itemLabel="Select Reader" itemValue="-1" />
+                        <f:selectItems value="#{ReaderBean.getReadersMap()}" var="reader"
+                                       itemLabel="#{reader}" itemValue="#{reader.id}"/>
+                        <f:ajax execute="@this"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:inputText binding="#{datefrom3}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:inputText binding="#{dateto3}">
+                        <f:ajax event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                    </h:inputText>
+                </td>
+                <td>
+                    <h:commandButton value="Submit" class = "grid-button add-button">
+                        <f:ajax listener="#{CatalogBean.getBooksByReaderIdAndDate(readerId.value,
+                        datefrom3.value, dateto3.value)}" render="queryResult"/>
+                    </h:commandButton>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h:outputText id="filterResult3" styleClass="filter-result-box"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+    </h:form>
+
+    <h:form styleClass="table-container">
+        <h:commandButton value="Find the most-read author" styleClass="menu-button add-button">
+            <f:ajax listener="#{CatalogBean.getMostReadAuthor}" render="filterResult4"/>
+        </h:commandButton>
+
+        <h:outputText styleClass="filter-result-box" id="filterResult4"
+                      value="#{CatalogBean.getLastQueryResult()}"></h:outputText>
+    </h:form>
+
+</h:body>
+</html>

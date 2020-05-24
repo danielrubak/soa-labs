@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Adding a reader</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+
+<h:form id = "reader-add-form" class = "form-container">
+    <h:outputLabel for="reader-name-field" styleClass="form-label">Reader Name:</h:outputLabel>
+    <h:inputText id="reader-name-field" value="#{ReaderBean.name}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="reader-name-field" styleClass="error-msg" rendered="true"/>
+
+    <h:outputLabel for="reader-surname-field" styleClass="form-label">Reader Surname:</h:outputLabel>
+    <h:inputText id="reader-surname-field" value="#{ReaderBean.surname}"
+                 required="true" requiredMessage="Value is required"/>
+    <h:message for="reader-surname-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
+                     immediate="true" styleClass = "menu-button back-button form-back-button"/>
+    <h:commandButton value="Add reader" action="#{ReaderBean.addReader}"
+                     styleClass = "menu-button add-button form-confirm-button"/>
+</h:form>
+
+</body>
+
+</html>
