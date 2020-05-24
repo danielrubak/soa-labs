@@ -12,35 +12,35 @@ public class Forum {
     public static List<String> users = new ArrayList<String>();
     public static Map<String, List<String>> notifications = new HashMap<String, List<String>>();
 
-    public static void addMessage(Message msg){
+    public static void addMessage(Message msg) throws JMSException {
         Message message = msg;
-        String messageTopic= "";
-        String messageText = "";
-        try {
-            messageTopic = msg.getStringProperty("topic");
-            messageText = msg.getStringProperty("text");
-        } catch (JMSException e) {
-            messageTopic="";
-        }
-        boolean isInSubscribed = false;
-        for (String topic: topics){
-            if(messageTopic.equals(topic)){
-                isInSubscribed=true;
-                break;
+
+        if (msg.propertyExists("msgTopic")) {
+            String msgTopic = msg.getStringProperty("msgTopic");
+            String msgValue = msg.getStringProperty("msgValue");
+
+            if ( topics.contains(msgTopic) ) {
+                // there is no messages for topic in notifications map
+                if ( !notifications.containsKey(msgTopic) ) {
+                    ArrayList<String> messages = new ArrayList<String>();
+                    notifications.put(msgTopic, messages);
+                }
+
+                notifications.get(msgTopic).add(msgValue);
             }
-        }
-        for (String topic: users){
-            if(messageTopic.equals(topic)){
-                isInSubscribed=true;
-                break;
+        } else if (msg.propertyExists("user")) {
+            String user = msg.getStringProperty("user");
+            String msgValue = msg.getStringProperty("msgValue");
+
+            if ( users.contains(user) ) {
+                // there is no messages for user in notifications map
+                if ( !notifications.containsKey(user) ) {
+                    ArrayList<String> messages = new ArrayList<String>();
+                    notifications.put(user, messages);
+                }
+
+                notifications.get(user).add(msgValue);
             }
-        }
-        if(isInSubscribed){
-            if (!notifications.containsKey(messageTopic)) {
-                ArrayList<String> al = new ArrayList<String>();
-                notifications.put(messageTopic, al);
-            }
-            notifications.get(messageTopic).add(messageText);
         }
     }
 }

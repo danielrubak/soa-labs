@@ -41,32 +41,15 @@
       </h:inputText>
       <h:message for="subscribe-topic-name-field" styleClass="error-msg" rendered="true"/>
 
-      <h:commandButton action="#{UserBean.addSubscription}" value="Add subscription"
+      <h:commandButton action="#{UserBean.addSubscription}" value="Subscribe"
                        styleClass = "menu-button add-button">
          <f:ajax render="my-subscription-table add-topic-subscription"/>
       </h:commandButton>
    </h:form>
 
-   <h:form>
-      <br/>Forum:<h:inputText binding="#{forumName}">
-      <f:ajax event="blur"/>
-   </h:inputText>
-      <br/>Text:<h:inputText binding="#{msgText}">
-      <f:ajax event="blur"/>
-   </h:inputText>
-      <h:commandButton action="#{ForumBean.sendMessage(forumName.value, msgText.value)}" value="SEND FORUM"/>
-   </h:form>
-   <br/>
-
-
-   <h:form>
-      <h:commandButton action="#{UserBean.loadMessages}" value="Load Messages"/>
-   </h:form>
-   <br/>
-
    <h:form id="my-subscription-table" class="table-container">
       <h:outputLabel styleClass="form-label">My Subscriptions</h:outputLabel>
-      <h:dataTable value="#{UserBean.getSubscribedTopics()}" var="topic">
+      <h:dataTable value="#{UserBean.subscribedTopics}" var="topic">
          <h:column>
             <f:facet name="header">Topic</f:facet>
             #{topic}
@@ -74,12 +57,67 @@
       </h:dataTable>
    </h:form>
 
+   <h:form id="sending-msg-form" class="form-container">
+      <h:outputLabel for="target-topic-name-field" styleClass="form-label">
+         Topic name for you want to send message</h:outputLabel>
+      <h:inputText id="target-topic-name-field" value="#{UserBean.targetTopicName}"
+                   required="true" requiredMessage="Value is required">
+         <f:ajax event="blur"/>
+      </h:inputText>
+      <h:message for="target-topic-name-field" styleClass="error-msg" rendered="true"/>
+
+      <h:outputLabel for="target-topic-msg-field" styleClass="form-label">
+         Message:</h:outputLabel>
+      <h:inputText id="target-topic-msg-field" value="#{UserBean.targetTopicMsg}"
+                   required="true" requiredMessage="Value is required">
+         <f:ajax event="blur"/>
+      </h:inputText>
+      <h:message for="target-topic-msg-field" styleClass="error-msg" rendered="true"/>
+
+      <h:commandButton action="#{ForumBean.sendMessage(UserBean.getTargetTopicName(), UserBean.getTargetTopicMsg())}"
+                       value="Send" styleClass = "menu-button add-button">
+         <f:ajax render="my-subscription-table sending-msg-form"/>
+      </h:commandButton>
+   </h:form>
+
+   <h:form id="sending-direct-msg-form" class="form-container">
+      <h:outputLabel for="target-user-name-field" styleClass="form-label">
+         Username you want to send message</h:outputLabel>
+      <h:inputText id="target-user-name-field" value="#{UserBean.directMsgUser}"
+                   required="true" requiredMessage="Value is required">
+         <f:ajax event="blur"/>
+      </h:inputText>
+      <h:message for="target-user-name-field" styleClass="error-msg" rendered="true"/>
+
+      <h:outputLabel for="target-user-msg-field" styleClass="form-label">
+         Message:</h:outputLabel>
+      <h:inputText id="target-user-msg-field" value="#{UserBean.directMsgValue}"
+                   required="true" requiredMessage="Value is required">
+         <f:ajax event="blur"/>
+      </h:inputText>
+      <h:message for="target-user-msg-field" styleClass="error-msg" rendered="true"/>
+
+      <h:commandButton action="#{ForumBean.sendDirectMessage(UserBean.getDirectMsgUser(), UserBean.getDirectMsgValue())}"
+                       value="Send" styleClass = "menu-button add-button">
+         <f:ajax render="my-subscription-table sending-msg-form"/>
+      </h:commandButton>
+   </h:form>
+
+   <h:form id="refresh-messages" class="form-container">
+      <h:commandButton action="#{UserBean.getMessages}" value="Get all new messages"
+                       styleClass = "menu-button select-button"/>
+   </h:form>
+
    <h:form id="notification-table" class="table-container">
       <h:outputLabel styleClass="form-label">Notifications</h:outputLabel>
-      <h:dataTable value="#{UserBean.getMyNotificationsList()}" var="notification">
+      <h:dataTable value="#{UserBean.myNotifications.entrySet().toArray()}" var="message">
+         <h:column>
+            <f:facet name="header">Topic/User</f:facet>
+            #{message.key}
+         </h:column>
          <h:column>
             <f:facet name="header">Notification</f:facet>
-            #{notification}
+            #{message.value}
          </h:column>
       </h:dataTable>
    </h:form>

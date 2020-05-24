@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.jms.*;
 import java.util.*;
 
@@ -29,26 +28,34 @@ public class UserBean implements MessageListener {
     private String newTopicName;
     private String topicToSubscribe;
 
-    public String login(String username) {
-        setUsername(username);
-        System.out.println("Logged as: " + this.username);
-        System.out.println("Subscribed topics: " + subscribedTopics);
-        Forum.users.add(this.username);
+    private String targetTopicName;
+    private String targetTopicMsg;
 
-        return "/user-page";
+    private String directMsgUser;
+    private String directMsgValue;
+
+    public String login(String username) {
+        if (Forum.users.contains(username)) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage( "User already logged in");
+            context.addMessage( "login-form:user-name-field", fm);
+
+            return null;
+        } else {
+            setUsername(username);
+            Forum.users.add(this.username);
+            System.out.println("Logged as: " + this.username);
+
+            return "/user-page";
+        }
     }
 
     public void addTopic() {
-        List<String> topics = Forum.topics;
-        System.out.println("All topics: " + topics);
-
-        if (topics.contains(this.newTopicName)) {
-            System.out.println("Topic exists");
+        if (Forum.topics.contains(this.newTopicName)) {
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage( "Topic already exists");
             context.addMessage( "new-topic-form:new-topic-name-field", fm);
         } else {
-            System.out.println("Topic '" + this.newTopicName + "' has been added");
             Forum.topics.add(this.newTopicName);
             addSubscription(newTopicName);
             setNewTopicName(null);
@@ -56,8 +63,6 @@ public class UserBean implements MessageListener {
     }
 
     public void addSubscription() {
-        System.out.println("All subscriptions: " + subscribedTopics);
-
         if (!Forum.topics.contains(topicToSubscribe)) {
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage( "Topic does not exists");
@@ -67,7 +72,6 @@ public class UserBean implements MessageListener {
             FacesMessage fm = new FacesMessage( "Topic already subscribed");
             context.addMessage( "add-topic-subscription:subscribe-topic-name-field", fm);
         } else {
-            System.out.println("Topic '" + this.newTopicName + "' has been subscribed!");
             subscribedTopics.add(topicToSubscribe);
             setTopicToSubscribe(null);
         }
@@ -78,35 +82,25 @@ public class UserBean implements MessageListener {
     }
 
     public void onMessage(final Message msg) {
-        Forum.addMessage(msg);
-        this.loadMessages();
+        try {
+            Forum.addMessage(msg);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+        this.getMessages();
     }
 
-    public void loadMessages(){
-        System.out.println("Subscribed Topics: " + subscribedTopics);
+    public void getMessages() {
         for (String topic: subscribedTopics) {
             if(Forum.notifications.containsKey(topic)){
-                System.out.println("Topic: " + topic);
-                System.out.println("Notification: " + Forum.notifications.get(topic));
                 this.myNotifications.put(topic,Forum.notifications.get(topic));
             }
         }
-    }
 
-    public List<String> getMyNotificationsList(){
-        List<String> notifications = new ArrayList<String>();
-
-        for (String topic: subscribedTopics){
-            if ( !myNotifications.containsKey(topic) ) continue;
-
-            for (String element:myNotifications.get(topic)) {
-                notifications.add(element);
-            }
+        if ( Forum.notifications.containsKey(username)) {
+            this.myNotifications.put(username,Forum.notifications.get(username));
         }
-
-        return notifications;
     }
-
 
     public List<String> getSubscribedTopics() {
         return subscribedTopics;
@@ -146,5 +140,37 @@ public class UserBean implements MessageListener {
 
     public void setTopicToSubscribe(String topicToSubscribe) {
         this.topicToSubscribe = topicToSubscribe;
+    }
+
+    public String getTargetTopicName() {
+        return targetTopicName;
+    }
+
+    public void setTargetTopicName(String targetTopicName) {
+        this.targetTopicName = targetTopicName;
+    }
+
+    public String getTargetTopicMsg() {
+        return targetTopicMsg;
+    }
+
+    public void setTargetTopicMsg(String targetTopicMsg) {
+        this.targetTopicMsg = targetTopicMsg;
+    }
+
+    public String getDirectMsgUser() {
+        return directMsgUser;
+    }
+
+    public void setDirectMsgUser(String directMsgUser) {
+        this.directMsgUser = directMsgUser;
+    }
+
+    public String getDirectMsgValue() {
+        return directMsgValue;
+    }
+
+    public void setDirectMsgValue(String directMsgValue) {
+        this.directMsgValue = directMsgValue;
     }
 }
