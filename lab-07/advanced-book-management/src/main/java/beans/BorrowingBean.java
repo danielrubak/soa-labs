@@ -5,6 +5,7 @@ import model.Borrowing;
 import model.Catalog;
 import model.Reader;
 import repository.BorrowingRepository;
+import repository.ReaderRepository;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +17,9 @@ import java.util.*;
 public class BorrowingBean {
     @EJB
     BorrowingRepository borrowingRepository;
+
+    @EJB
+    ReaderRepository readerRepository;
 
     private Book book;
     private Reader reader;
@@ -49,7 +53,7 @@ public class BorrowingBean {
         return borrowings;
     }
 
-    public String borrowBook(){
+    public String borrowBook() {
         borrowingRepository.borrowBook(this.getSelectedReaderId(), this.getSelectedBookId());
         this.setEmptyValues();
 
@@ -69,6 +73,21 @@ public class BorrowingBean {
     public void setEmptyValues () {
         this.setSelectedBookId(null);
         this.setSelectedReaderId(null);
+    }
+
+    public String getMessage(int mode) {
+        switch (mode) {
+            case 1:
+//                return "Reader " + getReader().getName() + " " + getReader().getSurname() + " borrowed "
+//                        + getBook().getTitle();
+                return "Reader " + this.getSelectedReaderId() + " borrowed " + this.getSelectedBookId();
+            case 2:
+//                return "Reader " + getReader().getName() + " " + getReader().getSurname() + " returned "
+//                        + getBook().getTitle();
+                return "Reader " + this.getSelectedReaderId() + " returned " + this.getSelectedBookId();
+            default:
+                return null;
+        }
     }
 
     public Book getBook() {

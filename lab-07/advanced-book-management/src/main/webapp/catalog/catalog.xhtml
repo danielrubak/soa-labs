@@ -48,6 +48,18 @@
                     <f:ajax listener="#{CatalogBean.setEditMode(catalog)}" render="@all"/>
                 </h:commandButton>
             </h:column>
+
+            <h:column rendered="#{UserBean.userId != null}">
+                <f:facet name="header">Newsletter</f:facet>
+                <h:commandButton rendered ="#{!UserBean.hasSubscription(catalog.id)}"
+                                 value = "Notify me" class="grid-button add-button"
+                                 action="#{UserBean.addSubscription(catalog.id)}">
+                </h:commandButton>
+                <h:commandButton rendered ="#{UserBean.hasSubscription(catalog.id)}"
+                                 value = "Unsubscribe" class="grid-button remove-button"
+                                 action="#{UserBean.removeSubscription(catalog.id)}">
+                </h:commandButton>
+            </h:column>
         </h:dataTable>
     </h:form>
 

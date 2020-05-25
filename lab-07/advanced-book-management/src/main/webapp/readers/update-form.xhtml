@@ -30,6 +30,13 @@
                  required="true" requiredMessage="Value is required"/>
     <h:message for="readers-surname-field" styleClass="error-msg" rendered="true"/>
 
+    <h:outputLabel for="reader-notifications-field" styleClass="form-label">Send notifications:</h:outputLabel>
+    <h:selectBooleanCheckbox id="reader-notifications-field" value="#{ReaderBean.notifyMe}"
+                             required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:selectBooleanCheckbox>
+    <h:message for="reader-notifications-field" styleClass="error-msg" rendered="true"/>
+
     <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
                      immediate="true" styleClass="menu-button back-button form-back-button"/>
     <h:commandButton value="Save changes" action="#{ReaderBean.updateReader}"

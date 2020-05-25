@@ -1,5 +1,6 @@
 package beans;
 
+import jms.LibraryPublisher;
 import repository.AuthorRepository;
 import model.Author;
 
@@ -115,6 +116,19 @@ public class AuthorBean {
         this.name = null;
         this.surname = null;
         this.selectedAuthorId = null;
+    }
+
+    public String getMessage(int mode) {
+        switch (mode) {
+            case 1:
+                return "New author has been added: '" + getName() + " " + getSurname() + "'";
+            case 2:
+                return "Author has been updated: '" + getName() + " " + getSurname() + "'";
+            case 3:
+                return "Author with id '" + this.selectedAuthorId + "' has been removed";
+            default:
+                return null;
+        }
     }
 
     public String getName() {

@@ -11,6 +11,18 @@
 </h:head>
 
 <h:body>
+    <h:form id="login-panel" class="form-container">
+        <h:outputLabel for="readers-listbox" styleClass="form-label">Select user you want to log as:</h:outputLabel>
+        <h:selectOneMenu id="readers-listbox" value="#{UserBean.userId}" styleClass="dropdown">
+            <f:selectItem itemLabel="Select a user..."  itemValue="-1" noSelectionOption="true" />
+            <f:selectItems value="#{UserBean.getReadersMap(ReaderBean.getAllReaders())}" var="reader"
+                           itemLabel="#{reader}" itemValue="#{reader.id}"/>
+            <f:ajax execute="@this"/>
+        </h:selectOneMenu>
+
+        <h:outputLabel styleClass="form-label">* Above value is required if you want to use notification system</h:outputLabel>
+    </h:form>
+
     <h:form id = "main-page-menu" class="buttons-menu-panel">
         <h:button value="Readers management" outcome = "/readers/readers" styleClass = "menu-button select-button"/>
         <br/>
@@ -24,6 +36,9 @@
         <h:button value="Borrow books" outcome = "/borrowing/borrowing" styleClass = "menu-button select-button"/>
         <br/>
         <h:button value="Show catalog" outcome = "/catalog/catalog" styleClass = "menu-button select-button"/>
+        <br/>
+        <h:button value="Show my notifiaction" outcome = "/notifications/notifications"
+                  styleClass = "menu-button select-button"/>
     </h:form>
 </h:body>
 </html>

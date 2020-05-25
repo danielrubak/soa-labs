@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>My notifications</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+
+    <h:form id ="menu" class="buttons-menu-panel">
+        <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
+        <br/>
+        <h:commandButton action="#{UserBean.loadNotifications}" value="Show my notifications"
+                         styleClass = "menu-button select-button"/>
+    </h:form>
+
+    <h:form id="my-subscription-table" class="table-container">
+        <h:outputLabel styleClass="form-label">My Subscriptions</h:outputLabel>
+        <h:dataTable value="#{UserBean.getUserSubscriptions()}" var="topic">
+            <h:column>
+                <f:facet name="header">Topic</f:facet>
+                #{topic}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+    <h:form id="notification-table" class="table-container">
+        <h:outputLabel styleClass="form-label">Notifications</h:outputLabel>
+        <h:dataTable value="#{UserBean.notifications.entrySet().toArray()}" var="message">
+            <h:column>
+                <f:facet name="header">Topic</f:facet>
+                #{message.key}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Notification</f:facet>
+                #{message.value}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+</h:body>
+
+</html>

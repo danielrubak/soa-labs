@@ -57,8 +57,10 @@
             <h:column rendered="#{BorrowingBean.showReturnBookField}">
                 <f:facet name="header">Return</f:facet>
                 <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}"
-                                 value = "Return book" class="grid-button edit-button">
-                    <f:ajax listener="#{BorrowingBean.returnBook(borrowing.id)}" render="@all"/>
+                                 value = "Return book" class="grid-button edit-button"
+                                 action="#{BorrowingBean.returnBook(borrowing.id)}">
+                    <f:ajax listener="#{LibraryPublisher.sendMessage('borrowing', BorrowingBean.getMessage(2))}"
+                            render="@all"/>
                 </h:commandButton>
             </h:column>
 

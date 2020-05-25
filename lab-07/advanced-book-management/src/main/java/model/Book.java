@@ -14,6 +14,7 @@ public class Book {
     private BookCategory category;
     private Catalog catalog;
     private List<Borrowing> borrowing;
+    private Boolean canBeBorrowed;
 
     public Book() {
     }
@@ -21,6 +22,7 @@ public class Book {
     public Book(String title, BigInteger ISBNNumber) {
         this.title=title;
         this.ISBNNumber=ISBNNumber;
+        this.canBeBorrowed = true;
     }
 
     @Id
@@ -81,6 +83,14 @@ public class Book {
     }
     public void setBorrowing(List<Borrowing> borrowing) {
         this.borrowing = borrowing;
+    }
+
+    public Boolean getCanBeBorrowed() {
+        return canBeBorrowed;
+    }
+
+    public void setCanBeBorrowed(Boolean canBeBorrowed) {
+        this.canBeBorrowed = canBeBorrowed;
     }
 
     @Override

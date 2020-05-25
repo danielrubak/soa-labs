@@ -59,6 +59,9 @@ public class ReaderService implements ReaderRepository {
             if( reader.getSurname() != null )
                 updateObject.setSurname(reader.getSurname());
 
+            if ( reader.getNotifyMe() != null )
+                updateObject.setNotifyMe(reader.getNotifyMe());
+
             em.persist(updateObject);
         } catch (Exception e) {
             System.err.println("An error occurred during updating a book object. Id = "+ id + "\n" + e);

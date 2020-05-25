@@ -94,6 +94,10 @@ public class BookBean {
         this.setQuantity(null);
     }
 
+    public String getMessage() {
+        return "New book has been added: '" + getTitle() + ", " + getAuthorName() + " " + getAuthorSurname() + "'";
+    }
+
     public String getTitle() {
         return title;
     }

@@ -21,6 +21,7 @@ public class ReaderBean {
 
     String name;
     String surname;
+    Boolean notifyMe;
 
     Integer selectedReaderId;
 
@@ -39,7 +40,8 @@ public class ReaderBean {
 
             return null;
         } else {
-            Reader reader = new Reader(this.name, this.surname);
+            // TODO: notifyMe should be get from webapp
+            Reader reader = new Reader(this.name, this.surname, this.notifyMe);
             readerRepository.addReader(reader);
             this.setEmptyValues();
 
@@ -50,16 +52,18 @@ public class ReaderBean {
     public String updateReader() {
         List<Reader> readers = readerRepository.findByNameAndSurname(this.name, this.surname);
 
-        if ( !readers.isEmpty() ) {
+        if ( !readers.isEmpty() && readers.get(0).getNotifyMe() == this.notifyMe ) {
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage( "Reader already exists");
-            context.addMessage( "reader-update-form:reader-name-field", fm);
+            context.addMessage( "reader-update-form:readers-name-field", fm);
 
             return null;
         } else {
-            Reader reader = new Reader(this.name, this.surname);
+            // TODO: notifyMe should be get from webapp
+            Reader reader = new Reader(this.name, this.surname, this.notifyMe);
             readerRepository.updateReader(this.getSelectedReaderId(), reader);
             this.setEmptyValues();
+
             return "/readers/readers";
         }
     }
@@ -119,6 +123,10 @@ public class ReaderBean {
         this.selectedReaderId = null;
     }
 
+    public String getMessage() {
+        return "New reader has been added: '" + getName() + " " + getSurname() + "'";
+    }
+
     public String getName() {
         return name;
     }
@@ -141,5 +149,13 @@ public class ReaderBean {
 
     public void setSelectedReaderId(Integer selectedReaderId) {
         this.selectedReaderId = selectedReaderId;
+    }
+
+    public Boolean getNotifyMe() {
+        return notifyMe;
+    }
+
+    public void setNotifyMe(Boolean notifyMe) {
+        this.notifyMe = notifyMe;
     }
 }

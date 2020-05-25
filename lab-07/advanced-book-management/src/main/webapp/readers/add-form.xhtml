@@ -15,18 +15,31 @@
 <h:form id = "reader-add-form" class = "form-container">
     <h:outputLabel for="reader-name-field" styleClass="form-label">Reader Name:</h:outputLabel>
     <h:inputText id="reader-name-field" value="#{ReaderBean.name}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="reader-name-field" styleClass="error-msg" rendered="true"/>
 
     <h:outputLabel for="reader-surname-field" styleClass="form-label">Reader Surname:</h:outputLabel>
     <h:inputText id="reader-surname-field" value="#{ReaderBean.surname}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="reader-surname-field" styleClass="error-msg" rendered="true"/>
+
+    <h:outputLabel for="reader-notifications-field" styleClass="form-label">Send notifications:</h:outputLabel>
+    <h:selectBooleanCheckbox id="reader-notifications-field" value="#{ReaderBean.notifyMe}"
+                             required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:selectBooleanCheckbox>
+    <h:message for="reader-notifications-field" styleClass="error-msg" rendered="true"/>
 
     <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
                      immediate="true" styleClass = "menu-button back-button form-back-button"/>
     <h:commandButton value="Add reader" action="#{ReaderBean.addReader}"
-                     styleClass = "menu-button add-button form-confirm-button"/>
+                     styleClass = "menu-button add-button form-confirm-button">
+        <f:ajax listener="#{LibraryPublisher.sendMessage('reader', ReaderBean.getMessage())}"/>
+    </h:commandButton>
 </h:form>
 
 </body>

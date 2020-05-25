@@ -33,7 +33,9 @@
     <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"
                      immediate="true" styleClass="menu-button back-button form-back-button"/>
     <h:commandButton value="Save changes" action="#{AuthorBean.updateAuthor}"
-                     styleClass="menu-button add-button form-confirm-button"/>
+                     styleClass="menu-button add-button form-confirm-button">
+        <f:ajax listener="#{LibraryPublisher.sendMessage('author', AuthorBean.getMessage(2))}"/>
+    </h:commandButton>
 </h:form>
 
 </body>

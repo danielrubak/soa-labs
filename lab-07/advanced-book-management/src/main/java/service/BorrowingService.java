@@ -52,7 +52,7 @@ public class BorrowingService implements BorrowingRepository {
             readerQuery.setParameter("id", readerId);
             Reader reader = (Reader) readerQuery.getSingleResult();
 
-            if ( !catalogs.isEmpty()){
+            if ( !catalogs.isEmpty()) {
                 if ( catalogs.get(0).getAvailable()>0 ){
                     Borrowing borrowing = new Borrowing(today.getTime(), returnDate.getTime());
                     borrowing.setBook(book);

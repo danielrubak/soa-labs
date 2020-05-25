@@ -54,9 +54,13 @@ public class Catalog {
 
     public void borrowBook() {
         this.available -= 1;
+        if ( this.available == 0 ) {
+            this.getBook().setCanBeBorrowed(false);
+        }
     }
 
     public void returnBook() {
         this.available += 1;
+        this.getBook().setCanBeBorrowed(true);
     }
 }

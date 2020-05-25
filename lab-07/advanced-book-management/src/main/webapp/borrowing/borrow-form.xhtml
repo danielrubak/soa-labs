@@ -18,6 +18,7 @@
                      required="true" requiredMessage="Value is required" styleClass="dropdown">
         <f:selectItem itemValue="#{null}" itemLabel="Select a reader..."/>
         <f:selectItems value="#{ReaderBean.getReadersMap()}"/>
+        <f:ajax event="blur"/>
     </h:selectOneMenu>
     <h:message for="readers-listbox" styleClass="error-msg" rendered="true"/>
 
@@ -26,13 +27,16 @@
                      required="true" requiredMessage="Value is required" styleClass="dropdown">
         <f:selectItem itemValue="#{null}" itemLabel="Select a reader..."/>
         <f:selectItems value="#{BookBean.getBooksMap()}"/>
+        <f:ajax event="blur"/>
     </h:selectOneMenu>
     <h:message for="books-listbox" styleClass="error-msg" rendered="true"/>
 
     <h:commandButton value="Back" action="#{BorrowingBean.onBackButton}"
                      immediate="true" styleClass = "menu-button back-button form-back-button"/>
     <h:commandButton value="Borrow book" action ="#{BorrowingBean.borrowBook}"
-                     styleClass = "menu-button add-button form-confirm-button"/>
+                     styleClass = "menu-button add-button form-confirm-button">
+        <f:ajax listener="#{LibraryPublisher.sendMessage('borrowing', BorrowingBean.getMessage(1))}"/>
+    </h:commandButton>
 
 </h:form>
 

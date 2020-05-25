@@ -10,13 +10,15 @@ public class Reader {
     private String name;
     private String surname;
     private List<Borrowing> borrowing;
+    private Boolean notifyMe;
 
     public Reader() {
     }
 
-    public Reader(String name, String surname) {
+    public Reader(String name, String surname, Boolean notifyMe) {
         this.name = name;
         this.surname = surname;
+        this.notifyMe = notifyMe;
     }
 
     @Id
@@ -52,6 +54,17 @@ public class Reader {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public Boolean getNotifyMe() {
+        return notifyMe;
+    }
+
+    public void setNotifyMe(Boolean notifyMe) {
+        this.notifyMe = notifyMe;
+    }
+
+    @Column(name = "notifications", nullable = false)
+
 
     @Override
     public String toString() {

@@ -45,7 +45,9 @@
         <h:commandButton value="Back" action="#{BookBean.onBackButton}"
                          immediate="true" styleClass = "menu-button back-button form-back-button"/>
         <h:commandButton value="Add book" action="#{BookBean.addBook}"
-                         styleClass = "menu-button add-button form-confirm-button"/>
+                         styleClass = "menu-button add-button form-confirm-button">
+            <f:ajax listener="#{LibraryPublisher.sendMessage('book', BookBean.getMessage())}"/>
+        </h:commandButton>
     </h:form>
 </h:body>
 
