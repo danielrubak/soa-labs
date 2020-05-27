@@ -59,7 +59,7 @@
                 <h:commandButton rendered ="#{BorrowingBean.getCanReturnMap().get(borrowing.id)}"
                                  value = "Return book" class="grid-button edit-button"
                                  action="#{BorrowingBean.returnBook(borrowing.id)}">
-                    <f:ajax listener="#{LibraryPublisher.sendMessage('borrowing', BorrowingBean.getMessage(2))}"
+                    <f:ajax listener="#{LibraryPublisher.sendMessage(borrowing.book.id, BorrowingBean.getMessage(2,borrowing.book.id))}"
                             render="@all"/>
                 </h:commandButton>
             </h:column>

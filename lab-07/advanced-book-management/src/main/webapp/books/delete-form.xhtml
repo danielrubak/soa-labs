@@ -24,7 +24,9 @@
         <h:commandButton value="Back" action="#{BookBean.onBackButton}"
                          immediate="true" styleClass="menu-button back-button form-back-button"/>
         <h:commandButton value="Remove book" action="#{BookBean.deleteBook}"
-                         styleClass = "menu-button remove-button form-confirm-button"/>
+                         styleClass = "menu-button remove-button form-confirm-button">
+            <f:ajax listener="#{LibraryPublisher.sendMessage('book', BookBean.getMessage(3))}"/>
+        </h:commandButton>
     </h:form>
 </h:body>
 

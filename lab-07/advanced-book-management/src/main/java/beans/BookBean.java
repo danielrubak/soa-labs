@@ -94,8 +94,17 @@ public class BookBean {
         this.setQuantity(null);
     }
 
-    public String getMessage() {
-        return "New book has been added: '" + getTitle() + ", " + getAuthorName() + " " + getAuthorSurname() + "'";
+    public String getMessage(int mode) {
+        switch (mode) {
+            case 1:
+                return "New book has been added: '" + getTitle() + ", " + getAuthorName() + " " + getAuthorSurname() + "'";
+            case 2:
+                return "Book has been updated: '" + getTitle() + ", " + getAuthorName() + " " + getAuthorSurname() + "'";
+            case 3:
+                return "Book with id '" + getSelectedBookId() + "' has been removed";
+            default:
+                return null;
+        }
     }
 
     public String getTitle() {

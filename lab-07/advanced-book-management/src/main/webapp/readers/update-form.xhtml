@@ -22,12 +22,16 @@
 
     <h:outputLabel for="readers-name-field" styleClass="form-label">Reader Name:</h:outputLabel>
     <h:inputText id="readers-name-field" value="#{ReaderBean.name}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="readers-name-field" styleClass="error-msg" rendered="true"/>
 
     <h:outputLabel for="readers-surname-field" styleClass="form-label">Reader Surname:</h:outputLabel>
     <h:inputText id="readers-surname-field" value="#{ReaderBean.surname}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="readers-surname-field" styleClass="error-msg" rendered="true"/>
 
     <h:outputLabel for="reader-notifications-field" styleClass="form-label">Send notifications:</h:outputLabel>
@@ -40,7 +44,9 @@
     <h:commandButton value="Back" action="#{ReaderBean.onBackButton}"
                      immediate="true" styleClass="menu-button back-button form-back-button"/>
     <h:commandButton value="Save changes" action="#{ReaderBean.updateReader}"
-                     styleClass="menu-button add-button form-confirm-button"/>
+                     styleClass="menu-button add-button form-confirm-button">
+        <f:ajax listener="#{LibraryPublisher.sendMessage('reader', ReaderBean.getMessage(2))}"/>
+    </h:commandButton>
 </h:form>
 
 </body>

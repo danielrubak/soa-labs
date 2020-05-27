@@ -4,6 +4,7 @@ import model.Book;
 import model.Borrowing;
 import model.Catalog;
 import model.Reader;
+import repository.BookRepository;
 import repository.BorrowingRepository;
 import repository.ReaderRepository;
 
@@ -19,7 +20,7 @@ public class BorrowingBean {
     BorrowingRepository borrowingRepository;
 
     @EJB
-    ReaderRepository readerRepository;
+    BookRepository bookRepository;
 
     private Book book;
     private Reader reader;
@@ -75,16 +76,14 @@ public class BorrowingBean {
         this.setSelectedReaderId(null);
     }
 
-    public String getMessage(int mode) {
+    public String getMessage(int mode, int bookId) {
+        Book book = bookRepository.getBookById(bookId);
+
         switch (mode) {
             case 1:
-//                return "Reader " + getReader().getName() + " " + getReader().getSurname() + " borrowed "
-//                        + getBook().getTitle();
-                return "Reader " + this.getSelectedReaderId() + " borrowed " + this.getSelectedBookId();
+                return "Book '" + book.getTitle() + "' has been borrowed";
             case 2:
-//                return "Reader " + getReader().getName() + " " + getReader().getSurname() + " returned "
-//                        + getBook().getTitle();
-                return "Reader " + this.getSelectedReaderId() + " returned " + this.getSelectedBookId();
+                return "Book '" + book.getTitle() + "' has been returned";
             default:
                 return null;
         }

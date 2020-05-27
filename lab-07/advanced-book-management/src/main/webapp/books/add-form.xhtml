@@ -14,39 +14,51 @@
     <h:form id = "book-add-form" class = "form-container">
         <h:outputLabel for="book-title-field" styleClass="form-label">Book Title:</h:outputLabel>
         <h:inputText id="book-title-field" value="#{BookBean.title}"
-                     required="true" requiredMessage="Value is required"/>
+                     required="true" requiredMessage="Value is required">
+            <f:ajax event="blur"/>
+        </h:inputText>
         <h:message for="book-title-field" styleClass="error-msg" rendered="true"/>
 
         <h:outputLabel for="book-isbn-field" styleClass="form-label">Book ISBN Number:</h:outputLabel>
         <h:inputText type="number" id="book-isbn-field" value="#{BookBean.ISBNNumber}"
-                     required="true" requiredMessage="Value is required"/>
+                     required="true" requiredMessage="Value is required">
+            <f:ajax event="blur"/>
+        </h:inputText>
         <h:message for="book-isbn-field" styleClass="error-msg" rendered="true"/>
 
         <h:outputLabel for="author-name-field" styleClass="form-label">Author Name:</h:outputLabel>
         <h:inputText id="author-name-field" value="#{BookBean.authorName}"
-                     required="true" requiredMessage="Value is required"/>
+                     required="true" requiredMessage="Value is required">
+            <f:ajax event="blur"/>
+        </h:inputText>
         <h:message for="author-name-field" styleClass="error-msg" rendered="true"/>
 
         <h:outputLabel for="author-surname-field" styleClass="form-label">Author Surname:</h:outputLabel>
         <h:inputText id="author-surname-field" value="#{BookBean.authorSurname}"
-                     required="true" requiredMessage="Value is required"/>
+                     required="true" requiredMessage="Value is required">
+            <f:ajax event="blur"/>
+        </h:inputText>
         <h:message for="author-surname-field" styleClass="error-msg" rendered="true"/>
 
         <h:outputLabel for="book-category-field" styleClass="form-label">Book category:</h:outputLabel>
         <h:inputText id="book-category-field" value="#{BookBean.category}"
-                     required="true" requiredMessage="Value is required"/>
+                     required="true" requiredMessage="Value is required">
+            <f:ajax event="blur"/>
+        </h:inputText>
         <h:message for="book-category-field" styleClass="error-msg" rendered="true"/>
 
         <h:outputLabel for="book-quantity-field" styleClass="form-label">Book quantity:</h:outputLabel>
         <h:inputText id="book-quantity-field" value="#{BookBean.quantity}"
-                     required="true" requiredMessage="Value is required"/>
+                     required="true" requiredMessage="Value is required">
+            <f:ajax event="blur"/>
+        </h:inputText>
         <h:message for="book-quantity-field" styleClass="error-msg" rendered="true"/>
 
         <h:commandButton value="Back" action="#{BookBean.onBackButton}"
                          immediate="true" styleClass = "menu-button back-button form-back-button"/>
         <h:commandButton value="Add book" action="#{BookBean.addBook}"
                          styleClass = "menu-button add-button form-confirm-button">
-            <f:ajax listener="#{LibraryPublisher.sendMessage('book', BookBean.getMessage())}"/>
+            <f:ajax listener="#{LibraryPublisher.sendMessage('book', BookBean.getMessage(1))}"/>
         </h:commandButton>
     </h:form>
 </h:body>

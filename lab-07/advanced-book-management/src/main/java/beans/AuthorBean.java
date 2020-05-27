@@ -59,6 +59,7 @@ public class AuthorBean {
             Author author = new Author(this.name, this.surname);
             authorRepository.updateAuthor(this.selectedAuthorId, author);
             this.setEmptyValues();
+
             return "/authors/authors";
         }
     }
@@ -125,7 +126,7 @@ public class AuthorBean {
             case 2:
                 return "Author has been updated: '" + getName() + " " + getSurname() + "'";
             case 3:
-                return "Author with id '" + this.selectedAuthorId + "' has been removed";
+                return "Author with id '" + getSelectedAuthorId() + "' has been removed";
             default:
                 return null;
         }

@@ -1,9 +1,6 @@
 package service;
 
-import model.Author;
-import model.Book;
-import model.BookCategory;
-import model.Catalog;
+import model.*;
 import repository.BookRepository;
 
 import javax.ejb.Local;
@@ -29,6 +26,11 @@ public class BookService implements BookRepository {
             System.err.println("An error occurred during selecting entities: " + e);
         }
         return null;
+    }
+
+    @Override
+    public Book getBookById(int id) {
+        return em.find(Book.class, id);
     }
 
     @Override

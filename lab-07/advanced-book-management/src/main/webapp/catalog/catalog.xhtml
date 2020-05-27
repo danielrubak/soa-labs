@@ -51,13 +51,13 @@
 
             <h:column rendered="#{UserBean.userId != null}">
                 <f:facet name="header">Newsletter</f:facet>
-                <h:commandButton rendered ="#{!UserBean.hasSubscription(catalog.id)}"
+                <h:commandButton rendered ="#{!UserBean.hasSubscription(catalog.book.id)}"
                                  value = "Notify me" class="grid-button add-button"
-                                 action="#{UserBean.addSubscription(catalog.id)}">
+                                 action="#{UserBean.addSubscription(catalog.book.id)}">
                 </h:commandButton>
-                <h:commandButton rendered ="#{UserBean.hasSubscription(catalog.id)}"
+                <h:commandButton rendered ="#{UserBean.hasSubscription(catalog.book.id)}"
                                  value = "Unsubscribe" class="grid-button remove-button"
-                                 action="#{UserBean.removeSubscription(catalog.id)}">
+                                 action="#{UserBean.removeSubscription(catalog.book.id)}">
                 </h:commandButton>
             </h:column>
         </h:dataTable>
@@ -223,7 +223,7 @@
                 <td>
                     <h:commandButton value="Submit" class = "grid-button add-button">
                         <f:ajax listener="#{CatalogBean.getBooksByReaderIdAndDate(readerId.value,
-                        datefrom3.value, dateto3.value)}" render="queryResult"/>
+                        datefrom3.value, dateto3.value)}" render="filterResult3"/>
                     </h:commandButton>
                 </td>
             </tr>

@@ -123,8 +123,17 @@ public class ReaderBean {
         this.selectedReaderId = null;
     }
 
-    public String getMessage() {
-        return "New reader has been added: '" + getName() + " " + getSurname() + "'";
+    public String getMessage(int mode) {
+        switch (mode) {
+            case 1:
+                return "New reader has been added: '" + getName() + " " + getSurname() + "'";
+            case 2:
+                return "Reaader has been updated: '" + getName() + " " + getSurname() + "'";
+            case 3:
+                return "Reader with id '" + getSelectedReaderId() + "' has been removed";
+            default:
+                return null;
+        }
     }
 
     public String getName() {

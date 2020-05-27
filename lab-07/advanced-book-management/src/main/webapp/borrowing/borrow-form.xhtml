@@ -35,7 +35,7 @@
                      immediate="true" styleClass = "menu-button back-button form-back-button"/>
     <h:commandButton value="Borrow book" action ="#{BorrowingBean.borrowBook}"
                      styleClass = "menu-button add-button form-confirm-button">
-        <f:ajax listener="#{LibraryPublisher.sendMessage('borrowing', BorrowingBean.getMessage(1))}"/>
+        <f:ajax listener="#{LibraryPublisher.sendMessage(BorrowingBean.selectedBookId, BorrowingBean.getMessage(1, BorrowingBean.selectedBookId))}"/>
     </h:commandButton>
 
 </h:form>

@@ -22,12 +22,16 @@
 
     <h:outputLabel for="author-name-field" styleClass="form-label">Author Name:</h:outputLabel>
     <h:inputText id="author-name-field" value="#{AuthorBean.name}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="author-name-field" styleClass="error-msg" rendered="true"/>
 
     <h:outputLabel for="author-surname-field" styleClass="form-label">Author Surname:</h:outputLabel>
     <h:inputText id="author-surname-field" value="#{AuthorBean.surname}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="author-surname-field" styleClass="error-msg" rendered="true"/>
 
     <h:commandButton value="Back" action="#{AuthorBean.onBackButton}"

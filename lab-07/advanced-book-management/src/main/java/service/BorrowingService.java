@@ -31,6 +31,11 @@ public class BorrowingService implements BorrowingRepository {
         return null;
     }
 
+    @Override
+    public Borrowing getBookBorrowingById(int id) {
+        return em.find(Borrowing.class, id);
+    }
+
     public void borrowBook(int readerId, int bookId) {
         try {
             Calendar today = Calendar.getInstance();

@@ -29,4 +29,23 @@ public class LibraryPublisher {
             e.printStackTrace();
         }
     }
+
+    public void sendMessage(int bookId, String msgValue){
+        Connection con = null;
+        try {
+            con = topicConnectionFactory.createConnection();
+            Session ses=con.createSession();
+            MessageProducer publisher=ses.createProducer(myTopic);
+            Message msg=ses.createTextMessage();
+
+            msg.setStringProperty("msgTopic", String.valueOf(bookId));
+            msg.setStringProperty("msgValue", msgValue);
+            publisher.send(msg);
+
+            System.out.println("Message '" + msgValue + "' for book '" + bookId + "' has been sent!.");
+
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
 }

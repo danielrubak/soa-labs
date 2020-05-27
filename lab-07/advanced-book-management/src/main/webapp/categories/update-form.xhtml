@@ -22,13 +22,17 @@
 
     <h:outputLabel for="category-name-field" styleClass="form-label">Category Name:</h:outputLabel>
     <h:inputText id="category-name-field" value="#{CategoryBean.name}"
-                 required="true" requiredMessage="Value is required"/>
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
     <h:message for="category-name-field" styleClass="error-msg" rendered="true"/>
 
     <h:commandButton value="Back" action="#{CategoryBean.onBackButton}"
                      immediate="true" styleClass="menu-button back-button form-back-button"/>
     <h:commandButton value="Save changes" action="#{CategoryBean.updateCategory}"
-                     styleClass="menu-button add-button form-confirm-button"/>
+                     styleClass="menu-button add-button form-confirm-button">
+        <f:ajax listener="#{LibraryPublisher.sendMessage('bookCategory', CategoryBean.getMessage(2))}"/>
+    </h:commandButton>
 </h:form>
 
 </body>

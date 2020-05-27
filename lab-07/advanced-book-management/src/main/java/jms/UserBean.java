@@ -35,6 +35,8 @@ public class UserBean {
         if( this.subscriptions.get(user).isEmpty() && reader.getNotifyMe() ) {
             this.setDefaultSubscriptions(user);
         }
+
+        notifications.clear();
     }
 
     public void setDefaultSubscriptions(int userId){
@@ -61,15 +63,15 @@ public class UserBean {
         return subscriptions.get(this.userId);
     }
 
-    public Boolean hasSubscription(int catalogId) {
+    public Boolean hasSubscription(int bookId) {
         if ( this.getUserId() == null) return false;
 
-        if ( this.subscriptions.get(this.getUserId()).contains(String.valueOf(catalogId)))
+        if ( this.subscriptions.get(this.getUserId()).contains(String.valueOf(bookId)))
             return true;
         return false;
     }
 
-    public void addSubscription (int catalogId) {
+    public void addSubscription (int bookId) {
         if ( this.getUserId() == null )
             return;
 
@@ -77,17 +79,17 @@ public class UserBean {
             this.subscriptions.put(getUserId(), new ArrayList<String>());
         }
 
-        if( !this.subscriptions.get(getUserId()).contains(String.valueOf(catalogId)) ) {
-            this.subscriptions.get(getUserId()).add(String.valueOf(catalogId));
+        if( !this.subscriptions.get(getUserId()).contains(String.valueOf(bookId)) ) {
+            this.subscriptions.get(getUserId()).add(String.valueOf(bookId));
         }
     }
 
-    public void removeSubscription (int catalogId) {
+    public void removeSubscription (int bookId) {
         if ( this.getUserId() == null )
             return;
 
         try{
-            this.subscriptions.get(getUserId()).remove(String.valueOf(catalogId));
+            this.subscriptions.get(getUserId()).remove(String.valueOf(bookId));
         } catch (Exception e) {}
     }
 

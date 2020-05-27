@@ -14,7 +14,7 @@
     <h:form id="login-panel" class="form-container">
         <h:outputLabel for="readers-listbox" styleClass="form-label">Select user you want to log as:</h:outputLabel>
         <h:selectOneMenu id="readers-listbox" value="#{UserBean.userId}" styleClass="dropdown">
-            <f:selectItem itemLabel="Select a user..."  itemValue="-1" noSelectionOption="true" />
+            <f:selectItem itemLabel="Select a user..."  itemValue="#{null}" noSelectionOption="true" />
             <f:selectItems value="#{UserBean.getReadersMap(ReaderBean.getAllReaders())}" var="reader"
                            itemLabel="#{reader}" itemValue="#{reader.id}"/>
             <f:ajax execute="@this"/>

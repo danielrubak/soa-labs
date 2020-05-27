@@ -83,6 +83,19 @@ public class CategoryBean {
         this.selectedCategoryId = null;
     }
 
+    public String getMessage(int mode) {
+        switch (mode) {
+            case 1:
+                return "New category has been added: '" + getName() + "'";
+            case 2:
+                return "Category has been updated: '" + getName() + "'";
+            case 3:
+                return "Category with id '" + getSelectedCategoryId() + "' has been removed";
+            default:
+                return null;
+        }
+    }
+
     public String getName() {
         return name;
     }
