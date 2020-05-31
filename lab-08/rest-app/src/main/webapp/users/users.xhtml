@@ -14,6 +14,12 @@
 
     <h:form id ="menu" class="buttons-menu-panel">
         <h:button value="Back to previous menu" outcome = "/index" styleClass = "menu-button back-button"/>
+        <br/>
+        <h:button value="Add user" outcome = "/users/add-form" styleClass = "menu-button add-button"/>
+        <br/>
+        <h:button value="Update user" outcome = "/users/update-form" styleClass = "menu-button edit-button"/>
+        <br/>
+        <h:button value="Remove user" outcome = "/users/delete-form" styleClass = "menu-button remove-button"/>
     </h:form>
 
     <h:form id="authors-table" class="table-container">

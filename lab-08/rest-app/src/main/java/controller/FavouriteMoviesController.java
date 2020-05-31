@@ -41,7 +41,7 @@ public class FavouriteMoviesController {
 
         user.setFavouriteMovies(favouriteMovies);
 
-        userRepository.updateUser(user);
+//        userRepository.updateUser(user);
 
         return Response.status(201).entity(user).build();
     }
@@ -67,7 +67,7 @@ public class FavouriteMoviesController {
                 .collect(Collectors.toList())
         );
 
-        userRepository.updateUser(user);
+//        userRepository.updateUser(user);
 
         return Response.status(201).entity(user).build();
     }

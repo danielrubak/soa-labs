@@ -1,7 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,15 @@ public class User {
     )
     private List<Movie> favouriteMovies = new ArrayList<>();
 
-    @JsonGetter("id")
+    public User() {
+    }
+
+    public User(String name, int age, String avatar) {
+        this.name = name;
+        this.age = age;
+        this.avatar = avatar;
+    }
+
     public int getId() {
         return id;
     }
@@ -40,7 +46,6 @@ public class User {
         this.id = id;
     }
 
-    @JsonGetter("name")
     public String getName() {
         return name;
     }
@@ -49,7 +54,6 @@ public class User {
         this.name = name;
     }
 
-    @JsonGetter("age")
     public int getAge() {
         return age;
     }
@@ -58,7 +62,6 @@ public class User {
         this.age = age;
     }
 
-    @JsonGetter("avatar")
     public String getAvatar() {
         return avatar;
     }
@@ -67,12 +70,18 @@ public class User {
         this.avatar = avatar;
     }
 
-    @JsonGetter("movies")
     public List<Movie> getFavouriteMovies() {
         return favouriteMovies;
     }
 
     public void setFavouriteMovies(List<Movie> favouriteMovies) {
         this.favouriteMovies = favouriteMovies;
+    }
+
+    @Override
+    public String toString() {
+        return "User id: " + id +
+                " name: " + name +
+                " age: " + age;
     }
 }
