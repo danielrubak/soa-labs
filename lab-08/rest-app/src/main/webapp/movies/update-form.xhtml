@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Updating a movie</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+
+<h:form id="movie-update-form" class = "form-container">
+    <h:outputLabel for="movies-listbox" styleClass="form-label">Select movie you want to update:</h:outputLabel>
+    <h:selectOneMenu id="movies-listbox" value="#{MovieBean.selectedMovieId}" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a movie..." noSelectionOption="true" />
+        <f:selectItems value="#{MovieBean.getMovieMap()}"/>
+        <f:ajax render="movie-update-form" listener = "#{MovieBean.onMovieSelection}" event="change"/>
+    </h:selectOneMenu>
+
+    <h:outputLabel for="movie-name-field" styleClass="form-label">Title:</h:outputLabel>
+    <h:inputText id="movie-name-field" value="#{MovieBean.title}"
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
+    <h:message for="movie-name-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{MovieBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Save changes" action="#{MovieBean.updateMovie}"
+                     styleClass="menu-button add-button form-confirm-button">
+    </h:commandButton>
+</h:form>
+
+</body>
+
+</html>

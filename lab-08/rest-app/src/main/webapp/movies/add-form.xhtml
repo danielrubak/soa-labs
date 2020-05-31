@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Adding a movie</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+
+<h:form id = "movie-add-form" class = "form-container">
+    <h:outputLabel for="movie-name-field" styleClass="form-label">Title:</h:outputLabel>
+    <h:inputText id="movie-name-field" value="#{MovieBean.title}"
+                 required="true" requiredMessage="Value is required">
+        <f:ajax event="blur"/>
+    </h:inputText>
+    <h:message for="movie-name-field" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{MovieBean.onBackButton}"
+                     immediate="true" styleClass = "menu-button back-button form-back-button"/>
+    <h:commandButton value="Add movie" action="#{MovieBean.addMovie}"
+                     styleClass = "menu-button add-button form-confirm-button">
+    </h:commandButton>
+</h:form>
+
+</body>
+
+</html>

@@ -1,9 +1,10 @@
 package controller;
 
 import model.Movie;
-import repository.MovieRepository;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import service.MovieService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,14 +16,14 @@ import java.util.stream.Collectors;
 @Path("movies")
 public class MoviesController {
     @Inject
-    private MovieRepository moviesRepository;
+    MovieService movieService;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
     private List<Movie> getMovies(String title) {
         return (title != null && !title.isEmpty())
-            ? moviesRepository.getMovieByTitle(title)
-            : moviesRepository.getAllMovies();
+            ? movieService.getMovieByTitle(title)
+            : movieService.getAllMovies();
     }
 
     @GET
@@ -50,7 +51,7 @@ public class MoviesController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") int id) {
-        Movie movie = moviesRepository.getMovieById(id);
+        Movie movie = movieService.getMovieById(id);
 
         if (movie == null) {
             return Response.status(404).build();
@@ -63,7 +64,7 @@ public class MoviesController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Movie store(Movie movie) {
-        moviesRepository.addMovie(movie);
+        movieService.addMovie(movie);
 
         return movie;
     }
@@ -72,8 +73,8 @@ public class MoviesController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") int id, Movie movie_) {
-        Movie movie = moviesRepository.getMovieById(id);
+    public Response partUpdate(@PathParam("id") int id, Movie movie_) {
+        Movie movie = movieService.getMovieById(id);
 
         if (movie == null) {
             return Response.status(422).build();
@@ -82,22 +83,33 @@ public class MoviesController {
         movie.setTitle((movie_.getTitle() != null) ? movie_.getTitle() : movie.getTitle());
         movie.setUri((movie_.getUri() != null) ? movie_.getUri() : movie.getUri());
 
-        moviesRepository.updateMovie(movie);
+        movieService.updateMovie(id, movie);
 
         return Response.ok(movie).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Response update(@PathParam("id") int id, Movie movie) {
+        try {
+            movieService.updateMovie(id, movie);
+
+            return Response.status(200).build();
+        } catch (RuntimeException e) {
+            return Response.status(500).build();
+        }
     }
 
     @DELETE
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response destroy(@PathParam("id") int id) {
-        boolean successful = moviesRepository.deleteMovie(id);
-
-        if (!successful) {
-            return Response.status(422).build();
+    public Response delete(@PathParam("id") int id) {
+        try {
+            movieService.deleteMovie(id);
+            return Response.status(200).build();
+        } catch (Exception e) {
+            return Response.status(405).build();
         }
-
-        return Response.noContent().build();
     }
 }

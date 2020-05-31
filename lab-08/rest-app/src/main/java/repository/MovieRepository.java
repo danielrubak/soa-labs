@@ -9,6 +9,6 @@ public interface MovieRepository {
     public Movie getMovieById(int id);
     public List<Movie> getMovieByTitle(String title);
     public void addMovie(Movie movie);
-    public void updateMovie(Movie movie);
-    public boolean deleteMovie(int id);
+    public void updateMovie(int id, Movie movie);
+    public void deleteMovie(int id);
 }

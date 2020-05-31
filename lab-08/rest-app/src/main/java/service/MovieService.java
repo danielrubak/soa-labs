@@ -31,24 +31,47 @@ public class MovieService implements MovieRepository {
 
     @Override
     public void addMovie(Movie movie) {
-        updateMovie(movie);
+        try {
+            em.get().getTransaction().begin();
+            em.get().persist(movie);
+            movie.setUri(movie.getUri() + movie.getId());
+            em.get().getTransaction().commit();
+
+        } catch (Exception e){
+            System.err.println("An error occurred during adding movie: " + e);
+        }
     }
 
     @Override
-    public void updateMovie(Movie movie) {
-        em.get().getTransaction().begin();
-        em.get().persist(movie);
-        em.get().getTransaction().commit();
-        em.get().clear();
+    public void updateMovie(int id, Movie movie) {
+        try {
+            em.get().getTransaction().begin();
+
+            Movie updateObject = em.get().find(Movie.class, id);
+
+            if ( movie.getTitle() != null ) {
+                updateObject.setTitle(movie.getTitle());
+            }
+
+            em.get().persist(updateObject);
+            em.get().getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("An error occurred during updating a movie object. Id = " + id + ":\n" +e);
+        }
     }
 
     @Override
-    public boolean deleteMovie(int id) {
-        em.get().getTransaction().begin();
-        int status = em.get().createQuery("DELETE FROM Movie u where u.id = :id").setParameter("id", id).executeUpdate();
-        em.get().getTransaction().commit();
-        em.get().clear();
+    public void deleteMovie(int id) {
+        try {
+            em.get().getTransaction().begin();
 
-        return status == 1;
+            Movie removeObject = em.get().find(Movie.class, id);
+            em.get().remove(removeObject);
+
+            em.get().getTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("An error occurred during removing a movie object. Id = " + id + ":\n" +e);
+        }
     }
 }

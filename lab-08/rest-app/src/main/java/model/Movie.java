@@ -1,7 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +16,13 @@ public class Movie {
     @Column(name = "uri", nullable = false)
     private String uri;
 
-    @JsonGetter("id")
+    public Movie() {
+    }
+
+    public Movie(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }
@@ -27,7 +31,6 @@ public class Movie {
         this.id = id;
     }
 
-    @JsonGetter("title")
     public String getTitle() {
         return title;
     }
@@ -36,12 +39,18 @@ public class Movie {
         this.title = title;
     }
 
-    @JsonGetter("uri")
     public String getUri() {
         return uri;
     }
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie id: " + id +
+                " title: " + title +
+                " uri: " + uri;
     }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Deleting a movie</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+
+<h:form id="movie-delete-form" class="form-container">
+    <h:outputLabel for="movies-listbox" styleClass="form-label">Select movie you want to delete:</h:outputLabel>
+    <h:selectOneMenu id="movies-listbox" value="#{MovieBean.selectedMovieId}" required="true"
+                     requiredMessage="Value is required" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a movie..." noSelectionOption="true" />
+        <f:selectItems value="#{MovieBean.getMovieMap()}"/>
+        <f:ajax listener = "#{MovieBean.onMovieSelection}" event="change"/>
+    </h:selectOneMenu>
+    <h:message for="movies-listbox" styleClass="error-msg" rendered="true"/>
+
+    <h:commandButton value="Back" action="#{MovieBean.onBackButton}"
+                     immediate="true" styleClass="menu-button back-button form-back-button"/>
+    <h:commandButton value="Remove reader" action="#{MovieBean.deleteMovie}"
+                     styleClass = "menu-button remove-button form-confirm-button">
+    </h:commandButton>
+</h:form>
+
+</body>
+
+</html>
