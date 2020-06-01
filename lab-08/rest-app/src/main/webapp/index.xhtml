@@ -11,10 +11,17 @@
 </h:head>
 
 <h:body>
+
     <h:form id = "main-page-menu" class="buttons-menu-panel">
         <h:button value="Users management" outcome = "users/users" styleClass = "menu-button select-button"/>
         <br/>
         <h:button value="Movies management" outcome = "movies/movies" styleClass = "menu-button select-button"/>
     </h:form>
+
+    <h:form id = "database-menu" class="buttons-menu-panel">
+        <h:commandButton value="Prepare database" action="#{InitBean.setupDatabase}"
+                         immediate="true" styleClass="menu-button select-button"/>
+    </h:form>
+
 </h:body>
 </html>

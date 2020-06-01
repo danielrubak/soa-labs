@@ -41,8 +41,7 @@ public class MovieBean implements Serializable {
 
     public String addMovie() {
         Movie movie = new Movie(title);
-        uri = BASE_URI + "/";
-        movie.setUri(uri);
+        movie.setUri(BASE_URI + "/");
 
         Entity entity = Entity.entity(movie, MediaType.APPLICATION_JSON);
         movieClient.target(BASE_URI).request().post(entity).close();

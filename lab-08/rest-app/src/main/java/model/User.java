@@ -39,6 +39,13 @@ public class User {
         this.avatar = avatar;
     }
 
+    public User(String name, int age, String avatar, List<Movie> favouriteMovies) {
+        this.name = name;
+        this.age = age;
+        this.avatar = avatar;
+        this.favouriteMovies = favouriteMovies;
+    }
+
     public int getId() {
         return id;
     }
@@ -73,14 +80,6 @@ public class User {
 
     public List<Movie> getFavouriteMovies() {
         return favouriteMovies;
-    }
-
-    public String getMoviesListStr() {
-        List<String> movieList = new ArrayList<>();
-        for ( Movie movie: favouriteMovies ) {
-            movieList.add(movie.getTitle());
-        }
-        return String.join(", ", movieList);
     }
 
     public void setFavouriteMovies(List<Movie> favouriteMovies) {

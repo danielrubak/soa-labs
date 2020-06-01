@@ -43,8 +43,16 @@ public class UserBean implements Serializable {
         }
     }
 
+    public String getMoviesListStr(List<Movie> userMovies) {
+        List<String> movieList = new ArrayList<>();
+        for ( Movie movie: userMovies ) {
+            movieList.add(movie.getTitle());
+        }
+        return String.join(", ", movieList);
+    }
+
     public String addUser() {
-        User user = new User(this.name, this.age, this.avatar);
+        User user = new User(name, age, avatar);
 
         Entity entity = Entity.entity(user, MediaType.APPLICATION_JSON);
         userClient.target(USERS_URI).request().post(entity).close();

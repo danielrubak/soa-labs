@@ -24,7 +24,6 @@ public class UsersController {
     @GET
     public Response getUsers() {
         List<User> users = userService.getAllUsers();
-
         return Response.status(200).entity(users).build();
     }
 

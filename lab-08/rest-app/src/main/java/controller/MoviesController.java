@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,30 +19,39 @@ public class MoviesController {
     @Inject
     MovieService movieService;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
-    private List<Movie> getMovies(String title) {
-        return (title != null && !title.isEmpty())
-            ? movieService.getMovieByTitle(title)
-            : movieService.getAllMovies();
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String indexJson(@QueryParam("title") String title) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(getMovies(title));
+    public Response getMovies(@QueryParam("title") String title) {
+        List<Movie> movies = new ArrayList<>();
+
+        if ( title != null && !title.isEmpty() ) {
+            movies = movieService.getMovieByTitle(title);
+        } else {
+            movies = movieService.getAllMovies();
+        }
+
+        return Response.status(200).entity(movies).build();
     }
 
     @GET
+    @Path("/uri-list")
     @Produces("text/uri-list")
-    public String indexUris(@QueryParam("title") String title) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(getMovies(title).stream().map(Movie::getUri).collect(Collectors.toList()));
+    public String getUris() throws JsonProcessingException {
+        List<Movie> movies = movieService.getAllMovies();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(
+                movies.stream().
+                        map(Movie::getUri).
+                        collect(Collectors.toList())
+        );
     }
 
     @GET
+    @Path("/text-plain")
     @Produces(MediaType.TEXT_PLAIN)
     public String indexText(@QueryParam("title") String title) {
-        return getMovies(title)
+        return movieService.getMovieByTitle(title)
             .stream()
             .map(movie -> "\"" + movie.getTitle() + "\"\n" + movie.getUri() + "\n")
             .reduce("", (String acc, String movie) -> acc + movie + "\n");

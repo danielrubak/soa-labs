@@ -31,6 +31,11 @@ public class Movie {
         this.title = title;
     }
 
+    public Movie(String title, String uri) {
+        this.title = title;
+        this.uri = uri;
+    }
+
     public int getId() {
         return id;
     }

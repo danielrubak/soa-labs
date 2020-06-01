@@ -43,8 +43,12 @@
                 #{user.age}
             </h:column>
             <h:column>
+                <f:facet name="header">Avatar</f:facet>
+                #{user.avatar}
+            </h:column>
+            <h:column>
                 <f:facet name="header">Movies collection</f:facet>
-                #{user.getMoviesListStr()}
+                #{UserBean.getMoviesListStr(user.favouriteMovies)}
             </h:column>
 
         </h:dataTable>
