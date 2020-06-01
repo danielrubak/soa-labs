@@ -1,6 +1,7 @@
 package service;
 
 import model.Movie;
+import model.User;
 import repository.MovieRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -56,7 +57,7 @@ public class MovieService implements MovieRepository {
             em.get().persist(updateObject);
             em.get().getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("An error occurred during updating a movie object. Id = " + id + ":\n" +e);
+            System.err.println("An error occurred during updating a movie object. Id = " + id + ":\n" +e);
         }
     }
 
@@ -66,12 +67,23 @@ public class MovieService implements MovieRepository {
             em.get().getTransaction().begin();
 
             Movie removeObject = em.get().find(Movie.class, id);
+
+            for ( User user: removeObject.getUsers() ) {
+                List<Movie> userMovies = user.getFavouriteMovies();
+
+                if ( userMovies.contains(removeObject) ) {
+                    userMovies.remove(removeObject);
+                    user.setFavouriteMovies(userMovies);
+                    em.get().persist(user);
+                }
+            }
+
             em.get().remove(removeObject);
 
             em.get().getTransaction().commit();
 
         } catch (Exception e) {
-            System.out.println("An error occurred during removing a movie object. Id = " + id + ":\n" +e);
+            System.err.println("An error occurred during removing a movie object. Id = " + id + ":\n" +e);
         }
     }
 }

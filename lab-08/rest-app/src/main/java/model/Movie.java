@@ -69,4 +69,17 @@ public class Movie {
                 " title: " + title +
                 " uri: " + uri;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Movie movie = (Movie) obj;
+
+        if ( movie == null ) {
+            return false;
+        } else if (this.getId() == movie.getId()) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -70,9 +70,7 @@ public class MovieBean implements Serializable {
     }
 
     public String deleteMovie() {
-        System.out.println("BEAN START");
         movieClient.target(BASE_URI+"/"+selectedMovieId).request().delete().close();
-        System.out.println("BEAN END");
         setEmptyValues();
 
         return "/movies/movies";

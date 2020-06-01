@@ -158,6 +158,7 @@ public class UserBean implements Serializable {
         age = null;
         avatar = null;
         selectedUserId = null;
+        selectedMovieId = null;
     }
 
     public String getName() {

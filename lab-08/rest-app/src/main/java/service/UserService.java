@@ -56,7 +56,7 @@ public class UserService implements UserRepository {
             em.get().getTransaction().commit();
 
         } catch (Exception e) {
-            System.out.println("An error occurred during updating a user object. Id = " + id + ":\n" +e);
+            System.err.println("An error occurred during updating a user object. Id = " + id + ":\n" +e);
         }
     }
 
@@ -71,7 +71,7 @@ public class UserService implements UserRepository {
             em.get().getTransaction().commit();
 
         } catch (Exception e) {
-            System.out.println("An error occurred during removing a user object. Id = " + id + ":\n" +e);
+            System.err.println("An error occurred during removing a user object. Id = " + id + ":\n" +e);
         }
     }
 }
