@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Return movie</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<body>
+
+<h:form id ="menu" class="buttons-menu-panel">
+    <h:button value="Back to previous menu" outcome = "/users/users" styleClass = "menu-button back-button"/>
+</h:form>
+
+<h:form id="return-movie-form" class = "form-container">
+    <h:outputLabel for="users-listbox" styleClass="form-label">Select user:</h:outputLabel>
+    <h:selectOneMenu id="users-listbox" value="#{UserBean.selectedUserId}" styleClass="dropdown">
+        <f:selectItem itemValue="#{null}" itemLabel="Select a user..." noSelectionOption="true" />
+        <f:selectItems value="#{UserBean.getUserMap()}"/>
+        <f:ajax render="user-movies-table" event="change"/>
+    </h:selectOneMenu>
+</h:form>
+
+<h:form id="user-movies-table" class="table-container">
+    <h:dataTable rendered="#{UserBean.selectedUserId != null}" value="#{UserBean.getUserMovies()}" var="movie">
+        <h:column>
+            <f:facet name="header">Id</f:facet>
+            #{movie.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Title</f:facet>
+            #{movie.title}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Remove</f:facet>
+            <h:commandButton class = "grid-button remove-button" value="Remove">
+                <f:ajax listener="#{UserBean.removeMovieFromCollection(movie)}" render="user-movies-table"/>
+            </h:commandButton>
+        </h:column>
+    </h:dataTable>
+</h:form>
+
+</body>
+
+</html>

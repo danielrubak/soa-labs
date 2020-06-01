@@ -21,11 +21,12 @@ public class User {
     @Column(name = "avatar", nullable = false)
     private String avatar;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "userToMovies",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id")
+            schema = "rest",
+            name = "userToMovies",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id")
     )
     private List<Movie> favouriteMovies = new ArrayList<>();
 
@@ -72,6 +73,14 @@ public class User {
 
     public List<Movie> getFavouriteMovies() {
         return favouriteMovies;
+    }
+
+    public String getMoviesListStr() {
+        List<String> movieList = new ArrayList<>();
+        for ( Movie movie: favouriteMovies ) {
+            movieList.add(movie.getTitle());
+        }
+        return String.join(", ", movieList);
     }
 
     public void setFavouriteMovies(List<Movie> favouriteMovies) {

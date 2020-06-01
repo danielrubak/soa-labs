@@ -14,7 +14,7 @@ public class UserService implements UserRepository {
 
     @Override
     public List<User> getAllUsers() {
-        return em.get().createQuery("SELECT u FROM User u LEFT JOIN u.favouriteMovies fm").getResultList();
+        return em.get().createQuery("SELECT u FROM User u").getResultList();
     }
 
     @Override
@@ -50,8 +50,11 @@ public class UserService implements UserRepository {
                 updateObject.setAvatar(user.getAvatar());
             }
 
+            updateObject.setFavouriteMovies(user.getFavouriteMovies());
+
             em.get().persist(updateObject);
             em.get().getTransaction().commit();
+
         } catch (Exception e) {
             System.out.println("An error occurred during updating a user object. Id = " + id + ":\n" +e);
         }

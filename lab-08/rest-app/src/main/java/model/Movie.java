@@ -1,6 +1,10 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(schema = "rest", name = "movies")
@@ -15,6 +19,10 @@ public class Movie {
 
     @Column(name = "uri", nullable = false)
     private String uri;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteMovies")
+    @JsonBackReference
+    private List<User> users = new ArrayList<>();
 
     public Movie() {
     }
@@ -45,6 +53,14 @@ public class Movie {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override

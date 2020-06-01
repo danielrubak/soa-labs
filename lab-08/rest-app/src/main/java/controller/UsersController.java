@@ -1,6 +1,8 @@
 package controller;
 
+import model.Movie;
 import model.User;
+import service.MovieService;
 import service.UserService;
 
 import javax.inject.Inject;
@@ -16,9 +18,13 @@ public class UsersController {
     @Inject
     UserService userService;
 
+    @Inject
+    MovieService movieService;
+
     @GET
     public Response getUsers() {
         List<User> users = userService.getAllUsers();
+
         return Response.status(200).entity(users).build();
     }
 
@@ -65,5 +71,35 @@ public class UsersController {
         } catch (Exception e) {
             return Response.status(405).build();
         }
+    }
+
+    @POST
+    @Path("/{user_id}/movies")
+    public Response addUserMovie(@PathParam("user_id") int userId, Movie movie){
+        User user = userService.getUserById(userId);
+        user.getFavouriteMovies().add(movie);
+        movie.getUsers().add(user);
+        userService.updateUser(userId, user);
+        movieService.updateMovie(movie.getId(), movie);
+
+        return Response.status(201).build();
+    }
+
+    @DELETE
+    @Path("/{user_id}/movies/{movie_id}")
+    public Response removeUserMovie(
+            @PathParam("user_id") int userId,
+            @PathParam("movie_id") int movieId
+    ) {
+        User user = userService.getUserById(userId);
+        Movie movie = movieService.getMovieById(movieId);
+
+        user.getFavouriteMovies().remove(movie);
+        movie.getUsers().remove(user);
+
+        userService.updateUser(userId, user);
+        movieService.updateMovie(movie.getId(), movie);
+
+        return Response.status(201).build();
     }
 }
